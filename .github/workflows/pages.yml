@@ -33,6 +33,12 @@ jobs:
       - name: Type check
         run: npm run lint
 
+      - name: Include published CMS content
+        run: |
+          mkdir -p public/website-assets
+          cp pages-content/site-content.json public/site-content.json
+          cp -R pages-content/website-assets/. public/website-assets/
+
       - name: Build for GitHub Pages
         run: npm run build
         env:

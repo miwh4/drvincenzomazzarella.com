@@ -44,6 +44,8 @@ Il repository esclude deliberatamente:
 - contenuti runtime generati (`public/site-content.json`);
 - report di sicurezza locali, log, cache e build.
 
+La cartella `pages-content/` contiene invece lo snapshot pubblico e sanitizzato del CMS usato da GitHub Pages. Non include credenziali FTP né i file di lavoro del builder.
+
 Il file `.env.example` contiene esclusivamente nomi di variabili e valori segnaposto. Prima di ogni pubblicazione verifica sempre i file selezionati con `git status`.
 
 ## Build di produzione
