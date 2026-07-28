@@ -98,6 +98,7 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
             <div className="relative aspect-[4/5] overflow-hidden bg-stone-200 border border-stone-200">
               <img
                 src={treatment.imageUrl}
+                data-forge-id={`treatment-detail-image-${treatment.id}`}
                 data-forge-image-path={`treatments.${treatmentIndex}.imageUrl`}
                 alt={treatment.title}
                 className="w-full h-full object-cover"
