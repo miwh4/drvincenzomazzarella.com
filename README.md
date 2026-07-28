@@ -46,6 +46,15 @@ Il repository esclude deliberatamente:
 
 La cartella `pages-content/` contiene invece lo snapshot pubblico e sanitizzato del CMS usato da GitHub Pages. Non include credenziali FTP né i file di lavoro del builder.
 
+Dopo aver salvato modifiche nel CMS, aggiorna lo snapshot pubblico e pubblicalo con:
+
+```sh
+npm run publish:pages-content
+git add pages-content
+git commit -m "Aggiorna contenuti CMS"
+git push
+```
+
 Il file `.env.example` contiene esclusivamente nomi di variabili e valori segnaposto. Prima di ogni pubblicazione verifica sempre i file selezionati con `git status`.
 
 ## Build di produzione

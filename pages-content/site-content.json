@@ -1,4 +1,4 @@
-﻿{
+{
   "meta": {
     "templateName": "Default Mazzarella",
     "savedAt": "2026-07-28T12:21:25.615Z"
@@ -7,17 +7,17 @@
     "name": "DR. VINCENZO MAZZARELLA",
     "title": "Specialista in Chirurgia Plastica, Ricostruttiva ed Estetica",
     "shortBio": "Il Dr. Vincenzo Mazzarella vanta anni di esperienza nella chirurgia plastica ed estetica, specializzato in interventi per valorizzare la tua bellezza.",
-    "philosophy": "La bellezza non Ã¨ omologazione, ma armonia. Ogni intervento Ã¨ una creazione su misura che rispetta l'identitÃ  della persona, restituendo una naturale freschezza senza mai alterare i tratti originari.",
+    "philosophy": "La bellezza non è omologazione, ma armonia. Ogni intervento è una creazione su misura che rispetta l'identità della persona, restituendo una naturale freschezza senza mai alterare i tratti originari.",
     "credentials": [
       {
         "year": "Laurea",
         "title": "Laurea in Medicina e Chirurgia",
-        "institution": "UniversitÃ  degli Studi di Napoli \"Federico II\" - Massimi voti e plauso della commissione"
+        "institution": "Università degli Studi di Napoli \"Federico II\" - Massimi voti e plauso della commissione"
       },
       {
         "year": "Specializzazione",
         "title": "Specializzazione in Chirurgia Plastica, Ricostruttiva ed Estetica",
-        "institution": "UniversitÃ  degli Studi di Napoli \"Federico II\" - Votazione 50/50"
+        "institution": "Università degli Studi di Napoli \"Federico II\" - Votazione 50/50"
       },
       {
         "year": "Esperienza",
@@ -25,9 +25,9 @@
         "institution": "Corsi teorico-pratici di altissimo profilo in Europa e collaborazioni con primari centri di chirurgia estetica"
       },
       {
-        "year": "SocietÃ  Scientifiche",
+        "year": "Società Scientifiche",
         "title": "Membro Attivo AICPE e SICPRE",
-        "institution": "Partecipazione costante come relatore ai piÃ¹ prestigiosi congressi nazionali e internazionali di chirurgia estetica"
+        "institution": "Partecipazione costante come relatore ai più prestigiosi congressi nazionali e internazionali di chirurgia estetica"
       }
     ],
     "portraitUrl": "/drvincenzomazzarella.com/website-assets/image-b8592588b180cd1ea2bc.jpg"
@@ -458,7 +458,7 @@
       "address": "Via Vittorio Veneto, 108 - 00187 Roma (RM)",
       "phone": "+39 06 4890 1234",
       "email": "roma@drvincenzomazzarella.it",
-      "hours": "MartedÃ¬ e GiovedÃ¬: 14:00 - 20:00 (Su appuntamento)",
+      "hours": "Martedì e Giovedì: 14:00 - 20:00 (Su appuntamento)",
       "images": [
         "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000"
       ]
@@ -514,14 +514,14 @@
       "category": "seno",
       "title": "Mastoplastica Additiva",
       "subtitle": "Aumento del volume del seno",
-      "description": "Intervento mirato ad aumentare il volume del seno e migliorarne la forma mediante l'inserimento di protesi di altissima qualitÃ , con risultati estremamente naturali.",
-      "fullDescription": "La mastoplastica additiva Ã¨ uno degli interventi piÃ¹ richiesti. Il Dr. Vincenzo Mazzarella utilizza protesi di ultima generazione certificate FDA e CE, applicando tecniche mininvasive personalizzate (sottomuscolare, dual-plane o retroghiandolare) per garantire la massima naturalezza al tatto e alla vista, con tempi di recupero rapidi.",
+      "description": "Intervento mirato ad aumentare il volume del seno e migliorarne la forma mediante l'inserimento di protesi di altissima qualità, con risultati estremamente naturali.",
+      "fullDescription": "La mastoplastica additiva è uno degli interventi più richiesti. Il Dr. Vincenzo Mazzarella utilizza protesi di ultima generazione certificate FDA e CE, applicando tecniche mininvasive personalizzate (sottomuscolare, dual-plane o retroghiandolare) per garantire la massima naturalezza al tatto e alla vista, con tempi di recupero rapidi.",
       "anesthesia": "Generale o Sedazione Profonda",
       "duration": "60 - 90 minuti",
       "hospitalization": "Day Hospital o 1 notte",
       "recoveryTime": "7 - 10 giorni",
       "benefits": [
-        "Aumento personalizzato del volume del decolletÃ©",
+        "Aumento personalizzato del volume del decolleté",
         "Correzione di asimmetrie mammarie",
         "Protesi certificate di ultima generazione",
         "Risultato naturale in armonia con le proporzioni del corpo"
@@ -534,14 +534,14 @@
       "title": "Liposcultura",
       "subtitle": "Ridefinire le forme del corpo con precisione",
       "description": "Intervento che rimodella la silhouette eliminando gli accumuli di grasso localizzato e valorizzando le proporzioni del corpo con risultati naturali.",
-      "fullDescription": "La liposcultura Ã¨ un intervento chirurgico che consente di rimuovere il grasso localizzato da aree come addome, fianchi, cosce, braccia o schiena, scolpendo la silhouette in modo armonioso. Il Dr. Vincenzo Mazzarella utilizza tecniche avanzate per ridefinire i contorni del corpo, preservando la naturalezza delle forme e garantendo risultati equilibrati e duraturi.",
+      "fullDescription": "La liposcultura è un intervento chirurgico che consente di rimuovere il grasso localizzato da aree come addome, fianchi, cosce, braccia o schiena, scolpendo la silhouette in modo armonioso. Il Dr. Vincenzo Mazzarella utilizza tecniche avanzate per ridefinire i contorni del corpo, preservando la naturalezza delle forme e garantendo risultati equilibrati e duraturi.",
       "anesthesia": "Locale con Sedazione o Generale",
       "duration": "90 - 180 minuti",
       "hospitalization": "Day Hospital",
       "recoveryTime": "7 - 10 giorni",
       "benefits": [
         "Eliminazione del grasso localizzato",
-        "Silhouette piÃ¹ definita e armoniosa",
+        "Silhouette più definita e armoniosa",
         "Miglioramento delle proporzioni corporee",
         "Risultati naturali e duraturi"
       ],
@@ -553,13 +553,13 @@
       "title": "Ginecomastia Uomo",
       "subtitle": "Eliminare il volume del petto maschile",
       "description": "Intervento indicato per correggere la ginecomastia maschile, eliminando l'eccesso di tessuto ghiandolare o adiposo e ripristinando un torace armonioso e definito.",
-      "fullDescription": "La ginecomastia Ã¨ una condizione caratterizzata dall'aumento del volume del seno nell'uomo, dovuto a tessuto ghiandolare, adiposo o entrambi. Il Dr. Vincenzo Mazzarella esegue un intervento personalizzato, combinando quando necessario l'asportazione della ghiandola e la liposcultura, per ottenere un torace naturale, proporzionato e con cicatrici poco visibili.",
+      "fullDescription": "La ginecomastia è una condizione caratterizzata dall'aumento del volume del seno nell'uomo, dovuto a tessuto ghiandolare, adiposo o entrambi. Il Dr. Vincenzo Mazzarella esegue un intervento personalizzato, combinando quando necessario l'asportazione della ghiandola e la liposcultura, per ottenere un torace naturale, proporzionato e con cicatrici poco visibili.",
       "anesthesia": "Locale con Sedazione o Generale",
       "duration": "60 - 90 minuti",
       "hospitalization": "Day Hospital",
       "recoveryTime": "7 - 10 giorni",
       "benefits": [
-        "Torace piÃ¹ piatto e definito",
+        "Torace più piatto e definito",
         "Eliminazione del tessuto ghiandolare o adiposo",
         "Miglioramento delle proporzioni del corpo",
         "Risultato naturale con cicatrici ridotte"
@@ -572,7 +572,7 @@
       "title": "Lipofilling del seno",
       "subtitle": "Aumentare il volume del seno in modo naturale",
       "description": "Intervento che aumenta o rimodella il seno utilizzando il proprio tessuto adiposo, per ottenere un risultato naturale senza l'utilizzo di protesi.",
-      "fullDescription": "Il lipofilling del seno Ã¨ una tecnica che prevede il prelievo di tessuto adiposo da aree del corpo come addome o cosce, successivamente purificato e reiniettato nel seno. Il Dr. Vincenzo Mazzarella esegue il trattamento con tecniche avanzate per migliorare volume, forma e simmetria, garantendo risultati naturali e armoniosi con un recupero rapido.",
+      "fullDescription": "Il lipofilling del seno è una tecnica che prevede il prelievo di tessuto adiposo da aree del corpo come addome o cosce, successivamente purificato e reiniettato nel seno. Il Dr. Vincenzo Mazzarella esegue il trattamento con tecniche avanzate per migliorare volume, forma e simmetria, garantendo risultati naturali e armoniosi con un recupero rapido.",
       "anesthesia": "Generale o Sedazione Profonda",
       "duration": "90 - 120 minuti",
       "hospitalization": "Day Hospital",
@@ -610,15 +610,15 @@
       "title": "Mastopessi",
       "subtitle": "Lifting del seno svuotato o cadente",
       "description": "Il lifting del seno riposiziona e rimodella la mammella che ha perso tono in seguito a gravidanze, allattamento o cali ponderali, donando un aspetto sodo e giovanile.",
-      "fullDescription": "Chiamata anche lifting del seno, la mastopessi solleva il seno cadente (ptosico), riposizionando l'areola e rimodellando la ghiandola. PuÃ² essere eseguita da sola o in combinazione con protesi se si desidera ripristinare il volume perduto, lasciando cicatrici minime e sapientemente nascoste.",
+      "fullDescription": "Chiamata anche lifting del seno, la mastopessi solleva il seno cadente (ptosico), riposizionando l'areola e rimodellando la ghiandola. Può essere eseguita da sola o in combinazione con protesi se si desidera ripristinare il volume perduto, lasciando cicatrici minime e sapientemente nascoste.",
       "anesthesia": "Generale o Sedazione Profonda con anestesia locale",
       "duration": "2 - 3 ore",
       "hospitalization": "Day Hospital o 1 notte",
       "recoveryTime": "10 - 14 giorni",
       "benefits": [
-        "Rassodamento e sollevamento del decolletÃ©",
+        "Rassodamento e sollevamento del decolleté",
         "Riposizionamento dell'areola mammaria",
-        "PossibilitÃ  di abbinare protesi per volume aggiuntivo",
+        "Possibilità di abbinare protesi per volume aggiuntivo",
         "Cicatrici sottili e discretamente posizionate"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-68d2fcead451ff9a18a3.jpg"
@@ -629,7 +629,7 @@
       "title": "Mastoplastica Riduttiva",
       "subtitle": "Riduzione del seno ipertrofico",
       "description": "Intervento volto a ridurre le dimensioni di un seno eccessivamente grande e pesante, migliorando la fisionomia corporea e alleviando dolori a schiena e collo.",
-      "fullDescription": "La mastoplastica riduttiva elimina l'eccesso di ghiandola, grasso e pelle mammaria. L'obiettivo del Dr. Mazzarella Ã¨ alleggerire il seno per donare proporzione e sollievo fisico, migliorando nettamente la postura e la qualitÃ  della vita della paziente.",
+      "fullDescription": "La mastoplastica riduttiva elimina l'eccesso di ghiandola, grasso e pelle mammaria. L'obiettivo del Dr. Mazzarella è alleggerire il seno per donare proporzione e sollievo fisico, migliorando nettamente la postura e la qualità della vita della paziente.",
       "anesthesia": "Generale",
       "duration": "2.5 - 3.5 ore",
       "hospitalization": "1 notte di degenza",
@@ -637,7 +637,7 @@
       "benefits": [
         "Sollievo immediato da dolori cervicali e posturali",
         "Seno proporzionato e modellato sulle forme corporee",
-        "Maggiore comfort nell'attivitÃ  fisica e nell'abbigliamento",
+        "Maggiore comfort nell'attività fisica e nell'abbigliamento",
         "Miglioramento della simmetria generale"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-b59522776d092abf487b.jpg"
@@ -647,8 +647,8 @@
       "category": "viso",
       "title": "Rinoplastica",
       "subtitle": "Rimodellamento del naso",
-      "description": "Correzione dei difetti estetici del naso (gobba, punta cadente, deviazioni) in piena armonia con il viso, migliorando se necessario la funzionalitÃ  respiratoria.",
-      "fullDescription": "La rinoplastica moderna unisce estetica e funzionalitÃ . Il Dr. Vincenzo Mazzarella predilige un approccio conservativo per modellare il profilo nasale senza mai creare un \"naso finto\". Attraverso tecniche mini-invasive, si eliminano le imperfezioni e si ripristina la corretta respirazione (rinosettoplastica) in un unico tempo chirurgico.",
+      "description": "Correzione dei difetti estetici del naso (gobba, punta cadente, deviazioni) in piena armonia con il viso, migliorando se necessario la funzionalità respiratoria.",
+      "fullDescription": "La rinoplastica moderna unisce estetica e funzionalità. Il Dr. Vincenzo Mazzarella predilige un approccio conservativo per modellare il profilo nasale senza mai creare un \"naso finto\". Attraverso tecniche mini-invasive, si eliminano le imperfezioni e si ripristina la corretta respirazione (rinosettoplastica) in un unico tempo chirurgico.",
       "anesthesia": "Generale o Sedazione Locale profonda",
       "duration": "1.5 - 2 ore",
       "hospitalization": "Day Hospital",
@@ -666,15 +666,15 @@
       "category": "viso",
       "title": "Blefaroplastica",
       "subtitle": "Ringiovanimento dello sguardo",
-      "description": "Eliminazione della pelle in eccesso sulle palpebre superiori e delle borse sotto gli occhi per restituire freschezza, luminositÃ  e giovinezza allo sguardo.",
-      "fullDescription": "La blefaroplastica (superiore, inferiore o completa) corregge lo sguardo stanco e appesantito dovuto all'etÃ . Rimuovendo l'eccesso cutaneo e ridefinendo i cuscinetti adiposi (borse), l'occhio riacquista la sua originaria vivacitÃ  senza alcuna alterazione della fisionomia o dell'espressione naturale.",
+      "description": "Eliminazione della pelle in eccesso sulle palpebre superiori e delle borse sotto gli occhi per restituire freschezza, luminosità e giovinezza allo sguardo.",
+      "fullDescription": "La blefaroplastica (superiore, inferiore o completa) corregge lo sguardo stanco e appesantito dovuto all'età. Rimuovendo l'eccesso cutaneo e ridefinendo i cuscinetti adiposi (borse), l'occhio riacquista la sua originaria vivacità senza alcuna alterazione della fisionomia o dell'espressione naturale.",
       "anesthesia": "Locale con sedazione leggera",
       "duration": "45 - 90 minuti",
       "hospitalization": "Day Hospital",
       "recoveryTime": "5 - 7 giorni",
       "benefits": [
         "Eliminazione delle palpebre cadenti e delle borse oculari",
-        "Sguardo visibilmente piÃ¹ riposato e luminoso",
+        "Sguardo visibilmente più riposato e luminoso",
         "Cicatrici invisibili nascoste nelle pieghe naturali dell'occhio",
         "Recupero rapidissimo con minimo disagio"
       ],
@@ -705,7 +705,7 @@
       "title": "Lipofilling",
       "subtitle": "Rimodellare il corpo con il proprio grasso",
       "description": "Intervento che utilizza il tessuto adiposo del paziente per aumentare i volumi e ridefinire le forme del corpo in modo naturale e armonioso.",
-      "fullDescription": "Il lipofilling Ã¨ una tecnica chirurgica che prevede il prelievo di tessuto adiposo da aree come addome, fianchi o cosce, successivamente purificato e reiniettato nelle zone da valorizzare. Il Dr. Vincenzo Mazzarella esegue il trattamento con tecniche avanzate per migliorare proporzioni, volume e definizione, garantendo risultati naturali, duraturi e perfettamente armonizzati con il corpo.",
+      "fullDescription": "Il lipofilling è una tecnica chirurgica che prevede il prelievo di tessuto adiposo da aree come addome, fianchi o cosce, successivamente purificato e reiniettato nelle zone da valorizzare. Il Dr. Vincenzo Mazzarella esegue il trattamento con tecniche avanzate per migliorare proporzioni, volume e definizione, garantendo risultati naturali, duraturi e perfettamente armonizzati con il corpo.",
       "anesthesia": "Locale con Sedazione o Generale",
       "duration": "90 - 150 minuti",
       "hospitalization": "Day Hospital",
@@ -724,7 +724,7 @@
       "title": "Addominoplastica",
       "subtitle": "Ricostruzione e tensione dell'addome",
       "description": "Asportazione della pelle e del grasso in eccesso nella regione addominale, con eventuale ricostruzione della parete muscolare (diastasi) per un addome piatto.",
-      "fullDescription": "L'addominoplastica Ã¨ indicata dopo forti dimagrimenti o gravidanze che hanno lasciato un eccesso di pelle rilassata (grembiule addominale) o una diastasi dei muscoli retti. L'intervento ripristina la tensione dei muscoli e rimuove la cute in esubero, restituendo un addome piatto e un punto vita delineato.",
+      "fullDescription": "L'addominoplastica è indicata dopo forti dimagrimenti o gravidanze che hanno lasciato un eccesso di pelle rilassata (grembiule addominale) o una diastasi dei muscoli retti. L'intervento ripristina la tensione dei muscoli e rimuove la cute in esubero, restituendo un addome piatto e un punto vita delineato.",
       "anesthesia": "Generale o Spinale",
       "duration": "2 - 3 ore",
       "hospitalization": "1 o 2 notti di degenza",
@@ -743,7 +743,7 @@
       "title": "Mastoplastica Secondaria",
       "subtitle": "Revisione e correzione di impianti mammari",
       "description": "Intervento di revisione volto a sostituire protesi usurate, correggere contratture capsulari, asimmetrie o risultati estetici insoddisfacenti di precedenti interventi.",
-      "fullDescription": "La mastoplastica secondaria (o di revisione) richiede un elevato livello di competenza specialistica. Il Dr. Vincenzo Mazzarella interviene per risolvere complicanze come la contrattura capsulare, la rottura o lo spostamento della protesi, asimmetrie o per assecondare la volontÃ  della paziente di cambiare il volume o il tipo di impianto, ripristinando la corretta estetica del decolletÃ©.",
+      "fullDescription": "La mastoplastica secondaria (o di revisione) richiede un elevato livello di competenza specialistica. Il Dr. Vincenzo Mazzarella interviene per risolvere complicanze come la contrattura capsulare, la rottura o lo spostamento della protesi, asimmetrie o per assecondare la volontà della paziente di cambiare il volume o il tipo di impianto, ripristinando la corretta estetica del decolleté.",
       "anesthesia": "Generale",
       "duration": "2 - 3 ore",
       "hospitalization": "1 notte di degenza",
@@ -752,7 +752,7 @@
         "Risoluzione di contratture capsulari e dolore",
         "Sostituzione di vecchie protesi con impianti di ultima generazione",
         "Correzione di asimmetrie mammarie e difetti di forma",
-        "Ripristino della fiducia in sÃ© e del benessere personale"
+        "Ripristino della fiducia in sé e del benessere personale"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-235ceb3fad44d9e13cda.jpg"
     },
@@ -770,7 +770,7 @@
       "benefits": [
         "Eliminazione definitiva del complesso delle orecchie a sventola",
         "Cicatrici invisibili posizionate dietro il padiglione",
-        "Intervento sicuro con immediato ritorno alle normali attivitÃ ",
+        "Intervento sicuro con immediato ritorno alle normali attività",
         "Miglioramento dell'armonia complessiva del viso"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-49b540a34037dc54c7e1.png"
@@ -780,15 +780,15 @@
       "category": "corpo",
       "title": "Lifting Braccia e Cosce",
       "subtitle": "Rimodellare braccia e cosce con risultati armoniosi",
-      "description": "Intervento indicato per eliminare l'eccesso di pelle e rassodare braccia o cosce, restituendo proporzioni piÃ¹ armoniose e una silhouette piÃ¹ tonica.",
-      "fullDescription": "Il lifting di braccia e cosce Ã¨ un intervento chirurgico dedicato alla rimozione della pelle in eccesso causata da dimagrimento importante o naturale perdita di elasticitÃ . Il Dr. Vincenzo Mazzarella personalizza la tecnica chirurgica per ottenere un rimodellamento efficace, cicatrici il piÃ¹ possibile discrete e un risultato naturale, armonioso e duraturo.",
+      "description": "Intervento indicato per eliminare l'eccesso di pelle e rassodare braccia o cosce, restituendo proporzioni più armoniose e una silhouette più tonica.",
+      "fullDescription": "Il lifting di braccia e cosce è un intervento chirurgico dedicato alla rimozione della pelle in eccesso causata da dimagrimento importante o naturale perdita di elasticità. Il Dr. Vincenzo Mazzarella personalizza la tecnica chirurgica per ottenere un rimodellamento efficace, cicatrici il più possibile discrete e un risultato naturale, armonioso e duraturo.",
       "anesthesia": "Generale o Sedazione Profonda",
       "duration": "90 - 180 minuti",
       "hospitalization": "Day Hospital o 1 notte",
       "recoveryTime": "10 - 15 giorni",
       "benefits": [
         "Eliminazione della pelle in eccesso",
-        "Braccia e cosce piÃ¹ toniche e definite",
+        "Braccia e cosce più toniche e definite",
         "Miglioramento della silhouette corporea",
         "Risultato naturale e proporzionato"
       ],
@@ -800,7 +800,7 @@
       "title": "Filler",
       "subtitle": "Ripristino volumi e definizione labbra/zigomi",
       "description": "Trattamento ambulatoriale mini-invasivo per rimodellare le labbra, ridefinire gli zigomi, riempire le rughe e idratare profondamente il viso.",
-      "fullDescription": "I filler a base di acido ialuronico consentono di correggere i volumi del viso in pochi minuti. Il Dr. Mazzarella utilizza esclusivamente prodotti top di gamma altamente biocompatibili. Ãˆ specializzato nel rimodellamento labbra (tecniche russe e naturali) e nel ringiovanimento non chirurgico degli zigomi e del profilo mandibolare.",
+      "fullDescription": "I filler a base di acido ialuronico consentono di correggere i volumi del viso in pochi minuti. Il Dr. Mazzarella utilizza esclusivamente prodotti top di gamma altamente biocompatibili. È specializzato nel rimodellamento labbra (tecniche russe e naturali) e nel ringiovanimento non chirurgico degli zigomi e del profilo mandibolare.",
       "anesthesia": "Crema anestetica o anestesia locale integrata",
       "duration": "15 - 30 minuti",
       "hospitalization": "Ambulatoriale (ritorno immediato al sociale)",
@@ -818,8 +818,8 @@
       "category": "categoria-1783083537398",
       "title": "Full Face",
       "subtitle": "Ringiovanire il viso in modo armonioso",
-      "description": "Trattamento personalizzato che combina diverse tecniche di medicina estetica per riequilibrare volumi, lineamenti e qualitÃ  della pelle con risultati naturali.",
-      "fullDescription": "Il trattamento Full Face prevede un approccio globale al ringiovanimento del viso, combinando filler, botulino e altre procedure di medicina estetica in base alle caratteristiche del paziente. Il Dr. Vincenzo Mazzarella realizza un piano personalizzato per valorizzare i lineamenti, ripristinare i volumi e migliorare l'armonia del volto, garantendo risultati naturali e senza alterarne l'espressivitÃ .",
+      "description": "Trattamento personalizzato che combina diverse tecniche di medicina estetica per riequilibrare volumi, lineamenti e qualità della pelle con risultati naturali.",
+      "fullDescription": "Il trattamento Full Face prevede un approccio globale al ringiovanimento del viso, combinando filler, botulino e altre procedure di medicina estetica in base alle caratteristiche del paziente. Il Dr. Vincenzo Mazzarella realizza un piano personalizzato per valorizzare i lineamenti, ripristinare i volumi e migliorare l'armonia del volto, garantendo risultati naturali e senza alterarne l'espressività.",
       "anesthesia": "Nessuna o Anestesia Locale",
       "duration": "45 - 60 minuti",
       "hospitalization": "Non Necessario",
@@ -828,7 +828,7 @@
         "Ringiovanimento completo del volto",
         "Miglioramento dell'armonia dei lineamenti",
         "Risultati naturali e personalizzati",
-        "Ripresa immediata delle attivitÃ "
+        "Ripresa immediata delle attività"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-f984cfef6d9d3b5cb11e.png"
     },
@@ -838,7 +838,7 @@
       "title": "Rinofiller",
       "subtitle": "Correggere il profilo del naso senza chirurgia",
       "description": "Trattamento di medicina estetica che corregge piccole imperfezioni del profilo nasale attraverso l'utilizzo di filler, senza ricorrere all'intervento chirurgico.",
-      "fullDescription": "Il rinofiller Ã¨ una procedura non chirurgica che utilizza filler a base di acido ialuronico per correggere gibbe, avvallamenti e lievi asimmetrie del naso. Il Dr. Vincenzo Mazzarella esegue il trattamento con estrema precisione, valorizzando il profilo del viso e ottenendo un risultato naturale, armonioso e immediatamente visibile.",
+      "fullDescription": "Il rinofiller è una procedura non chirurgica che utilizza filler a base di acido ialuronico per correggere gibbe, avvallamenti e lievi asimmetrie del naso. Il Dr. Vincenzo Mazzarella esegue il trattamento con estrema precisione, valorizzando il profilo del viso e ottenendo un risultato naturale, armonioso e immediatamente visibile.",
       "anesthesia": "Nessuna o Anestesia Locale",
       "duration": "20 - 30 minuti",
       "hospitalization": "Non Necessario",
@@ -857,16 +857,16 @@
       "title": "Gluteofiller",
       "subtitle": "Valorizzare i glutei senza chirurgia",
       "description": "Trattamento di medicina estetica che aumenta volume, proiezione e definizione dei glutei attraverso filler specifici, senza ricorrere a interventi chirurgici.",
-      "fullDescription": "Il Gluteofiller Ã¨ un trattamento non chirurgico che utilizza filler biocompatibili per migliorare forma, volume e proporzioni dei glutei. Il Dr. Vincenzo Mazzarella realizza un piano personalizzato in base alla struttura corporea del paziente, ottenendo un risultato armonioso, naturale e immediatamente visibile con tempi di recupero ridotti.",
+      "fullDescription": "Il Gluteofiller è un trattamento non chirurgico che utilizza filler biocompatibili per migliorare forma, volume e proporzioni dei glutei. Il Dr. Vincenzo Mazzarella realizza un piano personalizzato in base alla struttura corporea del paziente, ottenendo un risultato armonioso, naturale e immediatamente visibile con tempi di recupero ridotti.",
       "anesthesia": "Nessuna o Anestesia Locale",
       "duration": "45 - 60 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "Immediato (possibile leggero rossore per poche ore)",
       "benefits": [
         "Aumento del volume senza chirurgia",
-        "Glutei piÃ¹ armoniosi e definiti",
+        "Glutei più armoniosi e definiti",
         "Risultato naturale e immediato",
-        "Ripresa rapida delle attivitÃ  quotidiane"
+        "Ripresa rapida delle attività quotidiane"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-cd67b518fddd37afa312.png"
     },
@@ -876,14 +876,14 @@
       "title": "Filler Labbra",
       "subtitle": "Valorizzare le labbra in modo naturale",
       "description": "Trattamento di medicina estetica che aumenta volume, definizione e idratazione delle labbra, mantenendo proporzioni armoniose e un risultato naturale.",
-      "fullDescription": "Il filler labbra Ã¨ un trattamento a base di acido ialuronico studiato per migliorare volume, contorno e idratazione delle labbra senza alterarne l'espressivitÃ . Il Dr. Vincenzo Mazzarella personalizza ogni trattamento in base alle caratteristiche del viso, ottenendo un risultato equilibrato, naturale e immediatamente visibile.",
+      "fullDescription": "Il filler labbra è un trattamento a base di acido ialuronico studiato per migliorare volume, contorno e idratazione delle labbra senza alterarne l'espressività. Il Dr. Vincenzo Mazzarella personalizza ogni trattamento in base alle caratteristiche del viso, ottenendo un risultato equilibrato, naturale e immediatamente visibile.",
       "anesthesia": "Nessuna o Anestesia Locale",
       "duration": "20 - 30 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "Immediato (possibile leggero rossore per poche ore)",
       "benefits": [
-        "Labbra piÃ¹ piene e armoniose",
-        "Contorno piÃ¹ definito e naturale",
+        "Labbra più piene e armoniose",
+        "Contorno più definito e naturale",
         "Maggiore idratazione e morbidezza",
         "Risultato immediato e personalizzato"
       ],
@@ -894,15 +894,15 @@
       "category": "categoria-1783083537398",
       "title": "Acido Polilattico",
       "subtitle": "Stimolare il collagene e ringiovanire il viso",
-      "description": "Trattamento di medicina estetica che stimola la produzione naturale di collagene, migliorando volume, tonicitÃ  e qualitÃ  della pelle in modo graduale.",
-      "fullDescription": "L'acido polilattico Ã¨ un trattamento biostimolante che favorisce la produzione naturale di collagene, contrastando il rilassamento cutaneo e la perdita di volume. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle esigenze del paziente, ottenendo un miglioramento progressivo della compattezza, dell'elasticitÃ  e dell'armonia del viso con risultati naturali e duraturi.",
+      "description": "Trattamento di medicina estetica che stimola la produzione naturale di collagene, migliorando volume, tonicità e qualità della pelle in modo graduale.",
+      "fullDescription": "L'acido polilattico è un trattamento biostimolante che favorisce la produzione naturale di collagene, contrastando il rilassamento cutaneo e la perdita di volume. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle esigenze del paziente, ottenendo un miglioramento progressivo della compattezza, dell'elasticità e dell'armonia del viso con risultati naturali e duraturi.",
       "anesthesia": "Nessuna o Anestesia Locale",
       "duration": "30 - 45 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "Immediato",
       "benefits": [
         "Stimolazione naturale del collagene",
-        "Pelle piÃ¹ tonica ed elastica",
+        "Pelle più tonica ed elastica",
         "Miglioramento graduale dei volumi",
         "Risultati naturali e duraturi"
       ],
@@ -914,7 +914,7 @@
       "title": "Botulino",
       "subtitle": "Distensione delle rughe d'espressione",
       "description": "Trattamento rapido ed efficace per distendere le rughe della fronte, dello spazio glabellare e del contorno occhi (zampe di gallina), per un viso rilassato e riposato.",
-      "fullDescription": "La tossina botulinica agisce rilassando temporaneamente i muscoli mimici responsabili delle rughe d'espressione. Il Dr. Vincenzo Mazzarella dosa il trattamento con estrema precisione per preservare la naturale espressivitÃ  e mimica facciale del paziente, evitando l'effetto \"viso bloccato\".",
+      "fullDescription": "La tossina botulinica agisce rilassando temporaneamente i muscoli mimici responsabili delle rughe d'espressione. Il Dr. Vincenzo Mazzarella dosa il trattamento con estrema precisione per preservare la naturale espressività e mimica facciale del paziente, evitando l'effetto \"viso bloccato\".",
       "anesthesia": "Nessuna",
       "duration": "15 minuti",
       "hospitalization": "Ambulatoriale",
@@ -932,16 +932,16 @@
       "category": "categoria-1783086908067",
       "title": "Carbossiterapia",
       "subtitle": "Riattivare la circolazione e migliorare i tessuti",
-      "description": "Trattamento di medicina estetica che utilizza anidride carbonica medicale per migliorare la circolazione, l'elasticitÃ  della pelle e gli inestetismi del corpo e del viso.",
-      "fullDescription": "La carbossiterapia Ã¨ un trattamento minimamente invasivo che prevede la somministrazione di anidride carbonica medicale per stimolare la microcircolazione e l'ossigenazione dei tessuti. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle esigenze del paziente, contribuendo a migliorare cellulite, lassitÃ  cutanea, adipositÃ  localizzate e qualitÃ  della pelle con risultati progressivi e naturali.",
+      "description": "Trattamento di medicina estetica che utilizza anidride carbonica medicale per migliorare la circolazione, l'elasticità della pelle e gli inestetismi del corpo e del viso.",
+      "fullDescription": "La carbossiterapia è un trattamento minimamente invasivo che prevede la somministrazione di anidride carbonica medicale per stimolare la microcircolazione e l'ossigenazione dei tessuti. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle esigenze del paziente, contribuendo a migliorare cellulite, lassità cutanea, adiposità localizzate e qualità della pelle con risultati progressivi e naturali.",
       "anesthesia": "Nessuna",
       "duration": "20 - 30 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "Immediato ",
       "benefits": [
         "Miglioramento della microcircolazione",
-        "Pelle piÃ¹ tonica e ossigenata",
-        "Riduzione di cellulite e lassitÃ  cutanea",
+        "Pelle più tonica e ossigenata",
+        "Riduzione di cellulite e lassità cutanea",
         "Trattamento rapido senza tempi di recupero"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-246c31c59f1182f371a1.png"
@@ -951,16 +951,16 @@
       "category": "categoria-1783083169412",
       "title": "Biostimolazione",
       "subtitle": "Idratazione profonda e rigenerazione cutanea",
-      "description": "Micro-iniezioni di acido ialuronico libero, vitamine, amminoacidi e antiossidanti per risvegliare la compattezza e la luminositÃ  di viso, collo e decolletÃ©.",
-      "fullDescription": "La biorivitalizzazione Ã¨ un trattamento anti-aging mirato a contrastare l'invecchiamento cutaneo a livello cellulare. L'iniezione di complessi bioristrutturanti stimola i fibroblasti a produrre nuovo collagene ed elastina. Restituisce turgore, idratazione profonda e una pelle visibilmente ringiovanita, luminosa e tonica.",
+      "description": "Micro-iniezioni di acido ialuronico libero, vitamine, amminoacidi e antiossidanti per risvegliare la compattezza e la luminosità di viso, collo e decolleté.",
+      "fullDescription": "La biorivitalizzazione è un trattamento anti-aging mirato a contrastare l'invecchiamento cutaneo a livello cellulare. L'iniezione di complessi bioristrutturanti stimola i fibroblasti a produrre nuovo collagene ed elastina. Restituisce turgore, idratazione profonda e una pelle visibilmente ringiovanita, luminosa e tonica.",
       "anesthesia": "Nessuna o Crema Anestetica topica",
       "duration": "20 minuti",
       "hospitalization": "Ambulatoriale",
       "recoveryTime": "Immediato",
       "benefits": [
-        "Idratare in profonditÃ  la pelle di viso, collo e decolletÃ©",
+        "Idratare in profondità la pelle di viso, collo e decolleté",
         "Stimolare la produzione endogena di collagene ed elastina",
-        "Migliorare visibilmente la texture e la luminositÃ  cutanea",
+        "Migliorare visibilmente la texture e la luminosità cutanea",
         "Trattamento preventivo e curativo senza alcun fermo sociale"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-772bbdb88fef186ba8fc.png"
@@ -970,16 +970,16 @@
       "category": "categoria-1783083169412",
       "title": "PRP Viso",
       "subtitle": "Rigenerare la pelle con le proprie cellule",
-      "description": "Trattamento rigenerativo che utilizza il plasma ricco di piastrine del paziente per stimolare la produzione di collagene e migliorare qualitÃ , tono e luminositÃ  della pelle.",
-      "fullDescription": "Il PRP Viso (Plasma Ricco di Piastrine) Ã¨ un trattamento di medicina rigenerativa che sfrutta i fattori di crescita presenti nel sangue del paziente per favorire la naturale rigenerazione dei tessuti. Il Dr. Vincenzo Mazzarella realizza un protocollo personalizzato per migliorare compattezza, elasticitÃ  e luminositÃ  della pelle, ottenendo un ringiovanimento progressivo e naturale.",
+      "description": "Trattamento rigenerativo che utilizza il plasma ricco di piastrine del paziente per stimolare la produzione di collagene e migliorare qualità, tono e luminosità della pelle.",
+      "fullDescription": "Il PRP Viso (Plasma Ricco di Piastrine) è un trattamento di medicina rigenerativa che sfrutta i fattori di crescita presenti nel sangue del paziente per favorire la naturale rigenerazione dei tessuti. Il Dr. Vincenzo Mazzarella realizza un protocollo personalizzato per migliorare compattezza, elasticità e luminosità della pelle, ottenendo un ringiovanimento progressivo e naturale.",
       "anesthesia": "Anestesia Locale",
       "duration": "45 - 60 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "Immediato",
       "benefits": [
         "Stimolazione naturale del collagene",
-        "Pelle piÃ¹ luminosa e compatta",
-        "Miglioramento della qualitÃ  cutanea",
+        "Pelle più luminosa e compatta",
+        "Miglioramento della qualità cutanea",
         "Risultati progressivi e naturali"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-472fcb6b756cdd7961dd.jpg"
@@ -990,7 +990,7 @@
       "title": "PRP Capelli",
       "subtitle": "Stimolare la ricrescita naturale dei capelli",
       "description": "Trattamento rigenerativo che utilizza il plasma ricco di piastrine del paziente per stimolare i follicoli piliferi e contrastare la caduta dei capelli.",
-      "fullDescription": "Il PRP Capelli (Plasma Ricco di Piastrine) Ã¨ un trattamento di medicina rigenerativa che sfrutta i fattori di crescita presenti nel sangue del paziente per favorire la rigenerazione del cuoio capelluto. Il Dr. Vincenzo Mazzarella personalizza il protocollo per rinforzare i capelli, stimolarne la crescita e migliorare la qualitÃ  della chioma, ottenendo risultati progressivi e naturali.",
+      "fullDescription": "Il PRP Capelli (Plasma Ricco di Piastrine) è un trattamento di medicina rigenerativa che sfrutta i fattori di crescita presenti nel sangue del paziente per favorire la rigenerazione del cuoio capelluto. Il Dr. Vincenzo Mazzarella personalizza il protocollo per rinforzare i capelli, stimolarne la crescita e migliorare la qualità della chioma, ottenendo risultati progressivi e naturali.",
       "anesthesia": "Anestesia Locale",
       "duration": "45 - 60 minuti",
       "hospitalization": "Non Necessario",
@@ -1008,15 +1008,15 @@
       "category": "categoria-1783083169412",
       "title": "Microneedling",
       "subtitle": "Rinnovare la pelle stimolando il collagene",
-      "description": "Trattamento di medicina rigenerativa che stimola la produzione naturale di collagene ed elastina, migliorando texture, tono e luminositÃ  della pelle.",
-      "fullDescription": "Il microneedling Ã¨ un trattamento che utilizza micro-aghi per creare piccole stimolazioni controllate della pelle, favorendo i naturali processi di rigenerazione dei tessuti. Il Dr. Vincenzo Mazzarella personalizza il trattamento in base alle esigenze del paziente per migliorare cicatrici, pori dilatati, rughe sottili e qualitÃ  della pelle, ottenendo un risultato progressivo e naturale.",
+      "description": "Trattamento di medicina rigenerativa che stimola la produzione naturale di collagene ed elastina, migliorando texture, tono e luminosità della pelle.",
+      "fullDescription": "Il microneedling è un trattamento che utilizza micro-aghi per creare piccole stimolazioni controllate della pelle, favorendo i naturali processi di rigenerazione dei tessuti. Il Dr. Vincenzo Mazzarella personalizza il trattamento in base alle esigenze del paziente per migliorare cicatrici, pori dilatati, rughe sottili e qualità della pelle, ottenendo un risultato progressivo e naturale.",
       "anesthesia": "Anestesia Locale",
       "duration": "30 - 45 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "24 - 48 ore",
       "benefits": [
         "Stimolazione naturale del collagene",
-        "Pelle piÃ¹ uniforme e luminosa",
+        "Pelle più uniforme e luminosa",
         "Riduzione di cicatrici e pori dilatati",
         "Miglioramento della texture cutanea"
       ],
@@ -1027,15 +1027,15 @@
       "category": "categoria-1783083169412",
       "title": "Esosomi",
       "subtitle": "Rigenerare la pelle con la medicina avanzata",
-      "description": "Trattamento di medicina rigenerativa che utilizza esosomi per favorire la rigenerazione cellulare, migliorando qualitÃ  della pelle, elasticitÃ  e luminositÃ .",
-      "fullDescription": "Gli esosomi rappresentano una delle tecnologie piÃ¹ innovative della medicina rigenerativa, grazie alla loro capacitÃ  di favorire la comunicazione tra le cellule e stimolare i processi naturali di riparazione dei tessuti. Il Dr. Vincenzo Mazzarella personalizza il trattamento per migliorare tono, compattezza e qualitÃ  della pelle, ottenendo un ringiovanimento progressivo, naturale e duraturo.",
+      "description": "Trattamento di medicina rigenerativa che utilizza esosomi per favorire la rigenerazione cellulare, migliorando qualità della pelle, elasticità e luminosità.",
+      "fullDescription": "Gli esosomi rappresentano una delle tecnologie più innovative della medicina rigenerativa, grazie alla loro capacità di favorire la comunicazione tra le cellule e stimolare i processi naturali di riparazione dei tessuti. Il Dr. Vincenzo Mazzarella personalizza il trattamento per migliorare tono, compattezza e qualità della pelle, ottenendo un ringiovanimento progressivo, naturale e duraturo.",
       "anesthesia": "Anestesia Locale",
       "duration": "30 - 45 minuti",
       "hospitalization": "Non Necessario",
       "recoveryTime": "Immediato",
       "benefits": [
         "Rigenerazione cellulare avanzata",
-        "Pelle piÃ¹ tonica e luminosa",
+        "Pelle più tonica e luminosa",
         "Stimolazione naturale dei tessuti",
         "Risultati progressivi e duraturi"
       ],
@@ -1046,7 +1046,7 @@
       "category": "categoria-1783083169412",
       "title": "Peeling",
       "subtitle": "Rinnovamento cellulare ed esfoliazione controllata",
-      "description": "Applicazione di soluzioni acide per accelerare il ricambio cellulare, correggere macchie, rughe sottili, cicatrici acneiche e opacitÃ  del viso.",
+      "description": "Applicazione di soluzioni acide per accelerare il ricambio cellulare, correggere macchie, rughe sottili, cicatrici acneiche e opacità del viso.",
       "fullDescription": "Il peeling chimico medicale consiste nell'applicazione sulla pelle del viso di agenti chimici esfolianti (quali acido glicolico, salicilico, mandelico o TCA) a concentrazioni professionali. Promuove l'eliminazione delle cellule morte dello strato corneo e accelera il turnover cellulare, lasciando la pelle incredibilmente liscia, uniforme, priva di imperfezioni e ringiovanita.",
       "anesthesia": "Nessuna (sensazione di leggero calore/pizzicore)",
       "duration": "15 - 20 minuti",
@@ -1064,9 +1064,9 @@
       "id": "trattamento-1783086986373-602",
       "category": "categoria-1783086908067",
       "title": "Laser Frazionato",
-      "subtitle": "Rinnovare la pelle in profonditÃ ",
+      "subtitle": "Rinnovare la pelle in profondità",
       "description": "Trattamento laser che stimola il rinnovamento della pelle, migliorando rughe, cicatrici, pori dilatati e imperfezioni con risultati progressivi e naturali.",
-      "fullDescription": "Il Laser Frazionato Ã¨ un trattamento che agisce in profonditÃ  creando microstimolazioni controllate della pelle, favorendo la produzione naturale di collagene ed elastina. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle esigenze del paziente per migliorare texture, tono cutaneo, cicatrici da acne e segni del tempo, ottenendo una pelle piÃ¹ uniforme, compatta e luminosa.",
+      "fullDescription": "Il Laser Frazionato è un trattamento che agisce in profondità creando microstimolazioni controllate della pelle, favorendo la produzione naturale di collagene ed elastina. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle esigenze del paziente per migliorare texture, tono cutaneo, cicatrici da acne e segni del tempo, ottenendo una pelle più uniforme, compatta e luminosa.",
       "anesthesia": "Anestesia Locale",
       "duration": "30 - 45 minuti",
       "hospitalization": "Non Necessario",
@@ -1074,7 +1074,7 @@
       "benefits": [
         "Stimolazione naturale del collagene",
         "Riduzione di rughe e cicatrici",
-        "Pelle piÃ¹ uniforme e luminosa",
+        "Pelle più uniforme e luminosa",
         "Miglioramento della texture cutanea"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-d2cd9895885feb4af862.png"
@@ -1084,8 +1084,8 @@
       "category": "categoria-1783086908067",
       "title": "Laser CO2 Ablativo",
       "subtitle": "Rigenerare la pelle con il laser CO2",
-      "description": "Trattamento laser ablativo che rinnova gli strati superficiali della pelle, migliorando rughe, cicatrici, macchie e lassitÃ  cutanea con risultati duraturi.",
-      "fullDescription": "Il Laser CO2 Ablativo Ã¨ un trattamento avanzato che rimuove in modo controllato gli strati superficiali della pelle, stimolando una profonda rigenerazione dei tessuti e la produzione di nuovo collagene. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle caratteristiche del paziente per migliorare rughe, cicatrici, discromie e qualitÃ  della pelle, ottenendo un incarnato piÃ¹ uniforme, compatto e visibilmente ringiovanito.",
+      "description": "Trattamento laser ablativo che rinnova gli strati superficiali della pelle, migliorando rughe, cicatrici, macchie e lassità cutanea con risultati duraturi.",
+      "fullDescription": "Il Laser CO2 Ablativo è un trattamento avanzato che rimuove in modo controllato gli strati superficiali della pelle, stimolando una profonda rigenerazione dei tessuti e la produzione di nuovo collagene. Il Dr. Vincenzo Mazzarella personalizza il protocollo in base alle caratteristiche del paziente per migliorare rughe, cicatrici, discromie e qualità della pelle, ottenendo un incarnato più uniforme, compatto e visibilmente ringiovanito.",
       "anesthesia": "Anestesia Locale",
       "duration": "30 - 60 minuti",
       "hospitalization": "Non Necessario",
@@ -1093,7 +1093,7 @@
       "benefits": [
         "Rinnovamento profondo della pelle",
         "Riduzione di rughe e cicatrici",
-        "Pelle piÃ¹ compatta e uniforme",
+        "Pelle più compatta e uniforme",
         "Risultati duraturi e naturali"
       ],
       "imageUrl": "/drvincenzomazzarella.com/website-assets/image-840f978d23f65a713114.png"
@@ -1111,6 +1111,12 @@
       "title": "Foto",
       "subtitle": "",
       "layout": "image-carousel"
+    },
+    {
+      "id": "press",
+      "title": "Rassegna Stampa e Editoriali",
+      "subtitle": "Interviste, redazionali e rubriche sulle principali testate nazionali.",
+      "layout": "press-grid"
     }
   ],
   "media": [
@@ -1149,6 +1155,93 @@
       "videoFile": "",
       "images": [],
       "body": ""
+    },
+    {
+      "id": "vid-2",
+      "sectionId": "video",
+      "kind": "video",
+      "title": "Rinoplastica Preservativa e Strutturale: Differenze e Risultati",
+      "excerpt": "Discussione scientifica ed esempi di rimodellamento del profilo nasale senza cicatrici visibili e con recupero accelerato.",
+      "source": "YouTube Clinical Channel",
+      "category": "Approfondimento",
+      "date": "Maggio 2026",
+      "duration": "12:20",
+      "thumbnail": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600",
+      "linkMode": "internal",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "videoFile": "",
+      "externalUrl": "",
+      "images": [],
+      "body": "Un confronto tra rinoplastica preservativa e strutturale, con esempi di rimodellamento del profilo nasale e recupero post-operatorio accelerato."
+    },
+    {
+      "id": "vid-3",
+      "sectionId": "video",
+      "kind": "video",
+      "title": "Lifting Facciale: Riposizionare lo SMAS per un Ringiovanimento Naturale",
+      "excerpt": "Tutorial video congressuale del Dottore per chirurghi estetici sul trattamento dei piani profondi facciali.",
+      "source": "SICPRE Congress Live",
+      "category": "Congresso",
+      "date": "Marzo 2026",
+      "duration": "15:40",
+      "thumbnail": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600",
+      "linkMode": "internal",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "videoFile": "",
+      "externalUrl": "",
+      "images": [],
+      "body": "Tutorial congressuale dedicato ai chirurghi estetici sul riposizionamento dello SMAS per un ringiovanimento facciale stabile e naturale."
+    },
+    {
+      "id": "press-1",
+      "sectionId": "press",
+      "kind": "article",
+      "title": "La Mastoplastica del Futuro: Naturalezza al Tatto e Massima Sicurezza",
+      "excerpt": "In un lungo redazionale, il Dottore descrive le indagini pre-operatorie e la scelta consapevole dell'impianto ideale.",
+      "source": "Vogue Salute & Bellezza",
+      "category": "Intervista",
+      "date": "Aprile 2026",
+      "thumbnail": "https://images.unsplash.com/photo-1516575334481-f85287c2c82d?auto=format&fit=crop&q=80&w=800",
+      "linkMode": "internal",
+      "externalUrl": "",
+      "videoUrl": "",
+      "videoFile": "",
+      "images": [],
+      "body": "La mastoplastica additiva moderna punta a un risultato naturale al tatto e alla vista.\nIn questo redazionale il Dottore descrive il percorso di studio pre-operatorio: dalla valutazione delle proporzioni corporee alla simulazione del volume, fino alla scelta della protesi ideale.\nLa sicurezza è al centro: protesi certificate, tecniche mininvasive e un follow-up post-operatorio costante garantiscono un decolleté armonioso e duraturo."
+    },
+    {
+      "id": "press-2",
+      "sectionId": "press",
+      "kind": "article",
+      "title": "Combattere la Diastasi Addominale con l'Addominoplastica Ricostruttiva",
+      "excerpt": "Un focus medico sul ripristino della parete muscolare indebolita dopo la gravidanza o significativi cali ponderali.",
+      "source": "Corriere della Sera",
+      "category": "Rassegna Stampa",
+      "date": "Febbraio 2026",
+      "thumbnail": "https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&q=80&w=800",
+      "linkMode": "external",
+      "externalUrl": "https://www.corriere.it/",
+      "videoUrl": "",
+      "videoFile": "",
+      "images": [],
+      "body": ""
+    },
+    {
+      "id": "press-3",
+      "sectionId": "press",
+      "kind": "article",
+      "title": "Filler e Tossina Botulinica: l'Eleganza sta nel Saper Dire di No",
+      "excerpt": "L'opinione del Dottore sulla medicina estetica etica: preservare l'unicità espressiva di ciascun volto rifiutando gli eccessi.",
+      "source": "Elle Italia",
+      "category": "Rubrica",
+      "date": "Maggio 2026",
+      "thumbnail": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=800",
+      "linkMode": "internal",
+      "externalUrl": "",
+      "videoUrl": "",
+      "videoFile": "",
+      "images": [],
+      "body": "La medicina estetica etica non insegue la moda, ma valorizza l'unicità di ogni volto.\nIl Dottore spiega perché a volte il gesto più elegante è proprio quello di dire di no a un ritocco eccessivo, preservando la naturale espressività del paziente."
     }
   ],
   "assetLibrary": [],
@@ -1159,7 +1252,7 @@
       "age": 34,
       "treatmentName": "Mastoplastica Additiva",
       "rating": 5,
-      "content": "Ho scelto il Dr. Mazzarella dopo molte visite e non potevo fare scelta migliore. Ha capito subito il mio desiderio di avere un seno naturale e proporzionato. La sua empatia, professionalitÃ  e l'assistenza post-operatoria sono state straordinarie. Il risultato Ã¨ semplicemente perfetto.",
+      "content": "Ho scelto il Dr. Mazzarella dopo molte visite e non potevo fare scelta migliore. Ha capito subito il mio desiderio di avere un seno naturale e proporzionato. La sua empatia, professionalità e l'assistenza post-operatoria sono state straordinarie. Il risultato è semplicemente perfetto.",
       "date": "Maggio 2026"
     },
     {
@@ -1168,7 +1261,7 @@
       "age": 41,
       "treatmentName": "Rinoplastica",
       "rating": 5,
-      "content": "Il mio naso era un complesso da sempre. Il Dr. Mazzarella ha fatto un capolavoro: ha raddrizzato il setto facendomi respirare benissimo e ha armonizzato la forma senza stravolgere la mia espressione. Nessuno si Ã¨ accorto dell'operazione, dicono solo che mi trovano molto piÃ¹ bello e disteso.",
+      "content": "Il mio naso era un complesso da sempre. Il Dr. Mazzarella ha fatto un capolavoro: ha raddrizzato il setto facendomi respirare benissimo e ha armonizzato la forma senza stravolgere la mia espressione. Nessuno si è accorto dell'operazione, dicono solo che mi trovano molto più bello e disteso.",
       "date": "Aprile 2026"
     },
     {
@@ -1177,7 +1270,7 @@
       "age": 29,
       "treatmentName": "Filler Labbra & Tossina Botulinica",
       "rating": 5,
-      "content": "Frequento lo studio di Napoli del Dottore per piccoli trattamenti di medicina estetica. La sua cura del dettaglio Ã¨ incredibile. Non esagera mai, ti consiglia sempre il meno possibile per mantenere la naturalezza. Le mie labbra sono bellissime, idratate e piene ma senza l'effetto \"canotto\". Lo consiglio a tutti!",
+      "content": "Frequento lo studio di Napoli del Dottore per piccoli trattamenti di medicina estetica. La sua cura del dettaglio è incredibile. Non esagera mai, ti consiglia sempre il meno possibile per mantenere la naturalezza. Le mie labbra sono bellissime, idratate e piene ma senza l'effetto \"canotto\". Lo consiglio a tutti!",
       "date": "Giugno 2026"
     }
   ],
@@ -1211,7 +1304,7 @@
     "footer": {
       "brandTitle": "Dr. Vincenzo Mazzarella",
       "brandSubtitle": "Specialista in Chirurgia Plastica, Ricostruttiva ed Estetica",
-      "brandBlurb": "Un percorso improntato sull'eccellenza clinica, la naturalezza del risultato e il rispetto rigoroso dell'identitÃ  corporea e facciale di ogni paziente. Napoli, Roma, Milano.",
+      "brandBlurb": "Un percorso improntato sull'eccellenza clinica, la naturalezza del risultato e il rispetto rigoroso dell'identità corporea e facciale di ogni paziente. Napoli, Roma, Milano.",
       "complianceBadge": "Sito Informativo Sanitario Conforme",
       "quickLinksTitle": "Sezioni Principali",
       "sediTitle": "Sedi Principali",
@@ -1220,7 +1313,7 @@
         "Cod. Ref. MAZ-2026",
         "P.IVA IT08901234567"
       ],
-      "legalText": "Informativa Legale Sanitaria: Sito web conforme alle linee guida approvate dalla Federazione Nazionale degli Ordini dei Medici Chirurghi e degli Odontoiatri (FNOMCeO) sulla pubblicitÃ  sanitaria e l'informazione medica (Art. 55-56-57 del Codice di Deontologia Medica). Dr. Vincenzo Mazzarella, iscritto all'Ordine dei Medici e Chirurghi di Napoli n. 12345. Specialista in Chirurgia Plastica Ricostruttiva ed Estetica.",
+      "legalText": "Informativa Legale Sanitaria: Sito web conforme alle linee guida approvate dalla Federazione Nazionale degli Ordini dei Medici Chirurghi e degli Odontoiatri (FNOMCeO) sulla pubblicità sanitaria e l'informazione medica (Art. 55-56-57 del Codice di Deontologia Medica). Dr. Vincenzo Mazzarella, iscritto all'Ordine dei Medici e Chirurghi di Napoli n. 12345. Specialista in Chirurgia Plastica Ricostruttiva ed Estetica.",
       "copyrightName": "Dr. Vincenzo Mazzarella. Tutti i diritti riservati.",
       "policyLinks": [
         {
@@ -1244,7 +1337,7 @@
       "provider": "Aruba",
       "ftpHost": "",
       "ftpUser": "",
-      "publicPath": ""
+      "publicPath": "/drvincenzomazzarella.com/"
     }
   },
   "customStyles": {
@@ -1364,9 +1457,9 @@
     "footer-logo": "/drvincenzomazzarella.com/website-assets/image-bf7ef7be2fba8ebf5ce0.svg"
   },
   "customTexts": {
-    "auto:div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(4)>div:nth-of-type(1)>div:nth-of-type(3)>div:nth-of-type(3)>span:nth-of-type(1)": "Napoli â€¢ Roma â€¢Â Milano",
-    "auto:div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(4)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(2)>span:nth-of-type(1)": "Chirurgo PLASTICOÂ  MEDICO",
-    "auto:div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>article:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>p:nth-of-type(2)": "La ginecomastia Ã¨ una condizione caratterizzata dall'aumento del volume del seno nell'uomo, dovuto a tessuto ghiandolare, adiposo o entrambi. Il Dr. Vincenzo Mazzarella esegue un intervento personalizzato, combinando quando necessario l'asportazione della ghiandola e la liposcultura, per ottenere un torace naturale, proporzionato e con cicatrici poco visibili.",
+    "auto:div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(4)>div:nth-of-type(1)>div:nth-of-type(3)>div:nth-of-type(3)>span:nth-of-type(1)": "Napoli • Roma • Milano",
+    "auto:div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(4)>div:nth-of-type(2)>div:nth-of-type(1)>div:nth-of-type(2)>div:nth-of-type(2)>span:nth-of-type(1)": "Chirurgo PLASTICO  MEDICO",
+    "auto:div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>article:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>p:nth-of-type(2)": "La ginecomastia è una condizione caratterizzata dall'aumento del volume del seno nell'uomo, dovuto a tessuto ghiandolare, adiposo o entrambi. Il Dr. Vincenzo Mazzarella esegue un intervento personalizzato, combinando quando necessario l'asportazione della ghiandola e la liposcultura, per ottenere un torace naturale, proporzionato e con cicatrici poco visibili.",
     "hero-media": "CHIRUGO "
   },
   "customHtmls": {
