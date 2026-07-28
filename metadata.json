@@ -1,0 +1,6 @@
+{
+  "name": "Dr. Vincenzo Mazzarella - Chirurgia Plastica",
+  "description": "Sito web professionale del Dr. Vincenzo Mazzarella, Specialista in Chirurgia Plastica, Ricostruttiva ed Estetica. Napoli, Roma, Milano.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

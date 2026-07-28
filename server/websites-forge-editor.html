@@ -1,0 +1,3540 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Websites Forge</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #111827;
+        --muted: #6b7280;
+        --line: #d8dee9;
+        --panel: #ffffff;
+        --soft: #f4f7fb;
+        --deep: #101428;
+        --accent: #2bbfba;
+        --sidebar-width: 540px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        height: 100vh;
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--soft);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      button, input, textarea, select { font: inherit; }
+      button {
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--ink);
+        border-radius: 6px;
+        padding: 9px 12px;
+        cursor: pointer;
+      }
+      button:hover { border-color: var(--accent); }
+      .topbar {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 18px;
+        background: var(--deep);
+        color: white;
+        border-bottom: 1px solid rgba(255,255,255,.12);
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 10;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 270px;
+        flex: 0 0 auto;
+      }
+      .mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 7px;
+        color: var(--accent);
+        font-weight: 800;
+      }
+      .brand h1 { margin: 0; font-size: 16px; letter-spacing: .04em; text-transform: uppercase; }
+      .brand p { margin: 1px 0 0; color: #aab3c5; font-size: 12px; }
+      .tools {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        flex: 1 1 620px;
+        min-width: 0;
+      }
+      .tools button, .tools select, .tools input {
+        height: 38px;
+        border-color: rgba(255,255,255,.18);
+        min-width: 0;
+      }
+      .tools select, .tools input { background: #171d31; color: white; border-radius: 6px; padding: 0 10px; }
+      .tools select { flex: 0 1 190px; width: 190px; }
+      .tools input { flex: 0 1 190px; width: 190px; }
+      .tools button { white-space: nowrap; }
+      .primary { background: var(--accent); border-color: var(--accent); color: #06201f; font-weight: 800; }
+      .dark { background: #171d31; color: white; }
+      .danger { color: #b42318; }
+      .switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-weight: 800;
+      }
+      .switch input { display: none; }
+      .switch span {
+        width: 44px;
+        height: 24px;
+        border-radius: 999px;
+        background: #596174;
+        position: relative;
+        transition: .2s;
+      }
+      .switch span:before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        border-radius: 50%;
+        background: white;
+        transition: .2s;
+      }
+      .switch input:checked + span { background: var(--accent); }
+      .switch input:checked + span:before { transform: translateX(20px); }
+      .layout {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(340px, var(--sidebar-width)) minmax(420px, 1fr);
+        transition: grid-template-columns .2s ease;
+        position: relative;
+      }
+      body.sidebar-collapsed .layout { grid-template-columns: 54px minmax(420px, 1fr); }
+      aside {
+        border-right: 1px solid var(--line);
+        background: white;
+        overflow: auto;
+        position: relative;
+      }
+      .sidebar-resize-handle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(min(max(360px, var(--sidebar-width)), 860px) - 5px);
+        z-index: 20;
+        width: 10px;
+        cursor: col-resize;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: none;
+      }
+      .sidebar-resize-handle::before {
+        content: "";
+        width: 4px;
+        height: 72px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--accent), #7f8ca3);
+        box-shadow: 0 0 0 1px rgba(255,255,255,.85), 0 8px 22px rgba(15,23,42,.18);
+        opacity: .82;
+        transition: opacity .15s ease, width .15s ease;
+      }
+      .sidebar-resize-handle:hover::before,
+      body.sidebar-resizing .sidebar-resize-handle::before {
+        width: 6px;
+        opacity: 1;
+      }
+      body.sidebar-resizing {
+        cursor: col-resize;
+        user-select: none;
+      }
+      body.sidebar-collapsed .sidebar-resize-handle { display: none; }
+      .sidebar-head {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px;
+        background: white;
+        border-bottom: 1px solid var(--line);
+      }
+      .sidebar-title strong {
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+      }
+      .sidebar-title small { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
+      #collapseSidebar { width: 32px; height: 32px; padding: 0; font-weight: 900; }
+      body.sidebar-collapsed aside { overflow: hidden; }
+      body.sidebar-collapsed .sidebar-title,
+      body.sidebar-collapsed .live-inspector,
+      body.sidebar-collapsed .tabs,
+      body.sidebar-collapsed .panel { display: none; }
+      body.sidebar-collapsed #collapseSidebar { margin: 10px auto 0; display: block; }
+      .tabs {
+        position: sticky;
+        top: 57px;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        padding: 10px;
+        background: white;
+        border-bottom: 1px solid var(--line);
+      }
+      .tabs button {
+        border: 0;
+        background: var(--soft);
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        white-space: nowrap;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tabs button.active { background: var(--deep); color: white; }
+      .asset-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .asset-toolbar input { flex: 1 1 180px; }
+      .asset-view-toggle button.active { background: var(--deep); color: white; }
+      .asset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+        gap: 10px;
+      }
+      .asset-grid.list { display: grid; grid-template-columns: 1fr; }
+      .asset-card {
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 7px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .asset-card.selected { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .asset-thumb { aspect-ratio: 4 / 3; background: var(--soft); display: grid; place-items: center; overflow: hidden; }
+      .asset-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .asset-thumb-empty { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .asset-meta { padding: 8px; display: grid; gap: 2px; min-width: 0; }
+      .asset-meta strong, .asset-meta small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .asset-meta small { color: var(--muted); }
+      .asset-grid.list .asset-card { display: grid; grid-template-columns: 92px 1fr; }
+      .asset-grid.list .asset-thumb { aspect-ratio: 1 / 1; }
+      .asset-menu, .asset-modal {
+        position: fixed;
+        z-index: 1200;
+        background: white;
+        border: 1px solid var(--line);
+        box-shadow: 0 18px 50px rgba(15, 23, 42, .18);
+      }
+      .asset-menu { display: none; min-width: 190px; padding: 6px; border-radius: 7px; }
+      .asset-menu.active { display: grid; gap: 4px; }
+      .asset-menu button { text-align: left; border: 0; background: white; }
+      .asset-modal {
+        inset: 24px;
+        display: none;
+        grid-template-rows: auto 1fr;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .asset-modal.active { display: grid; }
+      .asset-modal header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+      .asset-modal-body { min-height: 0; display: grid; place-items: center; padding: 16px; background: #0f172a; }
+      .asset-modal-body img { max-width: 100%; max-height: 100%; object-fit: contain; }
+      .panel { padding: 14px; display: none; }
+      .panel.active { display: block; }
+      .section {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin-bottom: 14px;
+        overflow: hidden;
+        background: white;
+      }
+      .section header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px;
+        background: #f8fafc;
+        border-bottom: 1px solid var(--line);
+      }
+      .section h2 { margin: 0; font-size: 14px; }
+      .section-body { padding: 14px; display: grid; gap: 12px; }
+      .map-node { border-left: 3px solid var(--accent); }
+      .map-node[draggable="true"] { cursor: grab; }
+      .map-node.is-dragging { opacity: .45; }
+      .map-node.is-drop-target { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .drag-handle {
+        width: 28px;
+        min-width: 28px;
+        padding: 0;
+        cursor: grab;
+        color: var(--muted);
+        background: white;
+        border: 1px solid var(--line);
+      }
+      .drag-handle:active { cursor: grabbing; }
+      .map-node[data-depth="1"] { border-left-color: #9aa7bd; }
+      .map-node[data-depth="2"] { border-left-color: #c5cfdd; }
+      .map-label { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+      .map-label small {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .destination-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      label { display: grid; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
+      input, textarea, select {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: white;
+        color: var(--ink);
+        padding: 10px;
+      }
+      textarea { min-height: 92px; resize: vertical; line-height: 1.45; }
+      .live-field-highlight {
+        position: relative;
+        padding: 8px;
+        margin: -8px;
+        border-radius: 8px;
+        background: rgba(43, 191, 186, .10);
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        box-shadow: 0 10px 28px rgba(43, 191, 186, .18);
+      }
+      .live-field-highlight input,
+      .live-field-highlight textarea,
+      .live-field-highlight select {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(43, 191, 186, .16);
+      }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .mini-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+      .preview {
+        min-width: 0;
+        display: grid;
+        grid-template-rows: 42px 1fr;
+        background: #dfe5ef;
+        overflow: hidden;
+        --preview-zoom: 1;
+      }
+      .preview-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 12px;
+        color: #334155;
+        font-size: 12px;
+        border-bottom: 1px solid var(--line);
+        background: #f8fafc;
+      }
+      .preview-tools {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .preview-tools button {
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 5px;
+        font-size: 11px;
+        font-weight: 800;
+        background: white;
+      }
+      .preview-tools button.active {
+        background: var(--deep);
+        border-color: var(--deep);
+        color: white;
+      }
+      .preview-zoom {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 236px;
+        color: #334155;
+      }
+      .preview-zoom button {
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        display: grid;
+        place-items: center;
+      }
+      .preview-zoom input {
+        width: 98px;
+        accent-color: var(--accent);
+      }
+      .preview-zoom output {
+        width: 42px;
+        font-weight: 800;
+        font-size: 11px;
+        text-align: right;
+      }
+      .preview-zoom [data-preview-zoom-reset] {
+        width: auto;
+        padding: 0 8px;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .preview:not(.live-editing) .preview-zoom {
+        opacity: .45;
+      }
+      .preview-stage {
+        min-height: 0;
+        overflow: auto;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        padding: 0;
+      }
+      .frame-shell {
+        width: 100%;
+        height: 100%;
+        background: white;
+        transform: scale(var(--preview-zoom));
+        transform-origin: top center;
+        transition: width .2s ease, height .2s ease, transform .16s ease;
+      }
+      .preview.tablet .preview-stage,
+      .preview.mobile .preview-stage {
+        padding: 10px;
+        align-items: center;
+      }
+      .preview.tablet .frame-shell {
+        width: min(820px, calc((100vh - 118px) * .76), 100%);
+        max-width: 100%;
+        height: min(1080px, calc(100vh - 118px));
+        box-shadow: 0 18px 50px rgba(15, 23, 42, .18);
+      }
+      .preview.mobile .frame-shell {
+        width: min(430px, calc((100vh - 118px) * .46), 100%);
+        max-width: 100%;
+        height: min(932px, calc(100vh - 118px));
+        box-shadow: 0 18px 50px rgba(15, 23, 42, .18);
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: white;
+      }
+      .status {
+        color: #aab3c5;
+        font-size: 12px;
+        min-width: 160px;
+        max-width: 360px;
+        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .save-overlay {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity .28s ease, transform .28s ease;
+      }
+      .save-overlay.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .save-overlay-card {
+        min-width: 260px;
+        padding: 18px 22px;
+        text-align: center;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: 0 24px 80px rgba(15, 23, 42, .18);
+      }
+      .save-overlay-card strong { display: block; margin-bottom: 3px; }
+      .save-spinner {
+        width: 24px;
+        height: 24px;
+        margin: 0 auto 10px;
+        border: 3px solid #d8dee9;
+        border-top-color: var(--accent);
+        border-radius: 999px;
+        animation: saveSpin .8s linear infinite;
+      }
+      .save-overlay.done .save-spinner {
+        animation: none;
+        border-color: var(--accent);
+      }
+      .save-overlay.error .save-spinner {
+        animation: none;
+        border-color: #e11d48;
+      }
+      .import-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(9, 12, 22, .58);
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .26s ease;
+      }
+      .import-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .import-overlay-card {
+        width: min(420px, calc(100vw - 48px));
+        padding: 24px;
+        text-align: center;
+        background: rgba(255, 255, 255, .96);
+        border: 1px solid rgba(255, 255, 255, .7);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, .28);
+        transform: translateY(8px) scale(.98);
+        transition: transform .26s ease;
+      }
+      .import-overlay.active .import-overlay-card {
+        transform: translateY(0) scale(1);
+      }
+      .import-overlay-card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--deep);
+        font-size: 15px;
+      }
+      .import-progress-track {
+        height: 8px;
+        margin-top: 16px;
+        overflow: hidden;
+        background: #e6ebf3;
+        border-radius: 999px;
+      }
+      .import-progress-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), #f59e0b);
+        border-radius: inherit;
+        transition: width .22s ease;
+      }
+      .import-progress-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 10px;
+        color: #667085;
+        font-size: 11px;
+      }
+      @keyframes saveSpin { to { transform: rotate(360deg); } }
+      .live-inspector {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+        background: #f8fafc;
+      }
+      .live-inspector h2 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+      }
+      .live-inspector p {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .live-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .live-grid label { font-size: 11px; }
+      .live-grid input, .live-grid select { padding: 8px; }
+      .setting-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid var(--line);
+        padding: 10px;
+        border-radius: 7px;
+        color: var(--ink);
+      }
+      .setting-toggle span { display: block; min-width: 0; }
+      .setting-toggle small { display: block; color: var(--muted); font-weight: 600; line-height: 1.35; margin-top: 3px; }
+      .setting-toggle input { width: auto; }
+      .hint {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      @media (max-width: 980px) {
+        .topbar { height: auto; align-items: flex-start; flex-direction: column; padding: 12px; }
+        .tools { width: 100%; justify-content: flex-start; }
+        .tools select, .tools input { flex: 1 1 210px; width: auto; }
+        .status { text-align: left; }
+        .layout { grid-template-columns: 1fr; overflow: auto; }
+        .preview { height: 70vh; }
+      }
+
+      /* ---- Media manager (user-friendly) ---- */
+      .media-intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 14px; margin-bottom: 14px; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(180deg, #ffffff, #f7fbfb); }
+      .media-intro p { margin: 0; font-size: 12px; color: var(--muted); max-width: 60ch; }
+      .media-intro .mini-actions button { font-weight: 800; }
+      .media-group { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; overflow: hidden; background: white; box-shadow: 0 1px 0 rgba(16,24,40,.02); }
+      .media-group-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #eef5f4; border-bottom: 1px solid var(--line); }
+      .media-group-head .badge-layout { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: #06403d; background: #cfeae7; border: 1px solid #a9dbd6; padding: 3px 8px; border-radius: 999px; }
+      .media-group-head h3 { margin: 0; font-size: 14px; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .media-group-head .count { font-size: 11px; color: var(--muted); font-weight: 700; }
+      .media-group-head .mini-actions button { padding: 6px 9px; font-size: 11px; }
+      .media-config { padding: 12px 14px; border-bottom: 1px dashed var(--line); background: #fbfdfd; display: grid; gap: 10px; }
+      .media-config.hidden { display: none; }
+      .media-items { padding: 12px; display: grid; gap: 10px; }
+      .media-card { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: white; }
+      .media-card.expanded { border-color: var(--accent); box-shadow: 0 6px 20px rgba(43,191,186,.12); }
+      .media-card-head { display: flex; align-items: center; gap: 10px; padding: 8px 10px; cursor: pointer; }
+      .media-card-head:hover { background: #f7fbfb; }
+      .media-thumb { width: 66px; height: 46px; flex: 0 0 auto; border-radius: 7px; overflow: hidden; background: #eef1f6; display: grid; place-items: center; position: relative; border: 1px solid var(--line); }
+      .media-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .media-thumb .ph { font-size: 9px; font-weight: 800; letter-spacing: .06em; color: #9aa7bd; text-transform: uppercase; }
+      .media-thumb .kind-dot { position: absolute; left: 4px; top: 4px; width: 18px; height: 18px; border-radius: 6px; display: grid; place-items: center; color: white; font-size: 10px; }
+      .kind-video { background: #6d4bd8; } .kind-image { background: #2b8fbf; } .kind-article { background: #c67b18; }
+      .media-card-meta { flex: 1 1 auto; min-width: 0; display: grid; gap: 3px; }
+      .media-card-meta strong { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .media-card-meta .sub { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+      .media-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 2px 6px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+      .media-tag.open-int { color: #06403d; background: #e3f4f2; border-color: #b9e2dd; }
+      .media-tag.open-ext { color: #7a4a00; background: #fdf0dc; border-color: #f0d29a; }
+      .media-card-head .chev { color: var(--muted); font-weight: 900; transition: transform .15s ease; }
+      .media-card.expanded .chev { transform: rotate(90deg); }
+      .media-card-body { display: none; padding: 12px 12px 14px; border-top: 1px solid var(--line); background: #fcfdfe; gap: 12px; }
+      .media-card.expanded .media-card-body { display: grid; }
+      .media-card-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+      .media-card-actions button { font-size: 11px; padding: 6px 9px; }
+      .media-fieldset { display: grid; gap: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: white; }
+      .media-fieldset > .fs-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+      .media-field { display: grid; gap: 6px; }
+      .media-field > .mf-label { font-size: 12px; font-weight: 700; color: var(--muted); }
+      .media-field-row { display: flex; gap: 10px; align-items: flex-start; }
+      .media-preview { width: 92px; height: 62px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #eef1f6; display: grid; place-items: center; }
+      .media-preview img { width: 100%; height: 100%; object-fit: cover; }
+      .media-preview.video { background: #1b1030; color: #cbb8ff; }
+      .media-preview .ph { font-size: 9px; font-weight: 800; letter-spacing: .06em; color: #9aa7bd; text-transform: uppercase; }
+      .media-field-controls { flex: 1 1 auto; min-width: 0; display: grid; gap: 6px; }
+      .media-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+      .media-btns button { font-size: 11px; padding: 6px 9px; }
+      .media-btns button.primary-soft { background: #e3f4f2; border-color: #b9e2dd; color: #06403d; font-weight: 800; }
+      .media-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+      .media-gallery-item { position: relative; aspect-ratio: 4/3; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; background: #eef1f6; }
+      .media-gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+      .media-gallery-item button { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; padding: 0; border-radius: 6px; background: rgba(180,35,24,.92); color: white; border: 0; font-weight: 900; line-height: 1; }
+      .media-radio { display: flex; gap: 8px; flex-wrap: wrap; }
+      .media-radio label { flex: 1 1 160px; display: flex; align-items: center; gap: 8px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; cursor: pointer; color: var(--ink); font-weight: 700; font-size: 12px; }
+      .media-radio label.active { border-color: var(--accent); background: #e9f7f5; box-shadow: inset 0 0 0 1px var(--accent); }
+      .media-radio input { display: none; }
+      .media-empty { padding: 14px; text-align: center; color: var(--muted); font-size: 12px; border: 1px dashed var(--line); border-radius: 9px; }
+      /* Asset picker overlay */
+      .media-picker { position: fixed; inset: 0; z-index: 1300; background: rgba(15,23,42,.55); display: none; align-items: center; justify-content: center; padding: 24px; }
+      .media-picker.active { display: flex; }
+      .media-picker-panel { width: min(760px, 100%); max-height: 82vh; background: white; border-radius: 12px; overflow: hidden; display: grid; grid-template-rows: auto auto 1fr; }
+      .media-picker-panel header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+      .media-picker-panel > input { margin: 12px 14px 0; }
+      .media-picker-grid { padding: 12px 14px; overflow: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+      .media-pick-card { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; cursor: pointer; background: white; }
+      .media-pick-card:hover { border-color: var(--accent); box-shadow: 0 6px 18px rgba(43,191,186,.15); }
+      .media-pick-thumb { aspect-ratio: 4/3; background: #eef1f6; display: grid; place-items: center; }
+      .media-pick-thumb img { width: 100%; height: 100%; object-fit: cover; }
+      .media-pick-thumb.video { background: #1b1030; color: #cbb8ff; font-weight: 800; font-size: 11px; }
+      .media-pick-meta { padding: 6px 8px; font-size: 11px; }
+      .media-pick-meta strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .media-pick-meta small { color: var(--muted); }
+      /* External file drag-and-drop zone */
+      .drop-zone { position: fixed; inset: 0; z-index: 1500; display: none; align-items: center; justify-content: center; padding: 28px; background: rgba(10,20,40,.55); backdrop-filter: blur(2px); pointer-events: none; }
+      .drop-zone.active { display: flex; }
+      .drop-zone-card { border: 3px dashed var(--accent); border-radius: 16px; background: rgba(255,255,255,.96); padding: 40px 56px; text-align: center; display: grid; gap: 8px; box-shadow: 0 24px 60px rgba(15,23,42,.3); }
+      .drop-zone-card strong { font-size: 20px; color: var(--deep); }
+      .drop-zone-card span { color: var(--muted); font-size: 13px; }
+      .asset-card .asset-remove { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; padding: 0; border-radius: 6px; background: rgba(180,35,24,.92); color: white; border: 0; font-weight: 900; line-height: 1; display: none; }
+      .asset-card { position: relative; }
+      .asset-card.library .asset-remove { display: block; }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="brand">
+        <div class="mark">WF</div>
+        <div>
+          <h1>Websites Forge</h1>
+          <p>Editor locale, template e export statico</p>
+        </div>
+      </div>
+      <div class="tools">
+        <label class="switch" title="Aggiorna l'anteprima mentre modifichi">
+          Live edit
+          <input id="liveToggle" type="checkbox" checked />
+          <span></span>
+        </label>
+        <select id="templateSelect" title="Template salvati"></select>
+        <input id="templateName" placeholder="Nome template" />
+        <button id="undoAction" class="dark" title="Ctrl+Z">Undo</button>
+        <button id="redoAction" class="dark" title="Ctrl+Y">Redo</button>
+        <button id="saveTemplate" class="dark">Salva template</button>
+        <button id="newTemplate" class="dark">Nuovo da corrente</button>
+        <button id="downloadTemplate">Salva con nome</button>
+        <button id="importTemplate">Importa template</button>
+        <input id="templateFileInput" type="file" accept="application/json,.json" hidden />
+        <button id="exportZip" class="primary">Export ZIP</button>
+        <div id="status" class="status">Avvio...</div>
+      </div>
+    </div>
+    <div id="saveOverlay" class="save-overlay" aria-live="polite" aria-busy="true">
+      <div class="save-overlay-card">
+        <div class="save-spinner"></div>
+        <strong>Salvataggio in corso</strong>
+        <p id="saveOverlayText" class="hint">Attendi un momento...</p>
+      </div>
+    </div>
+    <div id="importOverlay" class="import-overlay" aria-live="polite" aria-busy="true">
+      <div class="import-overlay-card">
+        <div class="save-spinner"></div>
+        <strong>Importazione template</strong>
+        <p id="importOverlayText" class="hint">Preparazione del file...</p>
+        <div class="import-progress-track">
+          <div id="importProgressBar" class="import-progress-bar"></div>
+        </div>
+        <div class="import-progress-meta">
+          <span id="importProgressLabel">0%</span>
+          <span id="importProgressSize"></span>
+        </div>
+      </div>
+    </div>
+
+    <main class="layout">
+      <aside>
+        <div class="sidebar-head">
+          <div class="sidebar-title">
+            <strong>Gestione sito</strong>
+            <small>Mappa sito, menu, pagine e contenuti</small>
+          </div>
+          <button id="collapseSidebar" title="Collassa sidebar">‹</button>
+        </div>
+        <div class="live-inspector">
+          <h2>Scorciatoie elemento selezionato</h2>
+          <p id="selectedSummary">Seleziona un elemento nella preview.</p>
+          <p class="hint">Usale solo per correzioni rapide. Per struttura, menu, pagine e collegamenti usa la mappa sito qui sotto.</p>
+          <div class="live-grid">
+            <label>Margin<input data-style="margin" placeholder="es. 0 auto" /></label>
+            <label>Padding<input data-style="padding" placeholder="es. 24px" /></label>
+            <label>Allinea
+              <select data-style="textAlign">
+                <option value="">Default</option>
+                <option value="left">Sinistra</option>
+                <option value="center">Centro</option>
+                <option value="right">Destra</option>
+              </select>
+            </label>
+            <label>Larghezza<input data-style="width" placeholder="es. 100%" /></label>
+          </div>
+          <div class="mini-actions" style="margin-top:10px">
+            <button data-color-preset="lightText">Testo chiaro</button>
+            <button data-color-preset="darkText">Testo scuro</button>
+            <button data-color-preset="accentText">Accent</button>
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="active" data-tab="menu">Mappa sito</button>
+          <button data-tab="doctor">Contenuti</button>
+          <button data-tab="treatmentPages">Pagine trattamento</button>
+          <button data-tab="treatmentCategories">Categorie trattamenti</button>
+          <button data-tab="media">Media</button>
+          <button data-tab="clinics">Archivi</button>
+          <button data-tab="contactPanel">Contatti</button>
+          <button data-tab="footerPanel">Footer</button>
+          <button data-tab="reviews">Review</button>
+          <button data-tab="assets">Assets</button>
+          <button data-tab="sections">Sezioni</button>
+          <button data-tab="settings">Impostazioni</button>
+          <button data-tab="templateManager">Template</button>
+          <button data-tab="hosting">Hosting</button>
+        </div>
+
+        <section id="doctor" class="panel"></section>
+        <section id="menu" class="panel active"></section>
+        <section id="sections" class="panel"></section>
+        <section id="settings" class="panel"></section>
+        <section id="templateManager" class="panel"></section>
+        <section id="hosting" class="panel"></section>
+        <section id="clinics" class="panel"></section>
+        <section id="contactPanel" class="panel"></section>
+        <section id="footerPanel" class="panel"></section>
+        <section id="treatmentCategories" class="panel"></section>
+        <section id="treatmentPages" class="panel"></section>
+        <section id="media" class="panel"></section>
+        <section id="assets" class="panel"></section>
+        <section id="reviews" class="panel"></section>
+      </aside>
+      <div id="sidebarResizeHandle" class="sidebar-resize-handle" title="Trascina per allargare o restringere la sidebar. Doppio click per reset."></div>
+
+      <section class="preview">
+        <div class="preview-bar">
+          <div class="preview-tools">
+            <button class="active" data-device="desktop">Desktop</button>
+            <button data-device="tablet">Tablet</button>
+            <button data-device="mobile">Mobile</button>
+          </div>
+          <div class="preview-zoom" title="Zoom solo editor, attivo in Live edit">
+            <button type="button" data-preview-zoom-step="-10" aria-label="Riduci zoom">-</button>
+            <input id="previewZoom" type="range" min="50" max="180" step="5" value="100" />
+            <button type="button" data-preview-zoom-step="10" aria-label="Aumenta zoom">+</button>
+            <output id="previewZoomValue" for="previewZoom">100%</output>
+            <button type="button" data-preview-zoom-reset>Reset</button>
+          </div>
+          <span id="previewUrl"></span>
+        </div>
+        <div class="preview-stage">
+          <div class="frame-shell">
+            <iframe id="preview" title="Anteprima sito"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+    <input id="assetFileInput" type="file" accept="image/*" hidden />
+    <input id="mediaFileInput" type="file" accept="image/*" multiple hidden />
+    <input id="libraryFileInput" type="file" accept="image/*,video/*" multiple hidden />
+    <div id="mediaPicker" class="media-picker">
+      <div class="media-picker-panel">
+        <header>
+          <strong id="mediaPickerTitle">Scegli dagli Assets</strong>
+          <div class="mini-actions">
+            <button type="button" class="primary" data-media-picker-upload>Carica nuovo file</button>
+            <button type="button" data-media-pick-close>Chiudi</button>
+          </div>
+        </header>
+        <input id="mediaPickerSearch" placeholder="Filtra assets..." />
+        <div class="media-picker-grid" id="mediaPickerGrid"></div>
+      </div>
+    </div>
+    <div id="uploadOverlay" class="import-overlay" aria-live="polite" aria-busy="true">
+      <div class="import-overlay-card">
+        <div class="save-spinner"></div>
+        <strong>Caricamento file</strong>
+        <p id="uploadOverlayText" class="hint">Caricamento in corso...</p>
+        <div class="import-progress-track">
+          <div id="uploadProgressBar" class="import-progress-bar"></div>
+        </div>
+        <div class="import-progress-meta">
+          <span id="uploadProgressLabel">0%</span>
+          <span id="uploadProgressSize"></span>
+        </div>
+      </div>
+    </div>
+    <div id="dropZone" class="drop-zone"><div class="drop-zone-card"><strong>Rilascia qui i file</strong><span>Immagini e video verranno caricati nella libreria Assets</span></div></div>
+    <div id="assetContextMenu" class="asset-menu">
+      <button type="button" data-asset-action="replace">Sostituisci asset</button>
+      <button type="button" data-asset-action="copy">Copia sorgente</button>
+      <button type="button" data-asset-action="clear">Rimuovi sostituzione</button>
+    </div>
+    <div id="assetModal" class="asset-modal">
+      <header><strong id="assetModalTitle">Asset</strong><button type="button" id="assetModalClose">Chiudi</button></header>
+      <div class="asset-modal-body"><img id="assetModalImage" alt="" /></div>
+    </div>
+
+    <script>
+      const state = { content: null, defaultContent: null, templates: [], previewUrl: '', saveTimer: null, saveOverlayTimer: null, importOverlayTimer: null, liveFieldHighlightTimer: null, selected: null, history: [], future: [], pendingSaveLabel: '', contentVersion: 0, isSaving: false, saveAgain: false, historyMarkedAt: 0, assetView: 'grid', selectedAssets: new Set(), assetQuery: '', assetReplaceTarget: null, previewZoom: Number(localStorage.getItem('websitesForgePreviewZoom') || 100) || 100, mediaExpanded: new Set(), mediaSectionConfig: new Set(), mediaUploadTarget: null, mediaPickTarget: null };
+      const $ = (selector) => document.querySelector(selector);
+      const DEFAULT_NAV_ITEMS = [
+        { id: 'home', label: 'Home', tab: 'home', destinationType: 'page', destination: 'home', transition: 'fade' },
+        { id: 'chi-sono', label: 'Chi sono', tab: 'chi-sono', destinationType: 'page', destination: 'chi-sono', transition: 'fade' },
+        { id: 'chirurgia', label: 'Chirurgia Plastica', tab: 'chirurgia', destinationType: 'page', destination: 'chirurgia', transition: 'fade' },
+        { id: 'medicina', label: 'Medicina Estetica', tab: 'medicina', destinationType: 'page', destination: 'medicina', transition: 'fade' },
+        { id: 'media', label: 'Media', tab: 'media', destinationType: 'page', destination: 'media', transition: 'fade' },
+        { id: 'studio', label: 'Lo studio', tab: 'studio', destinationType: 'page', destination: 'studio', transition: 'fade' },
+        { id: 'contatti', label: 'Contatti', tab: 'contatti', destinationType: 'page', destination: 'contatti', transition: 'fade' },
+      ];
+      const DEFAULT_SITE_SETTINGS = {
+        layout: { siteWidth: 'contained', menuWidth: 'contained' },
+        sections: { footerVisible: true, contactFormVisible: true, floatingActionsVisible: true },
+        contactForm: {
+          submitMode: 'demo',
+          recipientEmail: 'info@drvincenzomazzarella.it',
+          subjectPrefix: 'Richiesta consulenza dal sito',
+          successMessage: 'Richiesta ricevuta. La segreteria ti contattera entro 24 ore lavorative.',
+        },
+        contact: {
+          mode: 'form',
+          showMap: true,
+          showSedi: true,
+          miodottore: { integration: 'widget', profileUrl: '', embedCode: '' },
+          customHtml: '',
+        },
+        footer: {
+          brandTitle: 'Dr. Vincenzo Mazzarella',
+          brandSubtitle: 'Specialista in Chirurgia Plastica, Ricostruttiva ed Estetica',
+          brandBlurb: "Un percorso improntato sull'eccellenza clinica, la naturalezza del risultato e il rispetto rigoroso dell'identità corporea e facciale di ogni paziente. Napoli, Roma, Milano.",
+          complianceBadge: 'Sito Informativo Sanitario Conforme',
+          quickLinksTitle: 'Sezioni Principali',
+          sediTitle: 'Sedi Principali',
+          showSedi: true,
+          metaLines: ['Cod. Ref. MAZ-2026', 'P.IVA IT08901234567'],
+          legalText: "Informativa Legale Sanitaria: Sito web conforme alle linee guida approvate dalla Federazione Nazionale degli Ordini dei Medici Chirurghi e degli Odontoiatri (FNOMCeO) sulla pubblicità sanitaria e l'informazione medica (Art. 55-56-57 del Codice di Deontologia Medica). Dr. Vincenzo Mazzarella, iscritto all'Ordine dei Medici e Chirurghi di Napoli n. 12345. Specialista in Chirurgia Plastica Ricostruttiva ed Estetica.",
+          copyrightName: 'Dr. Vincenzo Mazzarella. Tutti i diritti riservati.',
+          policyLinks: [
+            { label: 'Privacy Policy', url: '#' },
+            { label: 'Cookie Policy', url: '#' },
+            { label: 'Termini di Utilizzo', url: '#' },
+          ],
+          perPage: {},
+          customHtml: {},
+        },
+        hosting: { domainName: 'drvincenzomazzarella.it', provider: 'Aruba', ftpHost: '', ftpUser: '', publicPath: '/' },
+      };
+      const DEFAULT_TREATMENT_CATEGORIES = [
+        { id: 'seno', label: 'Chirurgia del Seno', page: 'chirurgia' },
+        { id: 'viso', label: 'Chirurgia del Viso', page: 'chirurgia' },
+        { id: 'corpo', label: 'Chirurgia del Corpo', page: 'chirurgia' },
+        { id: 'medicina_estetica', label: 'Medicina Estetica', page: 'medicina' },
+      ];
+      const HISTORY_MAX_ENTRIES = 30;
+      const STATIC_PAGE_SECTION_OPTIONS = [
+        { value: 'chirurgia#seno', label: 'Chirurgia Plastica / Seno' },
+        { value: 'chirurgia#viso', label: 'Chirurgia Plastica / Viso' },
+        { value: 'chirurgia#corpo', label: 'Chirurgia Plastica / Corpo' },
+        { value: 'medicina#medicina-trattamenti', label: 'Medicina Estetica / Trattamenti' },
+        { value: 'studio#studio-sedi', label: 'Lo studio / Sedi' },
+        { value: 'media#media-video', label: 'Media / Video' },
+        { value: 'media#media-press', label: 'Media / Rassegna stampa' },
+        { value: 'contatti#contatti-mappa', label: 'Contatti / Mappa' },
+        { value: 'contatti#contatti-form', label: 'Contatti / Form contatto' },
+      ];
+
+      function treatmentGroupLabel(category) {
+        const categoryConfig = (state.content?.treatmentCategories || DEFAULT_TREATMENT_CATEGORIES).find((item) => item.id === category);
+        return categoryConfig?.label || String(category || '').replace(/_/g, ' ');
+      }
+
+      function pageSectionOptions() {
+        const categoryOptions = (state.content?.treatmentCategories || DEFAULT_TREATMENT_CATEGORIES).map((category) => ({
+          value: `${category.page === 'medicina' ? 'medicina' : 'chirurgia'}#${category.id}`,
+          label: `${category.page === 'medicina' ? 'Medicina Estetica' : 'Chirurgia Plastica'} / ${category.label}`,
+        }));
+        const mediaOptions = (state.content?.mediaSections || []).map((section) => ({
+          value: `media#media-${section.id}`,
+          label: `Media / ${section.title}`,
+        }));
+        const seen = new Set();
+        return [...categoryOptions, ...mediaOptions, ...STATIC_PAGE_SECTION_OPTIONS].filter((option) => {
+          if (seen.has(option.value)) return false;
+          seen.add(option.value);
+          return true;
+        });
+      }
+
+      function treatmentPageForId(treatmentId, content = state.content) {
+        const treatment = (content?.treatments || []).find((item) => item.id === treatmentId);
+        const category = (content?.treatmentCategories || DEFAULT_TREATMENT_CATEGORIES).find((item) => item.id === treatment?.category);
+        return category?.page === 'medicina' ? 'medicina' : 'chirurgia';
+      }
+
+      function treatmentDestinationOptions() {
+        return (state.content?.treatments || []).map((treatment) => ({
+          value: treatment.id,
+          label: `${treatmentGroupLabel(treatment.category)} / ${treatment.title}`,
+        }));
+      }
+
+      function pageDestinationOptions() {
+        return [
+          { value: 'home', label: 'Home' },
+          { value: 'chi-sono', label: 'Chi sono' },
+          { value: 'chirurgia', label: 'Chirurgia Plastica' },
+          { value: 'medicina', label: 'Medicina Estetica' },
+          { value: 'media', label: 'Media' },
+          { value: 'studio', label: 'Lo studio' },
+          { value: 'contatti', label: 'Contatti' },
+          ...(state.content?.treatments || []).map((treatment) => ({
+            value: `treatment:${treatment.id}`,
+            label: `${treatmentGroupLabel(treatment.category)} / ${treatment.title}`,
+          })),
+          ...(state.content?.media || []).map((item) => ({
+            value: `media:${item.id}`,
+            label: `Media / ${item.title || item.id}`,
+          })),
+        ];
+      }
+
+      function setStatus(text) {
+        $('#status').textContent = text;
+      }
+
+      function setSaveOverlay(active, label = '') {
+        clearTimeout(state.saveOverlayTimer);
+        const overlay = $('#saveOverlay');
+        overlay?.classList.remove('done', 'error');
+        overlay?.classList.toggle('active', Boolean(active));
+        const text = $('#saveOverlayText');
+        if (text) text.textContent = label ? `Sto salvando: ${label}` : 'Attendi un momento...';
+      }
+
+      function finishSaveOverlay(label = 'Salvato', mode = 'done') {
+        const overlay = $('#saveOverlay');
+        const text = $('#saveOverlayText');
+        overlay?.classList.remove('error', 'done');
+        overlay?.classList.add('active', mode);
+        if (text) text.textContent = label;
+        clearTimeout(state.saveOverlayTimer);
+        state.saveOverlayTimer = setTimeout(() => {
+          overlay?.classList.remove('active', 'done', 'error');
+        }, mode === 'error' ? 4200 : 2600);
+      }
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes <= 0) return '';
+        const units = ['B', 'KB', 'MB', 'GB'];
+        let value = bytes;
+        let unitIndex = 0;
+        while (value >= 1024 && unitIndex < units.length - 1) {
+          value /= 1024;
+          unitIndex += 1;
+        }
+        return `${value.toFixed(unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+      }
+
+      function setImportOverlay(active, percent = 0, label = 'Preparazione del file...', sizeLabel = '') {
+        clearTimeout(state.importOverlayTimer);
+        const overlay = $('#importOverlay');
+        const text = $('#importOverlayText');
+        const bar = $('#importProgressBar');
+        const progressLabel = $('#importProgressLabel');
+        const progressSize = $('#importProgressSize');
+        const safePercent = Math.min(100, Math.max(0, Math.round(percent)));
+        overlay?.classList.toggle('active', Boolean(active));
+        if (text) text.textContent = label;
+        if (bar) bar.style.width = `${safePercent}%`;
+        if (progressLabel) progressLabel.textContent = `${safePercent}%`;
+        if (progressSize) progressSize.textContent = sizeLabel;
+      }
+
+      function finishImportOverlay(label = 'Template importato', delay = 700) {
+        setImportOverlay(true, 100, label, $('#importProgressSize')?.textContent || '');
+        clearTimeout(state.importOverlayTimer);
+        state.importOverlayTimer = setTimeout(() => {
+          $('#importOverlay')?.classList.remove('active');
+        }, delay);
+      }
+
+      function readTemplateText(file, onProgress) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onprogress = (event) => {
+            if (event.lengthComputable) onProgress?.(event.loaded / event.total);
+          };
+          reader.onerror = () => reject(reader.error || new Error('Lettura file non riuscita'));
+          reader.onload = () => resolve(String(reader.result || ''));
+          reader.readAsText(file);
+        });
+      }
+
+      function nextFrame() {
+        return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function setSidebarWidth(width, options = { persist: true }) {
+        const viewportMax = Math.max(420, window.innerWidth - 460);
+        const safeWidth = clamp(Number.parseFloat(String(width)) || 540, 360, Math.min(860, viewportMax));
+        document.documentElement.style.setProperty('--sidebar-width', `${safeWidth}px`);
+        if (options.persist) localStorage.setItem('websitesForge.sidebarWidth', String(safeWidth));
+      }
+
+      function initSidebarResize() {
+        setSidebarWidth(localStorage.getItem('websitesForge.sidebarWidth') || 540, { persist: false });
+        const handle = $('#sidebarResizeHandle');
+        let startX = 0;
+        let startWidth = 540;
+
+        const stopResize = () => {
+          document.body.classList.remove('sidebar-resizing');
+          window.removeEventListener('pointermove', onResize);
+          window.removeEventListener('pointerup', stopResize);
+        };
+
+        const onResize = (event) => {
+          setSidebarWidth(startWidth + event.clientX - startX);
+        };
+
+        handle.addEventListener('pointerdown', (event) => {
+          if (document.body.classList.contains('sidebar-collapsed')) return;
+          startX = event.clientX;
+          startWidth = Number(getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width').replace('px', '')) || 540;
+          document.body.classList.add('sidebar-resizing');
+          handle.setPointerCapture?.(event.pointerId);
+          window.addEventListener('pointermove', onResize);
+          window.addEventListener('pointerup', stopResize);
+        });
+
+        handle.addEventListener('dblclick', () => {
+          setSidebarWidth(540);
+          setStatus('Larghezza sidebar ripristinata');
+        });
+
+        window.addEventListener('resize', () => {
+          setSidebarWidth(getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width'), { persist: false });
+        });
+      }
+
+      function saveLabelFromPath(path = '') {
+        if (path.startsWith('drInfo.credentials')) return 'credenziali';
+        if (path.startsWith('drInfo.name')) return 'nome sito';
+        if (path.startsWith('drInfo.title')) return 'titolo sito';
+        if (path.startsWith('drInfo')) return 'identita';
+        if (path.startsWith('navItems')) return 'menu';
+        if (path.startsWith('clinics')) return 'sedi';
+        if (path.startsWith('treatmentCategories')) return 'categorie trattamenti';
+        if (path.startsWith('treatments')) return 'trattamenti';
+        if (path.startsWith('mediaSections')) return 'sezioni media';
+        if (path.startsWith('media')) return 'contenuti media';
+        if (path.startsWith('testimonials')) return 'recensioni';
+        if (path.startsWith('siteSettings.sections')) return 'sezioni';
+        if (path.startsWith('siteSettings.layout')) return 'layout sito';
+        if (path.startsWith('siteSettings.contactForm')) return 'form contatto';
+        if (path.startsWith('siteSettings.hosting')) return 'hosting';
+        if (path.endsWith('.benefits')) return 'benefici';
+        return 'contenuto';
+      }
+
+      function shortSaveLabel(label) {
+        return String(label || 'modifica').replace(/\s+/g, ' ').trim().slice(0, 42);
+      }
+
+      function cloneContent(content = state.content) {
+        return JSON.parse(JSON.stringify(content));
+      }
+
+      function normalizeEditorContent(content) {
+        const fallback = state.defaultContent || {};
+        const next = { ...fallback, ...(content || {}) };
+        next.meta = { ...(fallback.meta || {}), ...(content?.meta || {}) };
+        next.drInfo = { ...(fallback.drInfo || {}), ...(content?.drInfo || {}) };
+        next.drInfo.credentials = Array.isArray(next.drInfo.credentials)
+          ? next.drInfo.credentials
+          : (fallback.drInfo?.credentials || []);
+        const fallbackCategories = Array.isArray(fallback.treatmentCategories) && fallback.treatmentCategories.length
+          ? fallback.treatmentCategories
+          : DEFAULT_TREATMENT_CATEGORIES;
+        next.treatmentCategories = Array.isArray(next.treatmentCategories) && next.treatmentCategories.length
+          ? next.treatmentCategories.map((category, index) => ({
+              id: category.id || `categoria-${index + 1}`,
+              label: category.label || category.id || `Categoria ${index + 1}`,
+              page: category.page === 'medicina' ? 'medicina' : 'chirurgia',
+            }))
+          : fallbackCategories;
+        next.treatments = Array.isArray(next.treatments) ? next.treatments : (fallback.treatments || []);
+        next.mediaSections = Array.isArray(next.mediaSections) && next.mediaSections.length
+          ? next.mediaSections.map((section, index) => ({
+              id: section.id || `sezione-${index + 1}`,
+              title: section.title || section.id || `Sezione ${index + 1}`,
+              subtitle: section.subtitle || '',
+              layout: ['video-grid', 'press-grid', 'image-carousel'].includes(section.layout) ? section.layout : 'press-grid',
+            }))
+          : (fallback.mediaSections || []);
+        next.media = Array.isArray(next.media)
+          ? next.media.map((item, index) => ({
+              id: item.id || `media-${index + 1}`,
+              sectionId: item.sectionId || '',
+              kind: ['video', 'image', 'article'].includes(item.kind) ? item.kind : 'article',
+              title: item.title || '',
+              excerpt: item.excerpt || '',
+              source: item.source || '',
+              category: item.category || '',
+              date: item.date || '',
+              duration: item.duration || '',
+              thumbnail: item.thumbnail || '',
+              linkMode: item.linkMode === 'external' ? 'external' : 'internal',
+              externalUrl: item.externalUrl || '',
+              videoUrl: item.videoUrl || '',
+              videoFile: item.videoFile || '',
+              images: Array.isArray(item.images) ? item.images.filter(Boolean) : [],
+              body: item.body || '',
+            }))
+          : (fallback.media || []);
+        next.assetLibrary = Array.isArray(next.assetLibrary)
+          ? next.assetLibrary.filter((item) => item && item.url).map((item, index) => ({
+              id: item.id || `lib-${index + 1}`,
+              url: item.url,
+              name: item.name || `File ${index + 1}`,
+              kind: item.kind === 'video' ? 'video' : 'image',
+            }))
+          : (fallback.assetLibrary || []);
+        next.navItems = normalizeNavItems(Array.isArray(next.navItems) ? next.navItems : (fallback.navItems || DEFAULT_NAV_ITEMS), next);
+        next.clinics = Array.isArray(next.clinics) ? next.clinics : (fallback.clinics || []);
+        next.testimonials = Array.isArray(next.testimonials) ? next.testimonials : (fallback.testimonials || []);
+        const fallbackSettings = fallback.siteSettings || DEFAULT_SITE_SETTINGS;
+        next.siteSettings = {
+          ...DEFAULT_SITE_SETTINGS,
+          ...fallbackSettings,
+          ...(content?.siteSettings || {}),
+          layout: {
+            ...DEFAULT_SITE_SETTINGS.layout,
+            ...(fallbackSettings.layout || {}),
+            ...(content?.siteSettings?.layout || {}),
+          },
+          sections: {
+            ...DEFAULT_SITE_SETTINGS.sections,
+            ...(fallbackSettings.sections || {}),
+            ...(content?.siteSettings?.sections || {}),
+          },
+          contactForm: {
+            ...DEFAULT_SITE_SETTINGS.contactForm,
+            ...(fallbackSettings.contactForm || {}),
+            ...(content?.siteSettings?.contactForm || {}),
+          },
+          contact: {
+            ...DEFAULT_SITE_SETTINGS.contact,
+            ...(fallbackSettings.contact || {}),
+            ...(content?.siteSettings?.contact || {}),
+            miodottore: {
+              ...DEFAULT_SITE_SETTINGS.contact.miodottore,
+              ...((fallbackSettings.contact || {}).miodottore || {}),
+              ...((content?.siteSettings?.contact || {}).miodottore || {}),
+            },
+          },
+          footer: {
+            ...DEFAULT_SITE_SETTINGS.footer,
+            ...(fallbackSettings.footer || {}),
+            ...(content?.siteSettings?.footer || {}),
+            metaLines: Array.isArray(content?.siteSettings?.footer?.metaLines)
+              ? content.siteSettings.footer.metaLines
+              : (Array.isArray(fallbackSettings.footer?.metaLines) ? fallbackSettings.footer.metaLines : DEFAULT_SITE_SETTINGS.footer.metaLines),
+            policyLinks: Array.isArray(content?.siteSettings?.footer?.policyLinks)
+              ? content.siteSettings.footer.policyLinks
+              : (Array.isArray(fallbackSettings.footer?.policyLinks) ? fallbackSettings.footer.policyLinks : DEFAULT_SITE_SETTINGS.footer.policyLinks),
+            perPage: { ...(content?.siteSettings?.footer?.perPage || {}) },
+            customHtml: { ...(content?.siteSettings?.footer?.customHtml || {}) },
+          },
+          hosting: {
+            ...DEFAULT_SITE_SETTINGS.hosting,
+            ...(fallbackSettings.hosting || {}),
+            ...(content?.siteSettings?.hosting || {}),
+          },
+        };
+        next.customStyles = next.customStyles || {};
+        next.customMedia = next.customMedia || {};
+        next.customTexts = next.customTexts || {};
+        next.customHtmls = next.customHtmls || {};
+        next.customLabels = next.customLabels || {};
+        next.customBehaviors = next.customBehaviors || {};
+        next.customActions = next.customActions || {};
+        next.customInserts = Array.isArray(next.customInserts) ? next.customInserts : [];
+        return next;
+      }
+
+      function normalizeNavItems(items, content = state.content) {
+        return (items || []).map((item) => {
+          const destinationType = item.destinationType || 'page';
+          const rawDestination = item.destination || item.tab || 'home';
+          const destination = item.id === 'contatti' && destinationType === 'page' && rawDestination === 'home'
+            ? 'contatti'
+            : rawDestination;
+          return {
+            ...item,
+            tab: destinationType === 'page'
+              ? destination
+              : destinationType === 'page-section'
+                ? destination.split('#')[0] || item.tab || 'home'
+                : destinationType === 'treatment'
+                  ? treatmentPageForId(destination, content)
+                : item.tab || 'home',
+            destinationType,
+            destination,
+            transition: item.transition || 'fade',
+            children: Array.isArray(item.children) ? normalizeNavItems(item.children, content) : [],
+          };
+        });
+      }
+
+      function historyStorageKey() {
+        const templateId = $('#templateSelect')?.value || state.content?.meta?.templateName || 'active';
+        return `websitesForge.history.${templateId}`;
+      }
+
+      function trimSnapshotList(list, maxEntries = HISTORY_MAX_ENTRIES) {
+        const snapshots = Array.isArray(list) ? list.filter((item) => typeof item === 'string') : [];
+        return snapshots.slice(-maxEntries);
+      }
+
+      function persistHistory() {
+        // Undo/redo is intentionally session-only. Persisting full template
+        // snapshots with base64 assets can make the browser unstable.
+      }
+
+      function restoreHistory() {
+        localStorage.removeItem(historyStorageKey());
+        state.history = [];
+        state.future = [];
+        state.historyMarkedAt = 0;
+      }
+
+      function resetHistoryPersistence() {
+        state.history = [];
+        state.future = [];
+        persistHistory();
+      }
+
+      function recordHistory() {
+        if (!state.content) return;
+        state.content = normalizeEditorContent(state.content);
+        const snapshot = JSON.stringify(state.content);
+        if (state.history[state.history.length - 1] === snapshot) return;
+        state.history.push(snapshot);
+        state.history = trimSnapshotList(state.history);
+        state.future = [];
+        persistHistory();
+      }
+
+      function recordHistoryOnceForLiveAction() {
+        const now = Date.now();
+        if (now - state.historyMarkedAt < 250) return;
+        recordHistory();
+        state.historyMarkedAt = now;
+      }
+
+      function applyHistorySnapshot(snapshot, label) {
+        state.content = normalizeEditorContent(JSON.parse(snapshot));
+        renderAll();
+        pushPreviewContent();
+        scheduleSave({ broadcast: false, label });
+        setStatus(label);
+      }
+
+      function undo() {
+        if (state.history.length === 0) {
+          setStatus('Niente da annullare');
+          return;
+        }
+        state.future.push(JSON.stringify(state.content));
+        state.future = trimSnapshotList(state.future);
+        applyHistorySnapshot(state.history.pop(), 'Undo');
+      }
+
+      function redo() {
+        if (state.future.length === 0) {
+          setStatus('Niente da ripristinare');
+          return;
+        }
+        state.history.push(JSON.stringify(state.content));
+        state.history = trimSnapshotList(state.history);
+        applyHistorySnapshot(state.future.pop(), 'Redo');
+      }
+
+      async function api(path, options = {}) {
+        const response = await fetch(path, {
+          headers: { 'Content-Type': 'application/json' },
+          ...options,
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || 'Operazione non riuscita');
+        return data;
+      }
+
+      function field(label, path, value, type = 'text') {
+        if (type === 'textarea') {
+          return `<label>${label}<textarea data-path="${path}">${escapeHtml(value ?? '')}</textarea></label>`;
+        }
+        return `<label>${label}<input data-path="${path}" value="${escapeHtml(value ?? '')}" /></label>`;
+      }
+
+      function selectField(label, path, value, options) {
+        return `<label>${label}<select data-path="${path}">
+          ${options.map((option) => `<option value="${escapeHtml(option.value)}" ${value === option.value ? 'selected' : ''}>${escapeHtml(option.label)}</option>`).join('')}
+        </select></label>`;
+      }
+
+      function toggleField(label, path, value, hint = '') {
+        return `<label class="setting-toggle"><span>${label}${hint ? `<small>${escapeHtml(hint)}</small>` : ''}</span><input data-path="${path}" type="checkbox" ${value ? 'checked' : ''} /></label>`;
+      }
+
+      function destinationControls(path, item) {
+        const type = item.destinationType || 'page';
+        const destination = item.destination || item.tab || 'home';
+        const destinationOptions = {
+          page: pageDestinationOptions(),
+          section: [
+            { value: 'hero', label: 'Hero / apertura' },
+            { value: 'filosofia', label: 'Filosofia' },
+            { value: 'trattamenti', label: 'Trattamenti' },
+            { value: 'biografia', label: 'Biografia' },
+            { value: 'cliniche', label: 'Sedi' },
+            { value: 'recensioni', label: 'Review' },
+            { value: 'contatto', label: 'Form contatto' },
+          ],
+          'page-section': pageSectionOptions(),
+          treatment: treatmentDestinationOptions(),
+          action: [
+            { value: 'booking', label: 'Apri prenotazione' },
+            { value: 'phone', label: 'Chiama telefono' },
+            { value: 'email', label: 'Apri email' },
+          ],
+        };
+        const options = destinationOptions[type] || destinationOptions.page;
+        const destinationField = type === 'external'
+          ? field('URL esterno', `${path}.destination`, destination)
+          : selectField(type === 'action' ? 'Azione' : 'Destinazione', `${path}.destination`, destination, options);
+
+        return `
+          <div class="destination-grid">
+            ${selectField('Tipo collegamento', `${path}.destinationType`, type, [
+              { value: 'page', label: 'Pagina interna' },
+              { value: 'section', label: 'Sezione della home' },
+              { value: 'page-section', label: 'Sezione di una pagina' },
+              { value: 'treatment', label: 'Pagina trattamento' },
+              { value: 'external', label: 'Link esterno' },
+              { value: 'action', label: 'Azione sito' },
+            ])}
+            ${selectField('Transizione', `${path}.transition`, item.transition || 'fade', [
+              { value: 'fade', label: 'Dissolvenza' },
+              { value: 'slide', label: 'Scorrimento morbido' },
+              { value: 'instant', label: 'Istantanea' },
+            ])}
+          </div>
+          ${destinationField}
+          <input type="hidden" data-path="${path}.tab" value="${escapeHtml(type === 'page' ? destination : type === 'page-section' ? destination.split('#')[0] || item.tab || 'home' : type === 'treatment' ? treatmentPageForId(destination) : item.tab || 'home')}" />
+        `;
+      }
+
+      function defaultDestinationForType(type) {
+        if (type === 'section') return 'hero';
+        if (type === 'page-section') return pageSectionOptions()[0]?.value || 'chirurgia#seno';
+        if (type === 'treatment') return treatmentDestinationOptions()[0]?.value || '';
+        if (type === 'external') return 'https://';
+        if (type === 'action') return 'booking';
+        return 'home';
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[char]));
+      }
+
+      function getByPath(path) {
+        return path.split('.').reduce((acc, part) => acc?.[part], state.content);
+      }
+
+      function setByPath(path, value) {
+        const parts = path.split('.');
+        const last = parts.pop();
+        const target = parts.reduce((acc, part) => acc[part], state.content);
+        target[last] = value;
+      }
+
+      function uniqueId(prefix) {
+        return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+      }
+
+      function cloneDeep(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
+      function duplicateRecord(path) {
+        const parts = path.split('.');
+        const index = Number(parts.pop());
+        const arr = getByPath(parts.join('.'));
+        if (!Array.isArray(arr) || Number.isNaN(index) || !arr[index]) return false;
+        const copy = cloneDeep(arr[index]);
+        if (path.startsWith('navItems')) {
+          const refreshNavIds = (item, depth = 0) => {
+            item.id = uniqueId(depth ? 'sottovoce' : 'voce');
+            item.label = `${item.label || 'Voce'} copia`;
+            (item.children || []).forEach((child) => refreshNavIds(child, depth + 1));
+          };
+          refreshNavIds(copy);
+        } else if (path.startsWith('treatments')) {
+          copy.id = uniqueId('trattamento');
+          copy.title = `${copy.title || 'Trattamento'} copia`;
+        } else if (path.startsWith('treatmentCategories')) {
+          copy.id = uniqueId('categoria');
+          copy.label = `${copy.label || 'Categoria'} copia`;
+        } else if (path.startsWith('drInfo.credentials')) {
+          copy.year = `${copy.year || 'Voce'} copia`;
+        } else if (path.startsWith('testimonials')) {
+          copy.id = uniqueId('review');
+          copy.author = `${copy.author || 'Review'} copia`;
+        } else if (path.startsWith('clinics')) {
+          copy.id = uniqueId('sede');
+          copy.city = `${copy.city || 'Sede'} copia`;
+        } else if (path.startsWith('mediaSections')) {
+          copy.id = uniqueId('sezione');
+          copy.title = `${copy.title || 'Sezione'} copia`;
+        } else if (path.startsWith('media')) {
+          copy.id = uniqueId('media');
+          copy.title = `${copy.title || 'Contenuto'} copia`;
+        }
+        arr.splice(index + 1, 0, copy);
+        return true;
+      }
+
+      function navParentPath(path) {
+        const parts = path.split('.');
+        parts.pop();
+        return parts.join('.');
+      }
+
+      function reorderNavItem(fromPath, toPath) {
+        if (!fromPath || !toPath || fromPath === toPath) return false;
+        const fromParentPath = navParentPath(fromPath);
+        const toParentPath = navParentPath(toPath);
+        if (fromParentPath !== toParentPath) return false;
+
+        const fromIndex = Number(fromPath.split('.').pop());
+        const toIndex = Number(toPath.split('.').pop());
+        const siblings = getByPath(fromParentPath);
+        if (!Array.isArray(siblings) || Number.isNaN(fromIndex) || Number.isNaN(toIndex)) return false;
+        if (fromIndex < 0 || fromIndex >= siblings.length || toIndex < 0 || toIndex >= siblings.length) return false;
+
+        const [item] = siblings.splice(fromIndex, 1);
+        siblings.splice(toIndex, 0, item);
+        return true;
+      }
+
+      function syncNavDestination(path) {
+        const match = path.match(/^(navItems(?:\.\d+(?:\.children)?)*)\.\d+\.(destination|destinationType)$/);
+        if (!match) return;
+        const itemPath = path.replace(/\.(destination|destinationType)$/, '');
+        const item = getByPath(itemPath);
+        if (!item) return;
+        if (path.endsWith('.destinationType')) {
+          item.destination = defaultDestinationForType(item.destinationType || 'page');
+        }
+        if ((item.destinationType || 'page') === 'page') {
+          item.tab = item.destination || item.tab || 'home';
+        }
+        if ((item.destinationType || 'page') === 'page-section') {
+          item.tab = (item.destination || '').split('#')[0] || item.tab || 'home';
+        }
+        if ((item.destinationType || 'page') === 'treatment') {
+          item.tab = treatmentPageForId(item.destination);
+        }
+      }
+
+      function renderTemplates() {
+        $('#templateSelect').innerHTML = state.templates
+          .map((template) => `<option value="${template.id}">${escapeHtml(template.name)}</option>`)
+          .join('');
+        $('#templateName').value = state.content.meta.templateName || '';
+      }
+
+      function renderDoctor() {
+        const c = state.content.drInfo;
+        $('#doctor').innerHTML = `
+          <div class="section">
+            <header><h2>Identita sito</h2></header>
+            <div class="section-body">
+              ${field('Nome', 'drInfo.name', c.name)}
+              ${field('Titolo', 'drInfo.title', c.title)}
+              ${field('Bio breve', 'drInfo.shortBio', c.shortBio, 'textarea')}
+              ${field('Filosofia', 'drInfo.philosophy', c.philosophy, 'textarea')}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Credenziali</h2><button data-add="credential">Aggiungi</button></header>
+            <div class="section-body">
+              ${c.credentials.map((item, index) => `
+                <div class="section">
+                  <header><h2>${escapeHtml(item.year || 'Voce')}</h2><div class="mini-actions"><button data-duplicate="drInfo.credentials.${index}">Duplica</button><button data-remove="drInfo.credentials.${index}">Rimuovi</button></div></header>
+                  <div class="section-body">
+                    ${field('Anno/Etichetta', `drInfo.credentials.${index}.year`, item.year)}
+                    ${field('Titolo', `drInfo.credentials.${index}.title`, item.title)}
+                    ${field('Istituzione', `drInfo.credentials.${index}.institution`, item.institution, 'textarea')}
+                  </div>
+                </div>`).join('')}
+            </div>
+          </div>`;
+      }
+
+      function renderMenu() {
+        const renderNavNode = (item, path, depth = 0) => `
+          <div class="section map-node" data-depth="${Math.min(depth, 2)}" data-nav-path="${escapeHtml(path)}" draggable="true" style="margin-left:${depth ? 12 : 0}px">
+            <header>
+              <h2 class="map-label">
+                <button class="drag-handle" type="button" draggable="true" data-drag-nav-path="${escapeHtml(path)}" title="Trascina per riordinare" aria-label="Trascina voce menu">☰</button>
+                <span>${depth === 0 ? 'Voce menu' : `Sotto-voce livello ${depth}`}: ${escapeHtml(item.label || 'Senza nome')}</span>
+                <small>${escapeHtml((item.destinationType || 'page') === 'page' ? 'pagina interna' : (item.destinationType || 'page'))}</small>
+              </h2>
+              <div class="mini-actions">
+                <button data-add-child="${path}">+ Sotto-voce</button>
+                <button data-duplicate="${path}">Duplica</button>
+                <button data-remove="${path}">Rimuovi</button>
+              </div>
+            </header>
+            <div class="section-body">
+              ${field('Etichetta visibile nel menu', `${path}.label`, item.label)}
+              ${destinationControls(path, item)}
+              ${(item.children || []).length > 0 ? item.children.map((child, childIndex) => renderNavNode(child, `${path}.children.${childIndex}`, depth + 1)).join('') : '<p>Nessuna voce figlia. Usa "Aggiungi figlia qui" per creare una tendina o sotto-tendina.</p>'}
+            </div>
+          </div>`;
+
+        $('#menu').innerHTML = `
+          <div class="section">
+            <header><h2>Mappa sito</h2><button data-add="navItem">Aggiungi voce principale</button></header>
+            <div class="section-body">
+              <p class="hint">Qui decidi la gerarchia: voce menu, tendina, sotto-tendina e cosa deve aprire ogni voce. I contenuti della pagina o sezione si modificano nelle tab sotto oppure direttamente dalla preview live.</p>
+            </div>
+          </div>` + state.content.navItems
+          .map((item, index) => renderNavNode(item, `navItems.${index}`))
+          .join('');
+      }
+
+      function renderSections() {
+        const s = state.content.siteSettings.sections;
+        const form = state.content.siteSettings.contactForm;
+        $('#sections').innerHTML = `
+          <div class="section">
+            <header><h2>Sezioni speciali</h2></header>
+            <div class="section-body">
+              <p class="hint">Qui gestisci blocchi strutturali del template. Gli elementi interni si rifiniscono dal live edit nella preview.</p>
+              ${toggleField('Form contatto in home', 'siteSettings.sections.contactFormVisible', s.contactFormVisible, 'Mostra o nasconde la sezione prenotazioni in fondo alla home.')}
+              ${toggleField('Footer sito', 'siteSettings.sections.footerVisible', s.footerVisible, 'Utile quando vuoi un sito one-page minimale o un export provvisorio.')}
+              ${toggleField('Azioni flottanti', 'siteSettings.sections.floatingActionsVisible', s.floatingActionsVisible, 'Pulsanti telefono e prenotazione in basso a destra.')}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Form contatto</h2></header>
+            <div class="section-body">
+              ${selectField('Invio form', 'siteSettings.contactForm.submitMode', form.submitMode, [
+                { value: 'demo', label: 'Demo locale con conferma' },
+                { value: 'mailto', label: 'Apri email pronta' },
+              ])}
+              ${field('Email destinatario', 'siteSettings.contactForm.recipientEmail', form.recipientEmail)}
+              ${field('Oggetto email', 'siteSettings.contactForm.subjectPrefix', form.subjectPrefix)}
+              ${field('Messaggio conferma', 'siteSettings.contactForm.successMessage', form.successMessage, 'textarea')}
+            </div>
+          </div>`;
+      }
+
+      function renderSettings() {
+        const layout = state.content.siteSettings.layout;
+        $('#settings').innerHTML = `
+          <div class="section">
+            <header><h2>Layout globale</h2></header>
+            <div class="section-body">
+              <p class="hint">Queste impostazioni cambiano il comportamento generale del template. Le misure dei singoli elementi restano nel live edit.</p>
+              ${selectField('Larghezza sito', 'siteSettings.layout.siteWidth', layout.siteWidth, [
+                { value: 'contained', label: 'Contenuta come template' },
+                { value: 'full', label: 'Piena larghezza' },
+              ])}
+              ${selectField('Larghezza menu', 'siteSettings.layout.menuWidth', layout.menuWidth, [
+                { value: 'contained', label: 'Contenuta come ora' },
+                { value: 'full', label: 'Piena larghezza' },
+              ])}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Note operative</h2></header>
+            <div class="section-body">
+              <p class="hint">Per testi, immagini, padding, margini, colori e livelli usa direttamente la preview. Questa sidebar serve per template, sezioni speciali e impostazioni del sito.</p>
+            </div>
+          </div>`;
+      }
+
+      function renderTemplateManager() {
+        $('#templateManager').innerHTML = `
+          <div class="section">
+            <header><h2>Template locali</h2></header>
+            <div class="section-body">
+              <p class="hint">Qui gestisci i template salvati nel progetto. Puoi anche salvare il template corrente come file JSON sul PC e re-importarlo in seguito.</p>
+              <label>Template salvato nel progetto<select id="managerTemplateSelect">
+                ${state.templates.map((template) => `<option value="${escapeHtml(template.id)}" ${template.id === $('#templateSelect').value ? 'selected' : ''}>${escapeHtml(template.name)}</option>`).join('')}
+              </select></label>
+              <div class="mini-actions">
+                <button id="managerLoadTemplate" type="button">Carica</button>
+                <button id="managerDeleteTemplate" class="danger" type="button">Elimina template</button>
+                <button id="managerDownloadTemplate" type="button">Salva con nome sul PC</button>
+                <button id="managerImportTemplate" type="button">Importa dal PC</button>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function renderHosting() {
+        const hosting = state.content.siteSettings.hosting;
+        $('#hosting').innerHTML = `
+          <div class="section">
+            <header><h2>Dominio e hosting</h2></header>
+            <div class="section-body">
+              <p class="hint">Dati di riferimento per preparare l'export e ricordare dove caricarlo via FTP. Non vengono usati per connettersi automaticamente.</p>
+              <div class="row">
+                ${field('Dominio', 'siteSettings.hosting.domainName', hosting.domainName)}
+                ${field('Provider', 'siteSettings.hosting.provider', hosting.provider)}
+              </div>
+              <div class="row">
+                ${field('Host FTP', 'siteSettings.hosting.ftpHost', hosting.ftpHost)}
+                ${field('Utente FTP', 'siteSettings.hosting.ftpUser', hosting.ftpUser)}
+              </div>
+              ${field('Cartella pubblica remota', 'siteSettings.hosting.publicPath', hosting.publicPath)}
+            </div>
+          </div>`;
+      }
+
+      function renderClinics() {
+        const intro = `
+          <div class="section">
+            <header><h2>Sedi / Studi</h2><div class="mini-actions"><button data-add="clinic">+ Aggiungi sede</button></div></header>
+            <div class="section-body">
+              <p class="hint">Le sedi alimentano la pagina "Lo studio" (carosello immagini, descrizione, dotazioni) e la sezione "Contatti" (schede sede e mappa). Aggiornandole qui si aggiornano ovunque.</p>
+            </div>
+          </div>`;
+        const cards = state.content.clinics.map((clinic, index) => `
+          <div class="section">
+            <header><h2>${escapeHtml(clinic.city || 'Nuova sede')}</h2><div class="mini-actions"><button data-duplicate="clinics.${index}">Duplica</button><button data-remove="clinics.${index}">Rimuovi</button></div></header>
+            <div class="section-body">
+              <div class="row">${field('Citta', `clinics.${index}.city`, clinic.city)}${field('Nome sede', `clinics.${index}.name`, clinic.name)}</div>
+              ${field('Indirizzo', `clinics.${index}.address`, clinic.address, 'textarea')}
+              <div class="row">${field('Telefono', `clinics.${index}.phone`, clinic.phone)}${field('Email', `clinics.${index}.email`, clinic.email)}</div>
+              ${field('Orari', `clinics.${index}.hours`, clinic.hours)}
+              ${field('Descrizione studio', `clinics.${index}.description`, clinic.description || '', 'textarea')}
+              ${field('Tecnologie e dotazioni, una per riga', `clinics.${index}.equipment`, (clinic.equipment || []).join('\n'), 'textarea')}
+              <div class="row">${field('Latitudine mappa', `clinics.${index}.lat`, clinic.lat ?? '')}${field('Longitudine mappa', `clinics.${index}.lng`, clinic.lng ?? '')}</div>
+              ${mediaGalleryField('Galleria immagini (carosello)', `clinics.${index}.images`, clinic.images || [])}
+            </div>
+          </div>`).join('');
+        $('#clinics').innerHTML = intro + cards;
+      }
+
+      function renderContatti() {
+        const c = state.content.siteSettings.contact;
+        const form = state.content.siteSettings.contactForm;
+        $('#contactPanel').innerHTML = `
+          <div class="section">
+            <header><h2>Sezione Contatti</h2></header>
+            <div class="section-body">
+              <p class="hint">Scegli cosa mostrare nella colonna destra della pagina Contatti. Le sedi e la mappa (colonna sinistra) si controllano con gli interruttori qui sotto e si aggiornano dalle Sedi (tab Archivi).</p>
+              ${selectField('Modalità contatto', 'siteSettings.contact.mode', c.mode, [
+                { value: 'form', label: 'Form richiesta interno' },
+                { value: 'miodottore', label: 'Il mio dottore (MioDottore)' },
+                { value: 'custom', label: 'Codice HTML personalizzato' },
+                { value: 'none', label: 'Nessuno (nascondi colonna)' },
+              ])}
+              ${toggleField('Mostra schede sedi', 'siteSettings.contact.showSedi', c.showSedi, 'Selettore sede e recapiti, presi dalle Sedi.')}
+              ${toggleField('Mostra mappa interattiva', 'siteSettings.contact.showMap', c.showMap, 'Mappa centrata sulle coordinate della sede selezionata.')}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Form richiesta</h2></header>
+            <div class="section-body">
+              <p class="hint">Usato quando la modalità è impostata su "Form richiesta interno".</p>
+              ${selectField('Invio form', 'siteSettings.contactForm.submitMode', form.submitMode, [
+                { value: 'demo', label: 'Demo locale con conferma' },
+                { value: 'mailto', label: 'Apri email pronta' },
+              ])}
+              ${field('Email destinatario', 'siteSettings.contactForm.recipientEmail', form.recipientEmail)}
+              ${field('Oggetto email', 'siteSettings.contactForm.subjectPrefix', form.subjectPrefix)}
+              ${field('Messaggio conferma', 'siteSettings.contactForm.successMessage', form.successMessage, 'textarea')}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Il mio dottore (MioDottore)</h2></header>
+            <div class="section-body">
+              <p class="hint">Usato quando la modalità è "Il mio dottore". Scegli tra pulsante di prenotazione verso il profilo, oppure incolla il widget/embed ufficiale.</p>
+              ${selectField('Tipo integrazione', 'siteSettings.contact.miodottore.integration', c.miodottore.integration, [
+                { value: 'widget', label: 'Pulsante verso profilo (URL)' },
+                { value: 'embed', label: 'Codice embed incollato' },
+              ])}
+              ${field('URL profilo MioDottore', 'siteSettings.contact.miodottore.profileUrl', c.miodottore.profileUrl)}
+              ${field('Codice embed MioDottore', 'siteSettings.contact.miodottore.embedCode', c.miodottore.embedCode, 'textarea')}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>HTML personalizzato</h2></header>
+            <div class="section-body">
+              <p class="hint">Usato quando la modalità è "Codice HTML personalizzato". Incolla qui il tuo blocco HTML (es. un altro sistema di prenotazione).</p>
+              ${field('Codice HTML', 'siteSettings.contact.customHtml', c.customHtml, 'textarea')}
+            </div>
+          </div>`;
+      }
+
+      function footerPageList() {
+        const pages = (state.content.navItems || [])
+          .filter((item) => (item.destinationType || 'page') === 'page')
+          .map((item) => ({ id: item.destination || item.tab || 'home', label: item.label || item.tab }));
+        const seen = new Set();
+        return pages.filter((p) => (seen.has(p.id) ? false : (seen.add(p.id), true)));
+      }
+
+      function renderFooterPanel() {
+        const f = state.content.siteSettings.footer;
+        const policyHtml = (f.policyLinks || []).map((link, i) => `
+          <div class="section" style="margin:8px 0;">
+            <header><h2>${escapeHtml(link.label || 'Link')}</h2><div class="mini-actions"><button data-remove="siteSettings.footer.policyLinks.${i}">Rimuovi</button></div></header>
+            <div class="section-body">
+              <div class="row">${field('Etichetta', `siteSettings.footer.policyLinks.${i}.label`, link.label)}${field('URL', `siteSettings.footer.policyLinks.${i}.url`, link.url)}</div>
+            </div>
+          </div>`).join('');
+        const perPageHtml = footerPageList().map((page) => {
+          const mode = f.perPage?.[page.id] || 'default';
+          const custom = f.customHtml?.[page.id] || '';
+          return `
+            <div class="section" style="margin:8px 0;">
+              <header><h2>${escapeHtml(page.label)}</h2></header>
+              <div class="section-body">
+                ${selectField('Footer su questa pagina', `siteSettings.footer.perPage.${page.id}`, mode, [
+                  { value: 'default', label: 'Footer standard del sito' },
+                  { value: 'hidden', label: 'Nascondi footer' },
+                  { value: 'custom', label: 'HTML personalizzato' },
+                ])}
+                ${mode === 'custom' ? field('HTML footer per questa pagina', `siteSettings.footer.customHtml.${page.id}`, custom, 'textarea') : ''}
+              </div>
+            </div>`;
+        }).join('');
+
+        $('#footerPanel').innerHTML = `
+          <div class="section">
+            <header><h2>Footer globale</h2></header>
+            <div class="section-body">
+              <p class="hint">Il footer è unico e valido per tutte le pagine. L'interruttore generale "Footer sito" è nel tab Sezioni. La colonna Sedi si aggiorna dalle Sedi (tab Archivi). Sotto puoi disattivarlo o personalizzarlo per singola pagina.</p>
+              <div class="row">${field('Titolo brand', 'siteSettings.footer.brandTitle', f.brandTitle)}${field('Sottotitolo brand', 'siteSettings.footer.brandSubtitle', f.brandSubtitle)}</div>
+              ${field('Testo introduttivo', 'siteSettings.footer.brandBlurb', f.brandBlurb, 'textarea')}
+              ${field('Badge conformità', 'siteSettings.footer.complianceBadge', f.complianceBadge)}
+              <div class="row">${field('Titolo colonna link', 'siteSettings.footer.quickLinksTitle', f.quickLinksTitle)}${field('Titolo colonna sedi', 'siteSettings.footer.sediTitle', f.sediTitle)}</div>
+              ${toggleField('Mostra colonna Sedi', 'siteSettings.footer.showSedi', f.showSedi, 'Elenco sedi generato automaticamente dalle Sedi.')}
+              ${field('Righe meta (una per riga)', 'siteSettings.footer.metaLines', (f.metaLines || []).join('\n'), 'textarea')}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Blocco legale</h2></header>
+            <div class="section-body">
+              ${field('Testo legale', 'siteSettings.footer.legalText', f.legalText, 'textarea')}
+              ${field('Intestazione copyright', 'siteSettings.footer.copyrightName', f.copyrightName)}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Link policy</h2><div class="mini-actions"><button data-add="footerPolicy">+ Aggiungi link</button></div></header>
+            <div class="section-body">
+              <p class="hint">Link mostrati in fondo al footer (Privacy, Cookie, Termini...).</p>
+              ${policyHtml || '<p class="hint">Nessun link policy.</p>'}
+            </div>
+          </div>
+          <div class="section">
+            <header><h2>Override per pagina</h2></header>
+            <div class="section-body">
+              <p class="hint">Per default ogni pagina mostra il footer standard. Qui puoi nasconderlo o sostituirlo con HTML personalizzato su singole pagine.</p>
+              ${perPageHtml}
+            </div>
+          </div>`;
+      }
+
+      function renderTreatmentCategories() {
+        $('#treatmentCategories').innerHTML = `
+          <div class="section">
+            <header><h2>Categorie trattamenti</h2><button data-add="treatmentCategory">Aggiungi categoria</button></header>
+            <div class="section-body">
+              <p class="hint">Le categorie controllano i filtri in home, le sezioni nelle pagine Chirurgia/Medicina e le destinazioni del menu. Il campo ID serve come ancora della sezione e collegamento interno.</p>
+            </div>
+          </div>
+          ${state.content.treatmentCategories.map((category, index) => `
+            <div class="section">
+              <header><h2>${escapeHtml(category.label)}</h2><div class="mini-actions"><button data-duplicate="treatmentCategories.${index}">Duplica</button><button data-remove="treatmentCategories.${index}">Rimuovi</button></div></header>
+              <div class="section-body">
+                <div class="row">
+                  ${field('Nome categoria', `treatmentCategories.${index}.label`, category.label)}
+                  ${field('ID / ancora', `treatmentCategories.${index}.id`, category.id)}
+                </div>
+                ${selectField('Pagina di appartenenza', `treatmentCategories.${index}.page`, category.page || 'chirurgia', [
+                  { value: 'chirurgia', label: 'Chirurgia Plastica' },
+                  { value: 'medicina', label: 'Medicina Estetica' },
+                ])}
+              </div>
+            </div>
+          `).join('')}`;
+      }
+
+      function renderTreatments() {
+        const categoryOptions = state.content.treatmentCategories || DEFAULT_TREATMENT_CATEGORIES;
+        const treatmentCategorySelect = (item, index) => {
+          const options = categoryOptions.some((category) => category.id === item.category)
+            ? categoryOptions
+            : [...categoryOptions, { id: item.category, label: `${item.category || 'Categoria rimossa'} (non trovata)`, page: 'chirurgia' }];
+          return selectField('Categoria', `treatments.${index}.category`, item.category, options.map((category) => ({
+            value: category.id,
+            label: category.label,
+          })));
+        };
+        const treatmentPagesHtml = state.content.treatments.map((item, index) => `
+          <div class="section">
+            <header><h2>${escapeHtml(item.title)}</h2><div class="mini-actions"><button data-duplicate="treatments.${index}">Duplica</button><button data-remove="treatments.${index}">Rimuovi pagina</button></div></header>
+            <div class="section-body">
+              <p class="hint">Questa e una pagina interna reale. La trovi nelle destinazioni come Pagina interna, insieme alle altre pagine del sito.</p>
+              <div class="row">
+                ${field('Titolo', `treatments.${index}.title`, item.title)}
+                ${treatmentCategorySelect(item, index)}
+              </div>
+              ${field('Sottotitolo', `treatments.${index}.subtitle`, item.subtitle)}
+              ${field('Descrizione breve', `treatments.${index}.description`, item.description, 'textarea')}
+              ${field('Descrizione completa', `treatments.${index}.fullDescription`, item.fullDescription, 'textarea')}
+              <div class="row">${field('Durata', `treatments.${index}.duration`, item.duration)}${field('Recupero', `treatments.${index}.recoveryTime`, item.recoveryTime)}</div>
+              <div class="row">${field('Anestesia', `treatments.${index}.anesthesia`, item.anesthesia)}${field('Ricovero', `treatments.${index}.hospitalization`, item.hospitalization)}</div>
+              ${field('Benefici, uno per riga', `treatments.${index}.benefits`, (item.benefits || []).join('\\n'), 'textarea')}
+              ${field('Immagine', `treatments.${index}.imageUrl`, item.imageUrl)}
+            </div>
+          </div>`).join('') + `<button data-add="treatment">Aggiungi pagina trattamento</button>`;
+        $('#treatmentPages').innerHTML = treatmentPagesHtml;
+      }
+
+      function mediaKindMeta(kind) {
+        if (kind === 'video') return { cls: 'kind-video', icon: '►', label: 'Video' };
+        if (kind === 'image') return { cls: 'kind-image', icon: '▦', label: 'Immagine' };
+        return { cls: 'kind-article', icon: '¶', label: 'Articolo' };
+      }
+
+      function isVideoSource(value) {
+        const v = String(value || '');
+        return /^data:video\//i.test(v) || /\.(mp4|webm|ogg|mov|m4v)(\?|$)/i.test(v);
+      }
+
+      function mediaCardThumb(item) {
+        const src = item.thumbnail || (item.images && item.images[0]) || '';
+        const km = mediaKindMeta(item.kind);
+        const inner = src ? `<img src="${escapeHtml(src)}" alt="" />` : '<span class="ph">Vuoto</span>';
+        return `<div class="media-thumb"><span class="kind-dot ${km.cls}">${km.icon}</span>${inner}</div>`;
+      }
+
+      function mediaSingleField(label, path, value, type) {
+        const isVid = type === 'video';
+        const showVideo = isVid || isVideoSource(value);
+        const preview = value
+          ? (showVideo
+              ? '<div class="media-preview video"><span class="ph">Video</span></div>'
+              : `<div class="media-preview"><img src="${escapeHtml(value)}" alt="" /></div>`)
+          : '<div class="media-preview"><span class="ph">Vuoto</span></div>';
+        return `
+          <div class="media-field">
+            <span class="mf-label">${label}</span>
+            <div class="media-field-row">
+              ${preview}
+              <div class="media-field-controls">
+                <input data-path="${path}" value="${escapeHtml(value || '')}" placeholder="Incolla un URL oppure carica un file" />
+                <div class="media-btns">
+                  <button type="button" class="primary-soft" data-media-upload="${path}" data-media-accept="${type}" data-media-mode="single">Carica ${isVid ? 'video' : 'immagine'}</button>
+                  <button type="button" data-media-pick="${path}" data-media-accept="${type}" data-media-mode="single">Scegli da Assets</button>
+                  ${value ? `<button type="button" data-media-clear="${path}">Rimuovi</button>` : ''}
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function mediaGalleryField(label, arrayPath, images) {
+        const list = images || [];
+        const thumbs = list.map((src, i) => `
+          <div class="media-gallery-item">
+            <img src="${escapeHtml(src)}" alt="" />
+            <button type="button" data-media-remove-image="${arrayPath}.${i}" title="Rimuovi">×</button>
+          </div>`).join('');
+        return `
+          <div class="media-field">
+            <span class="mf-label">${label}</span>
+            ${list.length ? `<div class="media-gallery">${thumbs}</div>` : '<div class="media-empty">Nessuna immagine nella galleria</div>'}
+            <div class="media-btns">
+              <button type="button" class="primary-soft" data-media-upload="${arrayPath}" data-media-accept="image" data-media-mode="append">Carica immagini</button>
+              <button type="button" data-media-pick="${arrayPath}" data-media-accept="image" data-media-mode="append">Aggiungi da Assets</button>
+            </div>
+          </div>`;
+      }
+
+      function renderMediaItemCard(item) {
+        const media = state.content.media || [];
+        const sections = state.content.mediaSections || [];
+        const index = media.indexOf(item);
+        const km = mediaKindMeta(item.kind);
+        const expanded = state.mediaExpanded.has(item.id);
+        const openTag = item.linkMode === 'external'
+          ? '<span class="media-tag open-ext">Link esterno</span>'
+          : '<span class="media-tag open-int">Pagina interna</span>';
+        const head = `
+          <div class="media-card-head" data-media-toggle="${item.id}">
+            ${mediaCardThumb(item)}
+            <div class="media-card-meta">
+              <strong>${escapeHtml(item.title || 'Senza titolo')}</strong>
+              <div class="sub">
+                <span class="media-tag">${km.label}</span>
+                ${openTag}
+                ${item.source ? `<span class="media-tag">${escapeHtml(item.source)}</span>` : ''}
+              </div>
+            </div>
+            <span class="chev">›</span>
+          </div>`;
+        if (!expanded) return `<div class="media-card">${head}</div>`;
+
+        const sectionOptions = sections.map((s) => ({ value: s.id, label: s.title || s.id }));
+        const commonFields = `
+          <div class="row">
+            ${selectField('Tipo di contenuto', `media.${index}.kind`, item.kind, [
+              { value: 'video', label: 'Video' },
+              { value: 'image', label: 'Immagine / Galleria' },
+              { value: 'article', label: 'Articolo' },
+            ])}
+            ${selectField('Sezione', `media.${index}.sectionId`, item.sectionId, sectionOptions.length ? sectionOptions : [{ value: item.sectionId || '', label: 'Nessuna sezione' }])}
+          </div>
+          ${field('Titolo', `media.${index}.title`, item.title)}
+          ${field('Descrizione breve (mostrata nella card)', `media.${index}.excerpt`, item.excerpt, 'textarea')}
+          <div class="row">
+            ${field('Fonte / Testata', `media.${index}.source`, item.source || '')}
+            ${field('Etichetta', `media.${index}.category`, item.category || '')}
+          </div>
+          ${field('Data', `media.${index}.date`, item.date || '')}
+          ${mediaSingleField('Immagine anteprima (card)', `media.${index}.thumbnail`, item.thumbnail || '', 'image')}`;
+
+        let kindFields = '';
+        if (item.kind === 'video') {
+          kindFields = `
+            <div class="media-fieldset">
+              <span class="fs-title">Sorgente video</span>
+              ${field('Durata (es. 08:45)', `media.${index}.duration`, item.duration || '')}
+              ${field('URL da incorporare (YouTube / Vimeo)', `media.${index}.videoUrl`, item.videoUrl || '')}
+              ${mediaSingleField('Oppure carica un file video', `media.${index}.videoFile`, item.videoFile || '', 'video')}
+            </div>`;
+        } else if (item.kind === 'image') {
+          kindFields = `
+            <div class="media-fieldset">
+              <span class="fs-title">Galleria immagini</span>
+              ${mediaGalleryField('Immagini', `media.${index}.images`, item.images)}
+            </div>`;
+        } else {
+          kindFields = `
+            <div class="media-fieldset">
+              <span class="fs-title">Contenuto articolo</span>
+              ${field('Testo — un paragrafo per riga', `media.${index}.body`, item.body || '', 'textarea')}
+            </div>`;
+        }
+
+        const linkFields = `
+          <div class="media-fieldset">
+            <span class="fs-title">Apertura del contenuto</span>
+            <div class="media-radio">
+              <label class="${item.linkMode !== 'external' ? 'active' : ''}" data-media-linkmode="media.${index}.linkMode" data-media-linkmode-value="internal">Pagina interna del sito</label>
+              <label class="${item.linkMode === 'external' ? 'active' : ''}" data-media-linkmode="media.${index}.linkMode" data-media-linkmode-value="external">Link esterno</label>
+            </div>
+            ${item.linkMode === 'external'
+              ? field('URL esterno (dove porta la card)', `media.${index}.externalUrl`, item.externalUrl || '')
+              : field('Link alla fonte (opzionale, mostrato nel dettaglio)', `media.${index}.externalUrl`, item.externalUrl || '')}
+          </div>`;
+
+        return `
+          <div class="media-card expanded">
+            ${head}
+            <div class="media-card-body">
+              ${commonFields}
+              ${kindFields}
+              ${linkFields}
+              <div class="media-card-actions">
+                <button type="button" data-duplicate="media.${index}">Duplica</button>
+                <button type="button" data-remove="media.${index}">Rimuovi contenuto</button>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function renderMedia() {
+        const sections = state.content.mediaSections || [];
+        const media = state.content.media || [];
+        const layoutLabel = (l) => l === 'video-grid' ? 'Griglia video' : l === 'image-carousel' ? 'Carosello immagini' : 'Griglia articoli';
+
+        const intro = `
+          <div class="media-intro">
+            <p>Organizza la pagina Media in sezioni (video, rassegna stampa, gallerie). Ogni contenuto può aprirsi in una pagina interna del sito oppure rimandare a un link esterno. Puoi incollare un URL o <strong>caricare direttamente immagini e video</strong>: finiscono anche nella libreria Assets.</p>
+            <div class="mini-actions"><button data-add="mediaSection">+ Nuova sezione</button></div>
+          </div>`;
+
+        const groupsHtml = sections.map((section, sIndex) => {
+          const items = media.filter((m) => m.sectionId === section.id);
+          const configOpen = state.mediaSectionConfig.has(section.id);
+          const config = `
+            <div class="media-config ${configOpen ? '' : 'hidden'}">
+              <div class="row">
+                ${field('Titolo sezione', `mediaSections.${sIndex}.title`, section.title)}
+                ${field('ID / ancora (per menu)', `mediaSections.${sIndex}.id`, section.id)}
+              </div>
+              ${field('Sottotitolo', `mediaSections.${sIndex}.subtitle`, section.subtitle || '', 'textarea')}
+              ${selectField('Layout di visualizzazione', `mediaSections.${sIndex}.layout`, section.layout, [
+                { value: 'video-grid', label: 'Griglia video (anteprima + play)' },
+                { value: 'press-grid', label: 'Griglia articoli / rassegna stampa' },
+                { value: 'image-carousel', label: 'Carosello di immagini' },
+              ])}
+            </div>`;
+          const itemsHtml = items.length
+            ? items.map(renderMediaItemCard).join('')
+            : '<div class="media-empty">Nessun contenuto in questa sezione. Aggiungine uno qui sotto.</div>';
+          return `
+            <div class="media-group">
+              <div class="media-group-head">
+                <span class="badge-layout">${layoutLabel(section.layout)}</span>
+                <h3>${escapeHtml(section.title || 'Sezione')}</h3>
+                <span class="count">${items.length} contenut${items.length === 1 ? 'o' : 'i'}</span>
+                <div class="mini-actions">
+                  <button type="button" data-media-config="${section.id}">${configOpen ? 'Chiudi' : 'Impostazioni'}</button>
+                  <button type="button" data-duplicate="mediaSections.${sIndex}">Duplica</button>
+                  <button type="button" data-remove="mediaSections.${sIndex}">Rimuovi</button>
+                </div>
+              </div>
+              ${config}
+              <div class="media-items">${itemsHtml}</div>
+              <div class="media-items" style="padding-top:0;"><button type="button" data-media-add-item="${section.id}">+ Aggiungi contenuto a "${escapeHtml(section.title || 'sezione')}"</button></div>
+            </div>`;
+        }).join('');
+
+        const orphanItems = media.filter((m) => !sections.some((s) => s.id === m.sectionId));
+        const orphanHtml = orphanItems.length ? `
+          <div class="media-group">
+            <div class="media-group-head"><span class="badge-layout">Senza sezione</span><h3>Contenuti non assegnati</h3><span class="count">${orphanItems.length}</span></div>
+            <div class="media-items">${orphanItems.map(renderMediaItemCard).join('')}</div>
+          </div>` : '';
+
+        $('#media').innerHTML = intro
+          + (sections.length ? groupsHtml : '<div class="media-empty">Nessuna sezione. Crea la prima sezione per iniziare.</div>')
+          + orphanHtml;
+      }
+
+      function applyMediaValue(target, value) {
+        if (!target || !value) return;
+        recordHistory();
+        if (target.mode === 'append') {
+          const arr = getByPath(target.path) || [];
+          arr.push(value);
+          setByPath(target.path, arr);
+        } else {
+          setByPath(target.path, value);
+        }
+        renderAll();
+        pushPreviewContent();
+        scheduleSave({ broadcast: false, label: 'media' });
+      }
+
+      function openMediaPicker(target) {
+        state.mediaPickTarget = target;
+        $('#mediaPickerTitle').textContent = target.accept === 'video' ? 'Scegli un video dagli Assets' : 'Scegli un\'immagine dagli Assets';
+        $('#mediaPickerSearch').value = '';
+        renderMediaPickerGrid('');
+        $('#mediaPicker').classList.add('active');
+      }
+
+      function closeMediaPicker() {
+        state.mediaPickTarget = null;
+        state.mediaPickAssets = [];
+        $('#mediaPicker').classList.remove('active');
+      }
+
+      function renderMediaPickerGrid(query) {
+        const target = state.mediaPickTarget;
+        const wantVideo = target?.accept === 'video';
+        const q = (query || '').trim().toLowerCase();
+        const assets = collectAssets().filter((a) => a.value && (wantVideo ? a.isVideo : !a.isVideo) && (!q || `${a.title} ${a.source}`.toLowerCase().includes(q)));
+        state.mediaPickAssets = assets;
+        $('#mediaPickerGrid').innerHTML = assets.map((a, i) => `
+          <div class="media-pick-card" data-media-pick-index="${i}">
+            <div class="media-pick-thumb ${a.isVideo ? 'video' : ''}">${a.isVideo ? 'VIDEO' : `<img src="${escapeHtml(a.value)}" alt="" />`}</div>
+            <div class="media-pick-meta"><strong>${escapeHtml(a.title)}</strong><small>${escapeHtml(a.source)}</small></div>
+          </div>`).join('') || '<p class="hint">Nessun asset disponibile. Usa "Carica nuovo file" per aggiungerne uno.</p>';
+      }
+
+      function humanFileSize(bytes) {
+        if (!bytes && bytes !== 0) return '';
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+      }
+
+      function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = () => reject(reader.error || new Error('Lettura file non riuscita'));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function setUploadOverlay(active, percent = 0, label = 'Caricamento in corso...', sizeLabel = '') {
+        const overlay = $('#uploadOverlay');
+        if (!overlay) return;
+        overlay.classList.toggle('active', Boolean(active));
+        $('#uploadOverlayText').textContent = label;
+        $('#uploadProgressBar').style.width = `${Math.max(0, Math.min(100, percent))}%`;
+        $('#uploadProgressLabel').textContent = `${Math.round(Math.max(0, Math.min(100, percent)))}%`;
+        $('#uploadProgressSize').textContent = sizeLabel;
+      }
+
+      function finishUploadOverlay(label = 'Completato', delay = 600) {
+        $('#uploadOverlayText').textContent = label;
+        $('#uploadProgressBar').style.width = '100%';
+        $('#uploadProgressLabel').textContent = '100%';
+        setTimeout(() => $('#uploadOverlay')?.classList.remove('active'), delay);
+      }
+
+      async function uploadFilesToLibrary(fileList, options = {}) {
+        const files = Array.from(fileList || []).filter((file) => file.type.startsWith('image/') || file.type.startsWith('video/'));
+        if (!files.length) {
+          setStatus('Nessun file immagine o video valido');
+          return;
+        }
+        recordHistory();
+        state.content.assetLibrary = state.content.assetLibrary || [];
+        setUploadOverlay(true, 0, `Caricamento 0 / ${files.length}...`);
+        const uploadedUrls = [];
+        try {
+          for (let i = 0; i < files.length; i += 1) {
+            const file = files[i];
+            setUploadOverlay(true, Math.round((i / files.length) * 100), `Caricamento ${i + 1} / ${files.length}: ${file.name || 'file'}`, humanFileSize(file.size));
+            const url = await readFileAsDataURL(file);
+            state.content.assetLibrary.push({
+              id: `lib-${Date.now()}-${i}`,
+              url,
+              name: file.name || `File ${i + 1}`,
+              kind: file.type.startsWith('video/') ? 'video' : 'image',
+            });
+            uploadedUrls.push(url);
+          }
+        } catch (error) {
+          state.history.pop();
+          setUploadOverlay(false);
+          setStatus(error?.message || 'Caricamento non riuscito');
+          return;
+        }
+        if (options.apply && uploadedUrls.length) {
+          if (options.apply.mode === 'append') uploadedUrls.forEach((url) => applyMediaValue(options.apply, url));
+          else applyMediaValue(options.apply, uploadedUrls[0]);
+        }
+        renderAll();
+        pushPreviewContent();
+        scheduleSave({ broadcast: false, label: 'libreria asset' });
+        if (options.closePicker) closeMediaPicker();
+        else if ($('#mediaPicker')?.classList.contains('active')) renderMediaPickerGrid($('#mediaPickerSearch').value);
+        finishUploadOverlay(files.length > 1 ? `${files.length} file caricati` : 'File caricato');
+        setStatus(files.length > 1 ? `${files.length} file caricati nella libreria` : 'File caricato nella libreria');
+      }
+
+      function triggerLibraryUpload(options = {}) {
+        state.libraryUploadOptions = options;
+        const input = $('#libraryFileInput');
+        input.setAttribute('accept', options.accept === 'video' ? 'video/*' : options.accept === 'image' ? 'image/*' : 'image/*,video/*');
+        input.click();
+      }
+
+      function updateAssetSelectionUI() {
+        document.querySelectorAll('#assets .asset-card').forEach((card) => {
+          card.classList.toggle('selected', state.selectedAssets.has(card.dataset.assetId));
+        });
+        const replaceBtn = document.querySelector('#assets [data-asset-action="replace"]');
+        const clearBtn = document.querySelector('#assets [data-asset-action="clear"]');
+        if (replaceBtn) replaceBtn.disabled = state.selectedAssets.size !== 1;
+        if (clearBtn) clearBtn.disabled = state.selectedAssets.size === 0;
+      }
+
+      function imageUrlFromCssBackground(value) {
+        const background = String(value || '').trim();
+        if (!background || background === 'none') return '';
+        return background.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+      }
+
+      function collectAssets() {
+        const assets = [];
+        const add = (asset) => {
+          if (asset.kind !== 'media' && asset.kind !== 'style-media' && !asset.value) return;
+          assets.push(asset);
+        };
+        (state.content.assetLibrary || []).forEach((lib) => add({
+          id: `library:${lib.id}`,
+          kind: 'library',
+          libraryId: lib.id,
+          title: lib.name || 'File caricato',
+          source: 'Libreria caricati',
+          value: lib.url,
+          isVideo: lib.kind === 'video',
+        }));
+        add({ id: 'content:drInfo.portraitUrl', kind: 'content', path: 'drInfo.portraitUrl', title: 'Ritratto principale', source: 'Identita', value: state.content.drInfo.portraitUrl || '' });
+        (state.content.clinics || []).forEach((clinic, index) => {
+          (clinic.images || []).forEach((image, imageIndex) => add({
+            id: `content:clinics.${index}.images.${imageIndex}`,
+            kind: 'content',
+            path: `clinics.${index}.images.${imageIndex}`,
+            title: `Sede ${clinic.city || index + 1}`,
+            source: 'Sedi',
+            value: image,
+          }));
+        });
+        (state.content.treatments || []).forEach((treatment, index) => add({
+          id: `content:treatments.${index}.imageUrl`,
+          kind: 'content',
+          path: `treatments.${index}.imageUrl`,
+          title: treatment.title || `Trattamento ${index + 1}`,
+          source: 'Pagine trattamento',
+          value: treatment.imageUrl,
+        }));
+        (state.content.media || []).forEach((item, index) => {
+          add({
+            id: `content:media.${index}.thumbnail`,
+            kind: 'content',
+            path: `media.${index}.thumbnail`,
+            title: item.title || `Media ${index + 1}`,
+            source: 'Media',
+            value: item.thumbnail,
+          });
+          (item.images || []).forEach((image, imageIndex) => add({
+            id: `content:media.${index}.images.${imageIndex}`,
+            kind: 'content',
+            path: `media.${index}.images.${imageIndex}`,
+            title: `${item.title || 'Media'} — galleria ${imageIndex + 1}`,
+            source: 'Media',
+            value: image,
+          }));
+          if (item.videoFile) add({
+            id: `content:media.${index}.videoFile`,
+            kind: 'content',
+            path: `media.${index}.videoFile`,
+            title: `${item.title || 'Media'} — video`,
+            source: 'Media',
+            value: item.videoFile,
+            isVideo: true,
+          });
+        });
+        Object.entries(state.content.customMedia || {}).forEach(([forgeId, value]) => add({
+          id: `media:${forgeId}`,
+          kind: 'media',
+          forgeId,
+          title: forgeId,
+          source: 'Live edit',
+          value,
+        }));
+        Object.entries(state.content.customStyles || {}).forEach(([forgeId, styles]) => {
+          const value = imageUrlFromCssBackground(styles?.backgroundImage);
+          if (!value || state.content.customMedia?.[forgeId]) return;
+          add({
+            id: `style-media:${forgeId}`,
+            kind: 'style-media',
+            forgeId,
+            title: forgeId,
+            source: 'Live edit',
+            value,
+          });
+        });
+        return assets;
+      }
+
+      function filteredAssets() {
+        const query = state.assetQuery.trim().toLowerCase();
+        return collectAssets().filter((asset) => !query || `${asset.title} ${asset.source} ${asset.id}`.toLowerCase().includes(query));
+      }
+
+      function renderAssets() {
+        const assets = filteredAssets();
+        const assetThumb = (asset) => asset.isVideo
+          ? '<span class="asset-thumb-empty">Video</span>'
+          : asset.value
+            ? `<img src="${escapeHtml(asset.value)}" alt="${escapeHtml(asset.title)}" />`
+            : '<span class="asset-thumb-empty">Vuoto</span>';
+        $('#assets').innerHTML = `
+          <div class="section">
+            <header><h2>Assets</h2><div class="mini-actions asset-view-toggle"><button data-asset-view="grid" class="${state.assetView === 'grid' ? 'active' : ''}">Griglia</button><button data-asset-view="list" class="${state.assetView === 'list' ? 'active' : ''}">Lista</button></div></header>
+            <div class="section-body">
+              <div class="asset-toolbar">
+                <input id="assetSearch" value="${escapeHtml(state.assetQuery)}" placeholder="Filtra per nome, sorgente o ID" />
+                <button class="primary" data-asset-action="upload">Carica file</button>
+                <button data-asset-action="replace" ${state.selectedAssets.size !== 1 ? 'disabled' : ''}>Sostituisci asset</button>
+                <button data-asset-action="clear" ${state.selectedAssets.size === 0 ? 'disabled' : ''}>Rimuovi sostituzione</button>
+              </div>
+              <p class="hint">Carica immagini e video con il pulsante o trascinandoli qui dal computer. Click per selezionare, Ctrl+click per selezione multipla, doppio click per anteprima.</p>
+              <div class="asset-grid ${state.assetView === 'list' ? 'list' : ''}">
+                ${assets.map((asset) => `
+                  <div class="asset-card ${asset.kind === 'library' ? 'library' : ''} ${state.selectedAssets.has(asset.id) ? 'selected' : ''}" data-asset-id="${escapeHtml(asset.id)}" title="${escapeHtml(asset.value)}">
+                    ${asset.kind === 'library' ? `<button type="button" class="asset-remove" data-library-remove="${escapeHtml(asset.libraryId)}" title="Elimina dalla libreria">×</button>` : ''}
+                    <div class="asset-thumb">${assetThumb(asset)}</div>
+                    <div class="asset-meta">
+                      <strong>${escapeHtml(asset.title)}</strong>
+                      <small>${escapeHtml(asset.source)}</small>
+                      <small>${escapeHtml(asset.kind === 'media' || asset.kind === 'style-media' ? asset.forgeId : (asset.kind === 'library' ? (asset.isVideo ? 'video' : 'immagine') : asset.path))}</small>
+                    </div>
+                  </div>
+                `).join('') || '<p class="hint">Nessun asset trovato. Usa "Carica file" o trascina qui i tuoi media.</p>'}
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function renderReviews() {
+        $('#reviews').innerHTML = state.content.testimonials.map((item, index) => `
+          <div class="section">
+            <header><h2>${escapeHtml(item.author)}</h2><div class="mini-actions"><button data-duplicate="testimonials.${index}">Duplica</button><button data-remove="testimonials.${index}">Rimuovi</button></div></header>
+            <div class="section-body">
+              <div class="row">${field('Autore', `testimonials.${index}.author`, item.author)}${field('Eta', `testimonials.${index}.age`, item.age || '')}</div>
+              <div class="row">${field('Trattamento', `testimonials.${index}.treatmentName`, item.treatmentName)}${field('Valutazione', `testimonials.${index}.rating`, item.rating || 5)}</div>
+              ${field('Testo', `testimonials.${index}.content`, item.content, 'textarea')}
+              ${field('Data', `testimonials.${index}.date`, item.date)}
+            </div>
+          </div>`).join('') + `<button data-add="review">Aggiungi recensione</button>`;
+      }
+
+      function renderAll() {
+        state.content = normalizeEditorContent(state.content);
+        renderTemplates();
+        renderDoctor();
+        renderMenu();
+        renderSections();
+        renderSettings();
+        renderTemplateManager();
+        renderHosting();
+        renderClinics();
+        renderContatti();
+        renderFooterPanel();
+        renderTreatmentCategories();
+        renderTreatments();
+        renderMedia();
+        renderAssets();
+        renderReviews();
+      }
+
+      function setActiveTab(tabId) {
+        const panel = $('#' + tabId);
+        const tabButton = document.querySelector(`.tabs button[data-tab="${tabId}"]`);
+        if (!panel || !tabButton) return false;
+        document.querySelectorAll('.tabs button, .panel').forEach((el) => el.classList.remove('active'));
+        tabButton.classList.add('active');
+        panel.classList.add('active');
+        return true;
+      }
+
+      function focusSiteManagerPath(paths) {
+        const wantedPaths = (Array.isArray(paths) ? paths : [paths]).filter(Boolean);
+        if (wantedPaths.length === 0) return false;
+        const controls = Array.from(document.querySelectorAll('[data-path]'));
+        const control = controls.find((item) => wantedPaths.includes(item.dataset.path));
+        if (!control) return false;
+
+        document.body.classList.remove('sidebar-collapsed');
+        $('#collapseSidebar').textContent = '‹';
+
+        const panel = control.closest('.panel');
+        if (panel?.id) setActiveTab(panel.id);
+
+        document.querySelectorAll('.live-field-highlight').forEach((item) => item.classList.remove('live-field-highlight'));
+        const fieldShell = control.closest('label, .section, .map-node') || control;
+        fieldShell.classList.add('live-field-highlight');
+
+        requestAnimationFrame(() => {
+          fieldShell.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+          if (typeof control.focus === 'function' && control.type !== 'hidden') control.focus({ preventScroll: true });
+        });
+
+        window.clearTimeout(state.liveFieldHighlightTimer);
+        state.liveFieldHighlightTimer = window.setTimeout(() => {
+          fieldShell.classList.remove('live-field-highlight');
+        }, 3600);
+        return true;
+      }
+
+      function broadcastPreview() {
+        if (!$('#liveToggle').checked) return;
+        $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_CONTENT', content: state.content }, '*');
+        $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_LIVE_EDIT', enabled: $('#liveToggle').checked }, '*');
+      }
+
+      function pushPreviewContent() {
+        $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_CONTENT', content: state.content }, '*');
+        $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_LIVE_EDIT', enabled: $('#liveToggle').checked }, '*');
+      }
+
+      function clampPreviewZoom(value) {
+        return Math.max(50, Math.min(180, Math.round(Number(value) || 100)));
+      }
+
+      function applyPreviewZoom() {
+        state.previewZoom = clampPreviewZoom(state.previewZoom);
+        const liveEditing = $('#liveToggle')?.checked;
+        const effectiveZoom = liveEditing ? state.previewZoom / 100 : 1;
+        const preview = document.querySelector('.preview');
+        preview?.style.setProperty('--preview-zoom', String(effectiveZoom));
+        preview?.classList.toggle('live-editing', Boolean(liveEditing));
+        if ($('#previewZoom')) $('#previewZoom').value = String(state.previewZoom);
+        if ($('#previewZoomValue')) $('#previewZoomValue').textContent = `${state.previewZoom}%`;
+        localStorage.setItem('websitesForgePreviewZoom', String(state.previewZoom));
+      }
+
+      function setPreviewZoom(value) {
+        state.previewZoom = clampPreviewZoom(value);
+        applyPreviewZoom();
+      }
+
+      function scheduleSave(options = { broadcast: true, label: '' }) {
+        const label = shortSaveLabel(options.label || state.pendingSaveLabel || 'modifica');
+        state.contentVersion += 1;
+        state.pendingSaveLabel = label;
+        state.saveAgain = state.isSaving || state.saveAgain;
+        setStatus(`Salvataggio: ${label}...`);
+        setSaveOverlay(true, label);
+        clearTimeout(state.saveTimer);
+        if (state.isSaving) {
+          state.saveAgain = true;
+          return;
+        }
+        state.saveTimer = setTimeout(async () => {
+          const version = state.contentVersion;
+          const payload = JSON.stringify(state.content);
+          state.isSaving = true;
+          state.saveAgain = false;
+          setSaveOverlay(true, label);
+          try {
+            const data = await api('/api/content', { method: 'PUT', body: payload });
+            if (state.contentVersion === version) {
+              state.content = normalizeEditorContent(data.content);
+            } else {
+              state.saveAgain = true;
+            }
+            state.templates = data.templates;
+            if (options.broadcast) broadcastPreview();
+            if (state.saveAgain) {
+              setStatus('Altre modifiche in coda...');
+            } else {
+              setStatus(`Salvato automaticamente: ${label}`);
+              state.pendingSaveLabel = '';
+              pushPreviewContent();
+            }
+          } catch (error) {
+            setStatus(error.message);
+            finishSaveOverlay(`Salvataggio fallito: ${error.message}`, 'error');
+          } finally {
+            state.isSaving = false;
+            if (state.saveAgain) {
+              scheduleSave({ broadcast: options.broadcast, label: state.pendingSaveLabel || label });
+            } else {
+              if (!$('#saveOverlay')?.classList.contains('error')) finishSaveOverlay(`Salvato: ${label}`, 'done');
+            }
+          }
+        }, 500);
+      }
+
+      async function saveContentNow(label = 'contenuto') {
+        clearTimeout(state.saveTimer);
+        setSaveOverlay(true, label);
+        state.isSaving = true;
+        try {
+          const data = await api('/api/content', { method: 'PUT', body: JSON.stringify(state.content) });
+          state.content = normalizeEditorContent(data.content);
+          state.templates = data.templates;
+          state.pendingSaveLabel = '';
+          state.saveAgain = false;
+          pushPreviewContent();
+          setStatus(`Salvato: ${label}`);
+          finishSaveOverlay(`Salvato: ${label}`, 'done');
+          return data;
+        } catch (error) {
+          setStatus(error.message);
+          finishSaveOverlay(`Salvataggio fallito: ${error.message}`, 'error');
+          throw error;
+        } finally {
+          state.isSaving = false;
+        }
+      }
+
+      function readInputValue(input, path) {
+        if (input.type === 'checkbox') return input.checked;
+        if (path.endsWith('.benefits') || path.endsWith('.images') || path.endsWith('.equipment') || path.endsWith('.metaLines')) {
+          return input.value.split('\n').map((line) => line.trim()).filter(Boolean);
+        }
+        if (path.endsWith('.lat') || path.endsWith('.lng')) {
+          const trimmed = input.value.trim();
+          if (trimmed === '') return undefined;
+          const num = Number(trimmed.replace(',', '.'));
+          return Number.isFinite(num) ? num : undefined;
+        }
+        return input.value;
+      }
+
+      function handleEditorInput(event) {
+        const input = event.target;
+        if (input.id === 'assetSearch') {
+          state.assetQuery = input.value;
+          renderAssets();
+          return;
+        }
+        if (event.type === 'input' && (input.tagName === 'SELECT' || input.type === 'checkbox')) return;
+        if (event.type === 'change' && input.tagName !== 'SELECT' && input.type !== 'checkbox') return;
+        const styleName = event.target.dataset?.style;
+        if (styleName) {
+          if (!state.selected?.forgeId) {
+            setStatus('Seleziona prima un elemento');
+            return;
+          }
+
+          recordHistory();
+          state.content.customStyles = state.content.customStyles || {};
+          state.content.customStyles[state.selected.forgeId] = {
+            ...(state.content.customStyles[state.selected.forgeId] || {}),
+            [styleName]: event.target.value,
+          };
+
+          $('#preview').contentWindow?.postMessage({
+            type: 'WEBSITES_FORGE_STYLE_UPDATE',
+            forgeId: state.selected.forgeId,
+            styles: { [styleName]: event.target.value },
+          }, '*');
+          scheduleSave({ broadcast: false, label: `stile ${styleName}` });
+          return;
+        }
+
+        const path = event.target.dataset?.path;
+        if (!path) return;
+        const value = readInputValue(event.target, path);
+        recordHistory();
+        setByPath(path, value);
+        syncNavDestination(path);
+        $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_CONTENT_FIELD_PATCH', path, value }, '*');
+        if (path.startsWith('navItems.')) {
+          $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_CONTENT', content: state.content }, '*');
+          if (path.endsWith('.destinationType')) renderMenu();
+        }
+        if (path.startsWith('media.') && (path.endsWith('.kind') || path.endsWith('.sectionId'))) {
+          renderMedia();
+        }
+        if (path.startsWith('siteSettings.footer.perPage.')) {
+          renderFooterPanel();
+        }
+        scheduleSave({ broadcast: false, label: saveLabelFromPath(path) });
+      }
+
+      document.body.addEventListener('input', handleEditorInput);
+      document.body.addEventListener('change', handleEditorInput);
+
+      function assetById(assetId) {
+        return collectAssets().find((asset) => asset.id === assetId);
+      }
+
+      function applyAssetValue(asset, value) {
+        if (!asset) return false;
+        recordHistory();
+        if (asset.kind === 'media' || asset.kind === 'style-media') {
+          state.content.customMedia = state.content.customMedia || {};
+          if (value === undefined) delete state.content.customMedia[asset.forgeId];
+          else state.content.customMedia[asset.forgeId] = value;
+          if (asset.kind === 'style-media' && state.content.customStyles?.[asset.forgeId]) {
+            const styles = state.content.customStyles[asset.forgeId];
+            delete styles.backgroundImage;
+            delete styles.backgroundSize;
+            delete styles.backgroundPosition;
+            delete styles.backgroundRepeat;
+            if (styles.color === 'transparent') delete styles.color;
+            if (Object.keys(styles).length === 0) delete state.content.customStyles[asset.forgeId];
+          }
+        } else {
+          setByPath(asset.path, value);
+        }
+        renderAll();
+        pushPreviewContent();
+        scheduleSave({ broadcast: false, label: 'asset' });
+        return true;
+      }
+
+      function selectedAssetList() {
+        return Array.from(state.selectedAssets).map(assetById).filter(Boolean);
+      }
+
+      function openAssetModal(asset) {
+        if (!asset) return;
+        $('#assetModalTitle').textContent = asset.title;
+        $('#assetModalImage').src = asset.value;
+        $('#assetModal').classList.add('active');
+      }
+
+      function hideAssetContextMenu() {
+        $('#assetContextMenu').classList.remove('active');
+      }
+
+      function openAssetContextMenu(event, assetId) {
+        if (!state.selectedAssets.has(assetId)) {
+          state.selectedAssets = new Set([assetId]);
+          updateAssetSelectionUI();
+        }
+        const menu = $('#assetContextMenu');
+        menu.style.left = `${Math.min(event.clientX, window.innerWidth - 210)}px`;
+        menu.style.top = `${Math.min(event.clientY, window.innerHeight - 128)}px`;
+        menu.classList.add('active');
+      }
+
+      document.body.addEventListener('dragstart', (event) => {
+        const handle = event.target.closest?.('.drag-handle[data-drag-nav-path]');
+        if (!handle) {
+          event.preventDefault();
+          return;
+        }
+        const node = handle.closest('.map-node[data-nav-path]');
+        if (!node) return;
+        state.dragNavPath = handle.dataset.dragNavPath;
+        node.classList.add('is-dragging');
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', state.dragNavPath);
+      });
+
+      document.body.addEventListener('dragover', (event) => {
+        const node = event.target.closest?.('.map-node[data-nav-path]');
+        if (!node || !state.dragNavPath) return;
+        if (navParentPath(state.dragNavPath) !== navParentPath(node.dataset.navPath)) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+        document.querySelectorAll('.map-node.is-drop-target').forEach((item) => item.classList.remove('is-drop-target'));
+        node.classList.add('is-drop-target');
+      });
+
+      document.body.addEventListener('dragleave', (event) => {
+        const node = event.target.closest?.('.map-node[data-nav-path]');
+        if (node && !node.contains(event.relatedTarget)) {
+          node.classList.remove('is-drop-target');
+        }
+      });
+
+      document.body.addEventListener('drop', (event) => {
+        const node = event.target.closest?.('.map-node[data-nav-path]');
+        if (!node || !state.dragNavPath) return;
+        event.preventDefault();
+        const fromPath = event.dataTransfer.getData('text/plain') || state.dragNavPath;
+        const toPath = node.dataset.navPath;
+        document.querySelectorAll('.map-node.is-drop-target, .map-node.is-dragging').forEach((item) => item.classList.remove('is-drop-target', 'is-dragging'));
+        if (fromPath === toPath) {
+          state.dragNavPath = '';
+          return;
+        }
+        recordHistory();
+        if (!reorderNavItem(fromPath, toPath)) {
+          state.history.pop();
+          state.dragNavPath = '';
+          setStatus('Riordino consentito solo tra voci dello stesso livello');
+          return;
+        }
+        state.dragNavPath = '';
+        renderAll();
+        scheduleSave({ label: 'ordine menu' });
+        broadcastPreview();
+        setStatus('Ordine menu aggiornato');
+      });
+
+      document.body.addEventListener('dragend', () => {
+        state.dragNavPath = '';
+        document.querySelectorAll('.map-node.is-drop-target, .map-node.is-dragging').forEach((item) => item.classList.remove('is-drop-target', 'is-dragging'));
+      });
+
+      document.body.addEventListener('click', async (event) => {
+        if (!event.target.closest?.('#assetContextMenu')) hideAssetContextMenu();
+
+        const assetView = event.target.dataset?.assetView;
+        if (assetView) {
+          state.assetView = assetView;
+          renderAssets();
+          return;
+        }
+
+        const libraryRemove = event.target.dataset?.libraryRemove;
+        if (libraryRemove) {
+          recordHistory();
+          state.content.assetLibrary = (state.content.assetLibrary || []).filter((item) => item.id !== libraryRemove);
+          state.selectedAssets.delete(`library:${libraryRemove}`);
+          renderAssets();
+          scheduleSave({ broadcast: false, label: 'libreria asset' });
+          setStatus('File rimosso dalla libreria');
+          return;
+        }
+
+        const assetCard = event.target.closest?.('[data-asset-id]');
+        if (assetCard) {
+          const assetId = assetCard.dataset.assetId;
+          if (event.ctrlKey || event.metaKey) {
+            const next = new Set(state.selectedAssets);
+            next.has(assetId) ? next.delete(assetId) : next.add(assetId);
+            state.selectedAssets = next;
+          } else {
+            state.selectedAssets = new Set([assetId]);
+          }
+          updateAssetSelectionUI();
+          return;
+        }
+
+        const assetAction = event.target.dataset?.assetAction;
+        if (assetAction) {
+          const assets = selectedAssetList();
+          if (assetAction === 'upload') {
+            triggerLibraryUpload();
+            return;
+          }
+          if (assetAction === 'replace') {
+            if (assets.length !== 1) {
+              setStatus('Seleziona un solo asset da sostituire');
+              return;
+            }
+            state.assetReplaceTarget = assets[0].id;
+            $('#assetFileInput').click();
+            return;
+          }
+          if (assetAction === 'clear') {
+            assets.forEach((asset) => applyAssetValue(asset, asset.kind === 'media' || asset.kind === 'style-media' ? undefined : ''));
+            state.selectedAssets = new Set();
+            renderAssets();
+            setStatus('Asset rimossi');
+            return;
+          }
+          if (assetAction === 'copy') {
+            const asset = assets[0];
+            if (asset) navigator.clipboard?.writeText(asset.value);
+            setStatus('Sorgente asset copiata');
+            return;
+          }
+        }
+
+        // ---- Media manager interactions ----
+        if (event.target.closest?.('[data-media-picker-upload]')) {
+          const target = state.mediaPickTarget;
+          if (target) triggerLibraryUpload({ apply: target, accept: target.accept, closePicker: true });
+          return;
+        }
+        if (event.target.id === 'mediaPicker' || event.target.closest?.('[data-media-pick-close]')) {
+          closeMediaPicker();
+          return;
+        }
+        const pickCard = event.target.closest?.('[data-media-pick-index]');
+        if (pickCard) {
+          const asset = (state.mediaPickAssets || [])[Number(pickCard.dataset.mediaPickIndex)];
+          if (asset) {
+            applyMediaValue(state.mediaPickTarget, asset.value);
+            closeMediaPicker();
+          }
+          return;
+        }
+        const mToggle = event.target.closest?.('[data-media-toggle]');
+        if (mToggle) {
+          const id = mToggle.dataset.mediaToggle;
+          if (state.mediaExpanded.has(id)) state.mediaExpanded.delete(id);
+          else state.mediaExpanded.add(id);
+          renderMedia();
+          return;
+        }
+        const mConfig = event.target.dataset?.mediaConfig;
+        if (mConfig) {
+          if (state.mediaSectionConfig.has(mConfig)) state.mediaSectionConfig.delete(mConfig);
+          else state.mediaSectionConfig.add(mConfig);
+          renderMedia();
+          return;
+        }
+        const mAddItem = event.target.dataset?.mediaAddItem;
+        if (mAddItem !== undefined) {
+          recordHistory();
+          const id = `media-${Date.now()}`;
+          state.content.media.push({ id, sectionId: mAddItem, kind: 'article', title: 'Nuovo contenuto', excerpt: '', source: '', category: '', date: '', duration: '', thumbnail: '', linkMode: 'internal', externalUrl: '', videoUrl: '', videoFile: '', images: [], body: '' });
+          state.mediaExpanded.add(id);
+          renderMedia();
+          scheduleSave({ label: 'nuovo contenuto media' });
+          broadcastPreview();
+          return;
+        }
+        const mLink = event.target.closest?.('[data-media-linkmode]');
+        if (mLink) {
+          recordHistory();
+          setByPath(mLink.dataset.mediaLinkmode, mLink.dataset.mediaLinkmodeValue);
+          $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_CONTENT_FIELD_PATCH', path: mLink.dataset.mediaLinkmode, value: mLink.dataset.mediaLinkmodeValue }, '*');
+          renderMedia();
+          scheduleSave({ broadcast: false, label: 'apertura media' });
+          return;
+        }
+        const mUpload = event.target.dataset?.mediaUpload;
+        if (mUpload) {
+          state.mediaUploadTarget = { path: mUpload, mode: event.target.dataset.mediaMode || 'single', accept: event.target.dataset.mediaAccept || 'image' };
+          const input = $('#mediaFileInput');
+          input.setAttribute('accept', state.mediaUploadTarget.accept === 'video' ? 'video/*' : 'image/*');
+          input.click();
+          return;
+        }
+        const mPick = event.target.dataset?.mediaPick;
+        if (mPick) {
+          openMediaPicker({ path: mPick, mode: event.target.dataset.mediaMode || 'single', accept: event.target.dataset.mediaAccept || 'image' });
+          return;
+        }
+        const mClear = event.target.dataset?.mediaClear;
+        if (mClear) {
+          recordHistory();
+          setByPath(mClear, '');
+          renderMedia();
+          pushPreviewContent();
+          scheduleSave({ broadcast: false, label: 'media' });
+          return;
+        }
+        const mRemoveImage = event.target.dataset?.mediaRemoveImage;
+        if (mRemoveImage) {
+          recordHistory();
+          const parts = mRemoveImage.split('.');
+          const i = Number(parts.pop());
+          const arr = getByPath(parts.join('.'));
+          if (Array.isArray(arr)) arr.splice(i, 1);
+          renderAll();
+          pushPreviewContent();
+          scheduleSave({ broadcast: false, label: 'galleria immagini' });
+          return;
+        }
+
+        const device = event.target.dataset?.device;
+        if (device) {
+          document.querySelectorAll('[data-device]').forEach((button) => button.classList.remove('active'));
+          event.target.classList.add('active');
+          document.querySelector('.preview').className = `preview ${device === 'desktop' ? '' : device}`.trim();
+          applyPreviewZoom();
+          return;
+        }
+
+        const zoomStep = event.target.dataset?.previewZoomStep;
+        if (zoomStep) {
+          setPreviewZoom(state.previewZoom + Number(zoomStep));
+          return;
+        }
+
+        if (event.target.dataset?.previewZoomReset !== undefined) {
+          setPreviewZoom(100);
+          return;
+        }
+
+        const colorPreset = event.target.dataset?.colorPreset;
+        if (colorPreset) {
+          if (!state.selected?.forgeId) {
+            setStatus('Seleziona prima un elemento');
+            return;
+          }
+          const presets = {
+            lightText: { color: '#ffffff' },
+            darkText: { color: '#090C16' },
+            accentText: { color: '#72C3BF' },
+          };
+          recordHistory();
+          const styles = presets[colorPreset];
+          state.content.customStyles = state.content.customStyles || {};
+          state.content.customStyles[state.selected.forgeId] = {
+            ...(state.content.customStyles[state.selected.forgeId] || {}),
+            ...styles,
+          };
+          $('#preview').contentWindow?.postMessage({
+            type: 'WEBSITES_FORGE_STYLE_UPDATE',
+            forgeId: state.selected.forgeId,
+            styles,
+          }, '*');
+          scheduleSave({ broadcast: false, label: 'preset colore' });
+          setStatus('Preset colore applicato');
+          return;
+        }
+
+        const tab = event.target.dataset?.tab;
+        if (tab) {
+          setActiveTab(tab);
+        }
+
+        const remove = event.target.dataset?.remove;
+        if (remove) {
+          recordHistory();
+          const parts = remove.split('.');
+          const index = Number(parts.pop());
+          const arr = getByPath(parts.join('.'));
+          arr.splice(index, 1);
+          renderAll();
+          scheduleSave({ label: `rimosso ${saveLabelFromPath(remove)}` });
+          broadcastPreview();
+        }
+
+        const duplicate = event.target.dataset?.duplicate;
+        if (duplicate) {
+          recordHistory();
+          if (!duplicateRecord(duplicate)) {
+            state.history.pop();
+            setStatus('Elemento non duplicabile');
+            return;
+          }
+          renderAll();
+          scheduleSave({ label: `duplicato ${saveLabelFromPath(duplicate)}` });
+          broadcastPreview();
+          setStatus('Elemento duplicato');
+          return;
+        }
+
+        const add = event.target.dataset?.add;
+        const addChild = event.target.dataset?.addChild;
+        if (add || addChild !== undefined) recordHistory();
+        if (add === 'credential') state.content.drInfo.credentials.push({ year: 'Nuova voce', title: 'Titolo', institution: 'Dettagli' });
+        if (add === 'navItem') state.content.navItems.push({ id: `voce-${Date.now()}`, label: 'Nuova voce', tab: 'home', destinationType: 'page', destination: 'home', transition: 'fade', children: [] });
+        if (add === 'treatmentCategory') state.content.treatmentCategories.push({ id: `categoria-${Date.now()}`, label: 'Nuova categoria', page: 'chirurgia' });
+        if (add === 'treatment') state.content.treatments.push({ id: `trattamento-${Date.now()}`, category: state.content.treatmentCategories[0]?.id || 'seno', title: 'Nuovo trattamento', subtitle: 'Sottotitolo', description: 'Descrizione breve', fullDescription: 'Descrizione completa', anesthesia: '', duration: '', hospitalization: '', recoveryTime: '', benefits: [], imageUrl: '' });
+        if (add === 'review') state.content.testimonials.push({ id: `review-${Date.now()}`, author: 'Nuovo paziente', treatmentName: '', rating: 5, content: '', date: 'Oggi' });
+        if (add === 'clinic') state.content.clinics.push({ id: `sede-${Date.now()}`, city: 'Nuova sede', name: 'Nome studio', address: '', phone: '', email: '', hours: '', description: '', equipment: [], lat: undefined, lng: undefined, images: [] });
+        if (add === 'footerPolicy') { state.content.siteSettings.footer.policyLinks = state.content.siteSettings.footer.policyLinks || []; state.content.siteSettings.footer.policyLinks.push({ label: 'Nuovo link', url: '#' }); }
+        if (add === 'mediaSection') state.content.mediaSections.push({ id: `sezione-${Date.now()}`, title: 'Nuova sezione', subtitle: '', layout: 'press-grid' });
+        if (add === 'mediaItem') state.content.media.push({ id: `media-${Date.now()}`, sectionId: state.content.mediaSections[0]?.id || '', kind: 'article', title: 'Nuovo contenuto', excerpt: '', source: '', category: '', date: '', duration: '', thumbnail: '', linkMode: 'internal', externalUrl: '', videoUrl: '', videoFile: '', images: [], body: '' });
+        if (addChild !== undefined) {
+          const parent = getByPath(addChild);
+          parent.children = parent.children || [];
+          parent.children.push({ id: `sottovoce-${Date.now()}`, label: 'Nuova sottovoce', tab: parent.tab || 'home', destinationType: 'page', destination: parent.tab || 'home', transition: 'fade', children: [] });
+        }
+        if (add || addChild !== undefined) {
+          renderAll();
+          scheduleSave({ label: addChild !== undefined ? 'sotto-menu' : `nuovo ${add}` });
+          broadcastPreview();
+        }
+      });
+
+      document.body.addEventListener('dblclick', (event) => {
+        const assetCard = event.target.closest?.('[data-asset-id]');
+        if (!assetCard) return;
+        openAssetModal(assetById(assetCard.dataset.assetId));
+      });
+
+      document.body.addEventListener('contextmenu', (event) => {
+        const assetCard = event.target.closest?.('[data-asset-id]');
+        if (!assetCard) return;
+        event.preventDefault();
+        openAssetContextMenu(event, assetCard.dataset.assetId);
+      });
+
+      $('#assetModalClose').addEventListener('click', () => $('#assetModal').classList.remove('active'));
+      $('#assetModal').addEventListener('click', (event) => {
+        if (event.target.id === 'assetModal') $('#assetModal').classList.remove('active');
+      });
+      $('#assetFileInput').addEventListener('change', (event) => {
+        const file = event.target.files?.[0];
+        const asset = assetById(state.assetReplaceTarget);
+        if (!file || !asset) {
+          event.target.value = '';
+          return;
+        }
+        if (!file.type.startsWith('image/')) {
+          setStatus('Seleziona un file immagine valido');
+          event.target.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          applyAssetValue(asset, String(reader.result));
+          state.assetReplaceTarget = null;
+          state.selectedAssets = new Set([asset.id]);
+          renderAssets();
+          setStatus('Asset sostituito');
+        };
+        reader.readAsDataURL(file);
+        event.target.value = '';
+      });
+
+      $('#mediaFileInput').addEventListener('change', (event) => {
+        const files = Array.from(event.target.files || []);
+        const target = state.mediaUploadTarget;
+        if (!files.length || !target) {
+          event.target.value = '';
+          return;
+        }
+        const wantVideo = target.accept === 'video';
+        let valid = files.filter((file) => wantVideo ? file.type.startsWith('video/') : file.type.startsWith('image/'));
+        if (target.mode !== 'append') valid = valid.slice(0, 1);
+        if (!valid.length) {
+          setStatus(wantVideo ? 'Seleziona un file video valido' : 'Seleziona un file immagine valido');
+          event.target.value = '';
+          return;
+        }
+        let remaining = valid.length;
+        valid.forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            applyMediaValue(target, String(reader.result));
+            remaining -= 1;
+            if (remaining === 0) {
+              state.mediaUploadTarget = null;
+              setStatus(valid.length > 1 ? `${valid.length} file caricati` : 'File caricato');
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+        event.target.value = '';
+      });
+
+      $('#mediaPickerSearch').addEventListener('input', (event) => {
+        renderMediaPickerGrid(event.target.value);
+      });
+
+      $('#libraryFileInput').addEventListener('change', (event) => {
+        const files = event.target.files;
+        const options = state.libraryUploadOptions || {};
+        state.libraryUploadOptions = null;
+        uploadFilesToLibrary(files, options);
+        event.target.value = '';
+      });
+
+      // External (OS) drag-and-drop of media files into the editor -> asset library
+      let dropDepth = 0;
+      const dragHasFiles = (event) => Array.from(event.dataTransfer?.types || []).includes('Files');
+      window.addEventListener('dragenter', (event) => {
+        if (!dragHasFiles(event)) return;
+        event.preventDefault();
+        dropDepth += 1;
+        $('#dropZone')?.classList.add('active');
+      });
+      window.addEventListener('dragover', (event) => {
+        if (!dragHasFiles(event)) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+      });
+      window.addEventListener('dragleave', (event) => {
+        if (!dragHasFiles(event)) return;
+        dropDepth = Math.max(0, dropDepth - 1);
+        if (dropDepth === 0) $('#dropZone')?.classList.remove('active');
+      });
+      window.addEventListener('drop', (event) => {
+        if (!dragHasFiles(event)) return;
+        event.preventDefault();
+        dropDepth = 0;
+        $('#dropZone')?.classList.remove('active');
+        const files = event.dataTransfer?.files;
+        if (files && files.length) uploadFilesToLibrary(files);
+      });
+
+      $('#templateSelect').addEventListener('change', async (event) => {
+        const data = await api(`/api/templates/${event.target.value}`);
+        state.content = normalizeEditorContent(data.content);
+        state.templates = data.templates;
+        restoreHistory();
+        renderAll();
+        pushPreviewContent();
+        setStatus('Template caricato');
+      });
+
+      $('#saveTemplate').addEventListener('click', async () => {
+        await saveContentNow('contenuto template');
+        const id = $('#templateSelect').value || $('#templateName').value;
+        const data = await api(`/api/templates/${id}`, { method: 'PUT', body: JSON.stringify({ name: $('#templateName').value }) });
+        state.content = normalizeEditorContent(data.content);
+        state.templates = data.templates;
+        renderAll();
+        persistHistory();
+        pushPreviewContent();
+        setStatus('Template salvato');
+      });
+
+      $('#newTemplate').addEventListener('click', async () => {
+        const name = $('#templateName').value || `Template ${new Date().toLocaleString('it-IT')}`;
+        const data = await api('/api/templates', { method: 'POST', body: JSON.stringify({ name }) });
+        state.content = normalizeEditorContent(data.content);
+        state.templates = data.templates;
+        resetHistoryPersistence();
+        renderAll();
+        pushPreviewContent();
+        setStatus('Nuovo template salvato');
+      });
+
+      $('#deleteTemplate')?.addEventListener('click', async () => {
+        if (!confirm('Eliminare il template selezionato?')) return;
+        const data = await api(`/api/templates/${$('#templateSelect').value}`, { method: 'DELETE' });
+        state.templates = data.templates;
+        renderAll();
+        setStatus('Template eliminato');
+      });
+
+      function downloadCurrentTemplate() {
+        const name = ($('#templateName').value || state.content.meta.templateName || 'websites-forge-template')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)+/g, '') || 'websites-forge-template';
+        const blob = new Blob([JSON.stringify(state.content, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${name}.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setStatus('Template salvato come file JSON');
+      }
+
+      async function importTemplateFile(file) {
+        if (!file) return;
+        const largeImport = file.size > 1024 * 1024;
+        const sizeLabel = formatBytes(file.size);
+        try {
+          if (largeImport) {
+            setImportOverlay(true, 4, 'Apertura template...', sizeLabel);
+            await nextFrame();
+          }
+          const fileText = await readTemplateText(file, (progress) => {
+            if (largeImport) setImportOverlay(true, 5 + (progress * 55), 'Lettura file template...', sizeLabel);
+          });
+          if (largeImport) {
+            setImportOverlay(true, 66, 'Analisi del template...', sizeLabel);
+            await nextFrame();
+          }
+          const imported = JSON.parse(fileText);
+          recordHistory();
+          if (largeImport) {
+            setImportOverlay(true, 76, 'Normalizzazione contenuti...', sizeLabel);
+            await nextFrame();
+          }
+          state.content = normalizeEditorContent(imported);
+          if (largeImport) {
+            setImportOverlay(true, 84, 'Salvataggio nel progetto...', sizeLabel);
+            await nextFrame();
+          }
+          const data = await api('/api/content', { method: 'PUT', body: JSON.stringify(state.content) });
+          state.content = normalizeEditorContent(data.content);
+          state.templates = data.templates;
+          persistHistory();
+          if (largeImport) {
+            setImportOverlay(true, 92, 'Aggiornamento editor e anteprima...', sizeLabel);
+            await nextFrame();
+          }
+          renderAll();
+          pushPreviewContent();
+          if (largeImport) finishImportOverlay('Template importato');
+          setStatus('Template importato');
+        } catch (error) {
+          if (largeImport) finishImportOverlay(`Import fallito: ${error.message}`, 2600);
+          setStatus(`Import fallito: ${error.message}`);
+        } finally {
+          $('#templateFileInput').value = '';
+        }
+      }
+
+      $('#downloadTemplate').addEventListener('click', downloadCurrentTemplate);
+      $('#importTemplate').addEventListener('click', () => $('#templateFileInput').click());
+      $('#templateFileInput').addEventListener('change', (event) => importTemplateFile(event.target.files?.[0]));
+
+      document.body.addEventListener('click', async (event) => {
+        if (event.target.id === 'managerDownloadTemplate') {
+          downloadCurrentTemplate();
+          return;
+        }
+        if (event.target.id === 'managerImportTemplate') {
+          $('#templateFileInput').click();
+          return;
+        }
+        if (event.target.id === 'managerLoadTemplate') {
+          const id = $('#managerTemplateSelect')?.value || $('#templateSelect').value;
+          const data = await api(`/api/templates/${id}`);
+          state.content = normalizeEditorContent(data.content);
+          state.templates = data.templates;
+          restoreHistory();
+          renderAll();
+          pushPreviewContent();
+          setStatus('Template caricato');
+          return;
+        }
+        if (event.target.id === 'managerDeleteTemplate') {
+          const id = $('#managerTemplateSelect')?.value || $('#templateSelect').value;
+          if (!confirm('Eliminare il template selezionato?')) return;
+          const data = await api(`/api/templates/${id}`, { method: 'DELETE' });
+          state.templates = data.templates;
+          renderAll();
+          setStatus('Template eliminato');
+        }
+      });
+
+      $('#exportZip').addEventListener('click', async () => {
+        setStatus('Creo export...');
+        try {
+          const data = await api('/api/export', { method: 'POST' });
+          setStatus('Export pronto');
+          window.location.href = data.url;
+        } catch (error) {
+          setStatus(error.message);
+        }
+      });
+
+      $('#undoAction').addEventListener('click', undo);
+      $('#redoAction').addEventListener('click', redo);
+      $('#collapseSidebar').addEventListener('click', () => {
+        document.body.classList.toggle('sidebar-collapsed');
+        $('#collapseSidebar').textContent = document.body.classList.contains('sidebar-collapsed') ? '›' : '‹';
+      });
+
+      window.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
+          event.preventDefault();
+          event.shiftKey ? redo() : undo();
+        }
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'y') {
+          event.preventDefault();
+          redo();
+        }
+      });
+
+      $('#liveToggle').addEventListener('change', () => {
+        $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_LIVE_EDIT', enabled: $('#liveToggle').checked }, '*');
+        applyPreviewZoom();
+        if ($('#liveToggle').checked) broadcastPreview();
+      });
+
+      $('#previewZoom').addEventListener('input', (event) => {
+        setPreviewZoom(event.target.value);
+      });
+
+      window.addEventListener('message', (event) => {
+        if (event.data?.type === 'WEBSITES_FORGE_ELEMENT_SELECTED') {
+          state.selected = event.data;
+          $('#selectedSummary').textContent = `${event.data.tagName || 'elemento'} ${event.data.forgeId ? `#${event.data.forgeId}` : ''}`.trim();
+          document.querySelectorAll('[data-style]').forEach((input) => {
+            input.value = event.data.styles?.[input.dataset.style] || '';
+          });
+          const focusedInManager = focusSiteManagerPath([event.data.path, event.data.imagePath]);
+          setStatus(focusedInManager ? 'Elemento selezionato e aperto in Gestione sito' : 'Elemento selezionato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_HISTORY_MARK') {
+          recordHistoryOnceForLiveAction();
+          setStatus(`Azione tracciata: ${event.data.label || 'modifica'}`);
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_CONTENT_PATCH') {
+          recordHistoryOnceForLiveAction();
+          setByPath(event.data.path, event.data.value);
+          $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_CONTENT_FIELD_PATCH', path: event.data.path, value: event.data.value }, '*');
+          scheduleSave({ broadcast: false, label: saveLabelFromPath(event.data.path) });
+          setStatus('Modifica live salvata');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_STYLE_PATCH') {
+          recordHistory();
+          state.content.customStyles = state.content.customStyles || {};
+          state.content.customStyles[event.data.forgeId] = {
+            ...(state.content.customStyles[event.data.forgeId] || {}),
+            ...event.data.styles,
+          };
+          scheduleSave({ broadcast: false, label: 'stile elemento' });
+          setStatus('Stile live salvato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_MEDIA_PATCH') {
+          recordHistoryOnceForLiveAction();
+          state.content.customMedia = state.content.customMedia || {};
+          if (event.data.remove) delete state.content.customMedia[event.data.forgeId];
+          else state.content.customMedia[event.data.forgeId] = event.data.value ?? '';
+          pushPreviewContent();
+          scheduleSave({ broadcast: false, label: 'immagine elemento' });
+          setStatus('Immagine live salvata');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_STYLE_BATCH_PATCH') {
+          recordHistory();
+          state.content.customStyles = state.content.customStyles || {};
+          (event.data.patches || []).forEach((patch) => {
+            state.content.customStyles[patch.forgeId] = {
+              ...(state.content.customStyles[patch.forgeId] || {}),
+              ...patch.styles,
+            };
+          });
+          scheduleSave({ broadcast: false, label: 'stile multi-selezione' });
+          setStatus('Stile multi-selezione salvato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_TEXT_PATCH') {
+          recordHistory();
+          state.content.customTexts = state.content.customTexts || {};
+          state.content.customTexts[event.data.forgeId] = event.data.text;
+          scheduleSave({ broadcast: false, label: 'testo' });
+          setStatus('Testo live salvato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_HTML_PATCH') {
+          recordHistory();
+          state.content.customHtmls = state.content.customHtmls || {};
+          state.content.customHtmls[event.data.forgeId] = event.data.html;
+          scheduleSave({ broadcast: false, label: 'testo formattato' });
+          setStatus('Formattazione testo salvata');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_LABEL_PATCH') {
+          recordHistory();
+          state.content.customLabels = state.content.customLabels || {};
+          if (event.data.label) state.content.customLabels[event.data.forgeId] = event.data.label;
+          else delete state.content.customLabels[event.data.forgeId];
+          scheduleSave({ broadcast: false, label: 'nome livello' });
+          setStatus('Nome livello salvato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_BEHAVIOR_PATCH') {
+          recordHistory();
+          state.content.customBehaviors = state.content.customBehaviors || {};
+          state.content.customBehaviors[event.data.forgeId] = {
+            ...(state.content.customBehaviors[event.data.forgeId] || {}),
+            ...event.data.behaviors,
+          };
+          scheduleSave({ broadcast: false, label: 'contrasto automatico' });
+          setStatus('Comportamento adattivo salvato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_ACTION_PATCH') {
+          recordHistory();
+          state.content.customActions = state.content.customActions || {};
+          state.content.customActions[event.data.forgeId] = event.data.action;
+          scheduleSave({ broadcast: false, label: 'azione elemento' });
+          setStatus('Azione elemento salvata');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_BEHAVIOR_BATCH_PATCH') {
+          recordHistory();
+          state.content.customBehaviors = state.content.customBehaviors || {};
+          (event.data.patches || []).forEach((patch) => {
+            state.content.customBehaviors[patch.forgeId] = {
+              ...(state.content.customBehaviors[patch.forgeId] || {}),
+              ...patch.behaviors,
+            };
+          });
+          scheduleSave({ broadcast: false, label: 'contrasto multi-selezione' });
+          setStatus('Comportamenti multi-selezione salvati');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_INSERT_PATCH') {
+          recordHistory();
+          if (event.data.parentStylePatch?.forgeId) {
+            state.content.customStyles = state.content.customStyles || {};
+            state.content.customStyles[event.data.parentStylePatch.forgeId] = {
+              ...(state.content.customStyles[event.data.parentStylePatch.forgeId] || {}),
+              ...(event.data.parentStylePatch.styles || {}),
+            };
+          }
+          state.content.customInserts = state.content.customInserts || [];
+          state.content.customInserts.push(event.data.insert);
+          pushPreviewContent();
+          scheduleSave({ broadcast: false, label: 'nuovo elemento' });
+          setStatus('Elemento aggiunto');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_DELETE_INSERT_PATCH') {
+          recordHistory();
+          state.content.customInserts = (state.content.customInserts || []).filter((insert) => insert.id !== event.data.insertId);
+          if (state.content.customStyles) delete state.content.customStyles[event.data.insertId];
+          if (state.content.customMedia) delete state.content.customMedia[event.data.insertId];
+          if (state.content.customTexts) delete state.content.customTexts[event.data.insertId];
+          if (state.content.customHtmls) delete state.content.customHtmls[event.data.insertId];
+          if (state.content.customLabels) delete state.content.customLabels[event.data.insertId];
+          if (state.content.customBehaviors) delete state.content.customBehaviors[event.data.insertId];
+          if (state.content.customActions) delete state.content.customActions[event.data.insertId];
+          scheduleSave({ broadcast: false, label: 'elemento eliminato' });
+          setStatus('Elemento eliminato');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_DELETE_INSERT_BATCH_PATCH') {
+          recordHistory();
+          const ids = new Set(event.data.insertIds || []);
+          state.content.customInserts = (state.content.customInserts || []).filter((insert) => !ids.has(insert.id));
+          ids.forEach((insertId) => {
+            if (state.content.customStyles) delete state.content.customStyles[insertId];
+            if (state.content.customMedia) delete state.content.customMedia[insertId];
+            if (state.content.customTexts) delete state.content.customTexts[insertId];
+            if (state.content.customHtmls) delete state.content.customHtmls[insertId];
+            if (state.content.customLabels) delete state.content.customLabels[insertId];
+            if (state.content.customBehaviors) delete state.content.customBehaviors[insertId];
+            if (state.content.customActions) delete state.content.customActions[insertId];
+          });
+          scheduleSave({ broadcast: false, label: 'elementi eliminati' });
+          setStatus('Elementi eliminati');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_MULTI_DELETE_PATCH') {
+          recordHistory();
+          state.content.customStyles = state.content.customStyles || {};
+          (event.data.stylePatches || []).forEach((patch) => {
+            state.content.customStyles[patch.forgeId] = {
+              ...(state.content.customStyles[patch.forgeId] || {}),
+              ...patch.styles,
+            };
+          });
+          const ids = new Set(event.data.insertIds || []);
+          state.content.customInserts = (state.content.customInserts || []).filter((insert) => !ids.has(insert.id));
+          ids.forEach((insertId) => {
+            if (state.content.customStyles) delete state.content.customStyles[insertId];
+            if (state.content.customMedia) delete state.content.customMedia[insertId];
+            if (state.content.customTexts) delete state.content.customTexts[insertId];
+            if (state.content.customHtmls) delete state.content.customHtmls[insertId];
+            if (state.content.customLabels) delete state.content.customLabels[insertId];
+            if (state.content.customBehaviors) delete state.content.customBehaviors[insertId];
+            if (state.content.customActions) delete state.content.customActions[insertId];
+          });
+          scheduleSave({ broadcast: false, label: 'elementi eliminati' });
+          setStatus('Elementi eliminati');
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_UNDO') {
+          undo();
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_REDO') {
+          redo();
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_TOAST') {
+          setStatus(event.data.message);
+        }
+
+        if (event.data?.type === 'WEBSITES_FORGE_IMAGE_REPLACE_REQUEST') {
+          const value = prompt('Incolla URL immagine oppure trascina un file direttamente sopra l’immagine nella preview.');
+          if (!value) return;
+          recordHistory();
+          setByPath(event.data.path, value);
+          scheduleSave({ label: saveLabelFromPath(event.data.path) || 'immagine' });
+          broadcastPreview();
+        }
+      });
+
+      async function boot() {
+        initSidebarResize();
+        applyPreviewZoom();
+        const data = await api('/api/state');
+        state.defaultContent = cloneContent(data.content);
+        state.content = normalizeEditorContent(data.content);
+        state.templates = data.templates;
+        state.previewUrl = data.previewUrl;
+        $('#preview').src = data.previewUrl;
+        $('#previewUrl').textContent = data.previewUrl;
+        $('#preview').addEventListener('load', () => {
+          broadcastPreview();
+          $('#preview').contentWindow?.postMessage({ type: 'WEBSITES_FORGE_LIVE_EDIT', enabled: $('#liveToggle').checked }, '*');
+        });
+        renderAll();
+        restoreHistory();
+        setStatus(state.history.length ? `Pronto - ${state.history.length} undo disponibili` : 'Pronto');
+      }
+
+      boot().catch((error) => setStatus(error.message));
+    </script>
+  </body>
+</html>
