@@ -6,7 +6,7 @@ Sito web professionale sviluppato con React, TypeScript, Vite e Tailwind CSS.
 
 ## Requisiti
 
-- Node.js 18 o successivo
+- Node.js 24
 - npm
 
 ## Avvio locale
@@ -46,6 +46,8 @@ Il repository esclude deliberatamente:
 
 La cartella `pages-content/` contiene invece lo snapshot pubblico e sanitizzato del CMS usato da GitHub Pages. Non include credenziali FTP né i file di lavoro del builder.
 
+Le correzioni editoriali sono conservate in `pages-content/editorial-overrides.json`; il PDF originale e il CV integrale non sono nel repository. Il CV scaricabile è una versione professionale senza indirizzo privato, data di nascita o e-mail personale. La nuova fotografia è usata esclusivamente nella pagina curriculum.
+
 Dopo aver salvato modifiche nel CMS, aggiorna lo snapshot pubblico e pubblicalo con:
 
 ```sh
@@ -65,7 +67,7 @@ npm run lint
 npm run build
 ```
 
-Se `public/site-content.json` non è presente, l'applicazione utilizza i contenuti predefiniti definiti nel codice sorgente.
+Se `public/site-content.json` non è presente, l'applicazione utilizza lo snapshot pubblico versionato.
 
 ## Export pronto per FTP
 

@@ -175,7 +175,7 @@ export default function App() {
               {/* Academic Curriculum and Core Values Summary */}
               <Biography />
 
-              {/* Clinic location cards (Napoli, Roma, Milano) */}
+              {/* Clinic location cards */}
               <Clinics onOpenBooking={(cityName) => handleOpenBooking(cityName)} />
 
               {/* Patient review carousel slider and review submit form */}
@@ -336,7 +336,7 @@ export default function App() {
       {siteSettings.sections.floatingActionsVisible && <div className="fixed bottom-6 right-6 z-35 flex flex-col space-y-3">
         {/* Telephone Call Floater */}
         <motion.a
-          href="tel:+3908119304567"
+          href="tel:+393500961963"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.8 }}

@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,6 +7,7 @@ const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const activePath = path.join(rootDir, 'forge-data', 'active-site-content.json');
 const legacyPath = path.join(rootDir, 'projects', 'default-mazzarella_v4.json');
 const outputDir = path.join(rootDir, 'pages-content');
+const editorialPath = path.join(outputDir, 'editorial-overrides.json');
 const assetsDir = path.join(outputDir, 'website-assets');
 const publicBase = '/drvincenzomazzarella.com/';
 
@@ -74,12 +75,16 @@ if (!existsSync(activePath)) {
 }
 
 const active = readJson(activePath);
+const editorialSynced = active.meta?.editorialRevision === 'pdf-2026-09-15';
 const legacy = existsSync(legacyPath) ? readJson(legacyPath) : {};
+const editorial = existsSync(editorialPath) ? readJson(editorialPath) : {};
 const merged = {
   ...active,
-  mediaSections: mergeMissing(active.mediaSections, legacy.mediaSections),
-  media: mergeMissing(active.media, legacy.media),
-  assetLibrary: mergeMissing(active.assetLibrary, legacy.assetLibrary),
+  mediaSections: editorialSynced ? active.mediaSections : mergeMissing(active.mediaSections, legacy.mediaSections),
+  media: editorialSynced
+    ? active.media.filter((item) => item.title && !/\bTitolo\b|^Foto$/i.test(item.title))
+    : mergeMissing(active.media, legacy.media),
+  assetLibrary: editorialSynced ? active.assetLibrary : mergeMissing(active.assetLibrary, legacy.assetLibrary),
   siteSettings: {
     ...active.siteSettings,
     hosting: {
@@ -91,7 +96,40 @@ const merged = {
   },
 };
 
-rmSync(assetsDir, { recursive: true, force: true });
+// Clinician-approved public copy stays versioned separately from local CMS snapshots.
+// Regenerating Pages assets must never restore superseded placeholder information.
+if (!editorialSynced) {
+  if (editorial.drInfo) merged.drInfo = { ...merged.drInfo, ...editorial.drInfo };
+  if (editorial.clinics) merged.clinics = editorial.clinics;
+  if (editorial.treatmentCategories) merged.treatmentCategories = editorial.treatmentCategories;
+  if (editorial.treatments) {
+    const byId = new Map(merged.treatments.map((item) => [item.id, item]));
+    for (const item of editorial.treatments) {
+      if (item.hidden) {
+        byId.delete(item.id);
+      } else {
+        byId.set(item.id, { ...byId.get(item.id), ...item });
+      }
+    }
+    merged.treatments = Array.from(byId.values());
+  }
+  if (editorial.mediaSections) merged.mediaSections = editorial.mediaSections;
+  if (editorial.media) merged.media = editorial.media;
+  if (editorial.testimonials) merged.testimonials = editorial.testimonials;
+  if (editorial.siteSettings) {
+    merged.siteSettings = {
+      ...merged.siteSettings,
+      ...editorial.siteSettings,
+      footer: { ...merged.siteSettings.footer, ...editorial.siteSettings.footer },
+      contactForm: { ...merged.siteSettings.contactForm, ...editorial.siteSettings.contactForm },
+    };
+  }
+  if (editorial.customTexts) merged.customTexts = editorial.customTexts;
+}
+if (editorialSynced && !active.meta?.publicClinicPhotosVerified) {
+  merged.clinics = merged.clinics.map((clinic) => ({ ...clinic, images: [] }));
+}
+
 mkdirSync(assetsDir, { recursive: true });
 const published = externalizeImages(merged);
 writeFileSync(path.join(outputDir, 'site-content.json'), `${JSON.stringify(published, null, 2)}\n`, 'utf8');

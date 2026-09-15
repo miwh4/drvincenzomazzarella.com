@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BookingFormData } from '../types';
-import { Calendar, Phone, Mail, CheckCircle, ShieldCheck, MapPin, X, Send } from 'lucide-react';
+import { Calendar, Phone, Mail, CheckCircle, MapPin, X, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSiteContent } from '../siteContent';
 
@@ -17,12 +17,12 @@ export default function BookingForm({
   preselectedCity = '',
   preselectedTreatment = '',
 }: BookingFormProps) {
-  const { siteSettings, treatmentCategories } = useSiteContent();
+  const { siteSettings, treatmentCategories, clinics } = useSiteContent();
   const [formData, setFormData] = useState<BookingFormData>({
     fullName: '',
     email: '',
     phone: '',
-    preferredClinic: 'napoli',
+    preferredClinic: 'frattamaggiore',
     preferredDate: '',
     treatmentCategory: 'seno',
     message: '',
@@ -32,7 +32,6 @@ export default function BookingForm({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [bookingRef, setBookingRef] = useState('');
 
   useEffect(() => {
     if (treatmentCategories.length > 0 && !treatmentCategories.some((category) => category.id === formData.treatmentCategory)) {
@@ -44,7 +43,7 @@ export default function BookingForm({
   useEffect(() => {
     if (preselectedCity) {
       const cityLower = preselectedCity.toLowerCase();
-      if (['napoli', 'roma', 'milano'].includes(cityLower)) {
+      if (clinics.some((clinic) => clinic.id === cityLower)) {
         setFormData((prev) => ({ ...prev, preferredClinic: cityLower }));
       }
     }
@@ -54,7 +53,7 @@ export default function BookingForm({
         message: `Richiesta di consulto specifico per: ${preselectedTreatment}`,
       }));
     }
-  }, [preselectedCity, preselectedTreatment]);
+  }, [preselectedCity, preselectedTreatment, clinics]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -84,7 +83,7 @@ export default function BookingForm({
       return;
     }
     if (!formData.privacyAccepted) {
-      setError('È necessario accettare il trattamento dei dati personali per proseguire.');
+      setError('Conferma di aver compreso che l’invio avverrà tramite il tuo programma di posta.');
       return;
     }
 
@@ -105,7 +104,6 @@ export default function BookingForm({
       window.location.href = `mailto:${siteSettings.contactForm.recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setLoading(false);
       setSuccess(true);
-      setBookingRef(`MAIL-${Math.floor(100000 + Math.random() * 900000)}`);
       return;
     }
 
@@ -113,7 +111,6 @@ export default function BookingForm({
     setTimeout(() => {
       setLoading(false);
       setSuccess(true);
-      setBookingRef(`MAZ-${Math.floor(100000 + Math.random() * 900000)}`);
     }, 1500);
   };
 
@@ -123,7 +120,7 @@ export default function BookingForm({
       fullName: '',
       email: '',
       phone: '',
-      preferredClinic: 'napoli',
+      preferredClinic: 'frattamaggiore',
       preferredDate: '',
       treatmentCategory: 'seno',
       message: '',
@@ -144,18 +141,14 @@ export default function BookingForm({
           </div>
           <div className="space-y-2">
             <h4 className="font-serif text-2xl md:text-3xl font-bold text-brand-deep">
-              Richiesta Ricevuta con Successo
+              {siteSettings.contactForm.submitMode === 'mailto' ? 'Completa l’invio dell’e-mail' : 'Richiesta pronta'}
             </h4>
             <p className="font-sans text-xs md:text-sm text-brand-deep/70 font-light max-w-md mx-auto leading-relaxed">
-              {siteSettings.contactForm.successMessage}
+              {siteSettings.contactForm.submitMode === 'mailto' ? 'Abbiamo aperto il tuo programma di posta. La richiesta arriverà soltanto dopo che avrai inviato l’e-mail.' : siteSettings.contactForm.successMessage}
             </p>
           </div>
 
           <div className="bg-[#f4f5f8] border border-brand-deep/5 p-6 rounded-none max-w-xs mx-auto text-left space-y-3 font-sans text-xs">
-            <div className="flex justify-between border-b border-brand-deep/10 pb-2 text-brand-deep/50">
-              <span>Codice Prenotazione:</span>
-              <span className="font-mono font-bold text-brand-deep">{bookingRef}</span>
-            </div>
             <div className="flex justify-between pb-1">
               <span className="text-brand-deep/50">Paziente:</span>
               <span className="font-semibold text-brand-deep">{formData.fullName}</span>
@@ -173,7 +166,7 @@ export default function BookingForm({
           </div>
 
           <p className="font-sans text-[11px] text-brand-deep/60 max-w-xs mx-auto">
-            Un assistente della clinica selezionata ti contatterà telefonicamente entro 24 ore lavorative per confermare giorno e orario dell&apos;appuntamento.
+            In alternativa puoi chiamare il numero +39 350 096 1963. Le visite si svolgono solo su appuntamento.
           </p>
 
           <button
@@ -255,9 +248,7 @@ export default function BookingForm({
                 onChange={handleChange}
                 className="w-full font-sans text-xs px-4 py-3 bg-[#f4f5f8] border border-stone-200 rounded-none focus:outline-none focus:border-brand-accent focus:bg-white transition-colors text-brand-deep"
               >
-                <option value="napoli">Napoli (Via dei Mille)</option>
-                <option value="roma">Roma (Via Veneto)</option>
-                <option value="milano">Milano (Corso Buenos Aires)</option>
+                {clinics.map((clinic) => <option value={clinic.id} key={clinic.id}>{clinic.city} ({clinic.address.split(',')[0]})</option>)}
               </select>
             </div>
 
@@ -311,7 +302,7 @@ export default function BookingForm({
             />
           </div>
 
-          {/* GDPR Privacy agreement */}
+          {/* The website does not submit this form to a server. */}
           <div className="flex items-start space-x-3 text-left">
             <input
               id="privacyAccepted"
@@ -322,7 +313,7 @@ export default function BookingForm({
               className="mt-1 w-4 h-4 rounded-none accent-brand-accent text-brand-accent border-stone-300 focus:ring-brand-accent"
             />
             <label htmlFor="privacyAccepted" className="font-sans text-[10px] text-brand-deep/60 leading-normal font-light">
-              Acconsento al trattamento dei miei dati sensibili al solo fine di essere ricontattato in merito alla richiesta di consulto medico, ai sensi del Regolamento UE 2016/679 (GDPR). *
+              Ho compreso che si aprirà il mio programma di posta e che la richiesta arriverà solo dopo che avrò inviato l’e-mail. *
             </label>
           </div>
 
@@ -380,7 +371,7 @@ export default function BookingForm({
                 Richiedi una Consulenza
               </h3>
               <p className="font-sans text-xs text-brand-deep/60 font-light">
-                Compila il modulo sottostante. La segreteria ti contatterà nelle prossime ore per pianificare il tuo incontro riservato con il Dr. Vincenzo Mazzarella.
+                Il modulo apre il tuo programma di posta. La richiesta sarà inviata solo quando confermerai l'e-mail.
               </p>
             </div>
 
@@ -413,7 +404,7 @@ export default function BookingForm({
           </div>
 
           <p className="font-sans text-xs md:text-sm text-stone-300 leading-relaxed font-light">
-            Siamo a tua completa disposizione per rispondere a qualsiasi dubbio o per prenotare la tua prima visita conoscitiva presso gli studi di Napoli, Roma o Milano. La riservatezza e l&apos;attenzione individuale sono al centro del nostro operato fin dal primo contatto.
+            Per informazioni o per prenotare una visita nelle sedi di Frattamaggiore, Napoli o Milano, contatta la segreteria. Le visite si svolgono solo su appuntamento.
           </p>
 
           <div className="space-y-4 pt-6 border-t border-white/5 font-sans text-xs md:text-sm">
@@ -423,7 +414,7 @@ export default function BookingForm({
               </div>
               <div>
                 <p className="font-light text-stone-400 uppercase tracking-widest text-[9px]">Segreteria Telefonica Unica</p>
-                <p className="font-semibold text-white tracking-wide mt-0.5">+39 081 1930 4567</p>
+                <p className="font-semibold text-white tracking-wide mt-0.5">+39 350 096 1963</p>
               </div>
             </div>
 
@@ -443,15 +434,11 @@ export default function BookingForm({
               </div>
               <div>
                 <p className="font-light text-stone-400 uppercase tracking-widest text-[9px]">Studi Medici Privati</p>
-                <p className="font-semibold text-white tracking-wide mt-0.5">Napoli • Roma • Milano</p>
+                <p className="font-semibold text-white tracking-wide mt-0.5">Frattamaggiore • Napoli • Milano</p>
               </div>
             </div>
           </div>
 
-          <div className="pt-6 flex items-center space-x-2 text-stone-300 text-xs font-light">
-            <ShieldCheck className="w-4 h-4 text-brand-accent shrink-0" />
-            <span>Tutti i dati trasmessi sono criptati e gestiti in conformità GDPR.</span>
-          </div>
         </div>
 
         {/* Right Col - Interactive Form Card */}

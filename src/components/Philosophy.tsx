@@ -21,7 +21,7 @@ export default function Philosophy() {
             La Nostra Visione
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl tracking-tight text-brand-deep uppercase font-bold">
-            I Nostri Valori Fondamentali
+            I valori che guidano ogni percorso
           </h2>
           <div className="h-0.5 w-12 bg-brand-accent mx-auto mt-4" />
         </motion.div>
@@ -41,7 +41,7 @@ export default function Philosophy() {
             </div>
             <h3 className="font-serif text-xl text-brand-deep font-semibold mb-3">Risultato Naturale</h3>
             <p className="font-sans text-xs md:text-sm text-brand-deep/80 leading-relaxed font-light">
-              Ogni viso ha proporzioni uniche. Rifiuto i risultati standardizzati e omologati. Il chirurgo deve comportarsi come uno scultore attento, modellando con tocchi precisi che non lasciano tracce di artificio.
+              Ogni paziente ha proporzioni e caratteristiche uniche. Il progetto terapeutico ricerca armonia e naturalezza, senza proporre risultati standardizzati.
             </p>
           </motion.div>
 
@@ -57,7 +57,7 @@ export default function Philosophy() {
             </div>
             <h3 className="font-serif text-xl text-brand-deep font-semibold mb-3">Sicurezza &amp; Rigore</h3>
             <p className="font-sans text-xs md:text-sm text-brand-deep/80 leading-relaxed font-light">
-              La medicina e la chirurgia sono scienze. Operiamo esclusivamente in cliniche autorizzate di altissimo livello, impiegando materiali certificati FDA e seguendo protocolli rigidi per il comfort e la tutela assoluta del paziente.
+              La valutazione clinica, la scelta delle indicazioni e la pianificazione dell&apos;intervento mettono al centro la sicurezza del paziente in ogni fase del percorso.
             </p>
           </motion.div>
 
@@ -73,7 +73,7 @@ export default function Philosophy() {
             </div>
             <h3 className="font-serif text-xl text-brand-deep font-semibold mb-3">Ascolto ed Empatia</h3>
             <p className="font-sans text-xs md:text-sm text-brand-deep/80 leading-relaxed font-light">
-              Il percorso inizia dall&apos;ascolto. La visita conoscitiva è fondamentale per comprendere le motivazioni profonde del paziente, spiegare chiaramente i limiti della chirurgia e costruire una reciproca e salda fiducia.
+              Il percorso inizia dall&apos;ascolto. La visita permette di comprendere esigenze e aspettative, discutere possibilità e limiti e definire un piano personalizzato.
             </p>
           </motion.div>
 

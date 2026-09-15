@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useSiteContent } from '../siteContent';
 
@@ -21,7 +21,7 @@ export default function Clinics({ onOpenBooking }: ClinicsProps) {
             I Nostri <span className="font-light italic text-brand-accent">Studi Medici</span>
           </h2>
           <p className="font-sans text-xs md:text-sm text-stone-300 font-light leading-relaxed">
-            Il Dr. Vincenzo Mazzarella riceve e opera esclusivamente in studi medici privati autorizzati e cliniche d&apos;eccellenza, dotate dei più alti standard di comfort e sicurezza.
+            Le visite sono disponibili su appuntamento nelle sedi di Frattamaggiore, Napoli e Milano.
           </p>
         </div>
 
@@ -40,13 +40,13 @@ export default function Clinics({ onOpenBooking }: ClinicsProps) {
               <div>
                 {/* Clinic Image */}
                 <div className="relative aspect-video overflow-hidden bg-brand-deep">
-                  <img
+                  {clinic.images[0] ? <img
                     src={clinic.images[0]}
                     data-forge-image-path={`clinics.${index}.images.0`}
                     alt={clinic.name}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                     referrerPolicy="no-referrer"
-                  />
+                  /> : <div className="w-full h-full flex items-center justify-center bg-brand-dark text-white font-serif text-2xl">{clinic.city}</div>}
                   <div className="absolute inset-0 bg-brand-deep/20 pointer-events-none" />
                   
                   {/* City Tag */}
@@ -61,10 +61,7 @@ export default function Clinics({ onOpenBooking }: ClinicsProps) {
                     <h3 data-forge-path={`clinics.${index}.name`} className="font-serif text-xl md:text-2xl text-white font-bold">
                       {clinic.name}
                     </h3>
-                    <p className="font-sans text-[10px] uppercase tracking-wider text-brand-accent font-semibold flex items-center space-x-1">
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      <span>Struttura Certificata</span>
-                    </p>
+                    <p className="font-sans text-[10px] uppercase tracking-wider text-brand-accent font-semibold">Solo su appuntamento</p>
                   </div>
 
                   <div className="space-y-4 pt-4 border-t border-white/5 text-stone-400 font-sans text-xs font-light">
@@ -74,6 +71,8 @@ export default function Clinics({ onOpenBooking }: ClinicsProps) {
                       <div>
                         <p className="font-semibold text-stone-200">Indirizzo</p>
                         <p data-forge-path={`clinics.${index}.address`}>{clinic.address}</p>
+                        {clinic.mapUrl && <a href={clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="text-brand-accent hover:text-white mt-2 inline-block">Apri in Google Maps</a>}
+                        {clinic.parkingMapUrl && <a href={clinic.parkingMapUrl} target="_blank" rel="noopener noreferrer" className="text-brand-accent hover:text-white mt-2 block">Indicazioni parcheggio</a>}
                       </div>
                     </div>
 
@@ -124,14 +123,6 @@ export default function Clinics({ onOpenBooking }: ClinicsProps) {
 
             </motion.div>
           ))}
-        </div>
-
-        {/* Standard Info note */}
-        <div className="mt-12 bg-brand-dark border border-white/5 p-6 max-w-3xl mx-auto rounded-none flex items-center space-x-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-brand-accent animate-ping shrink-0" />
-          <p className="font-sans text-xs text-stone-300 font-light leading-relaxed text-left">
-            <strong>Informazione Importante:</strong> Tutti gli interventi di chirurgia maggiore vengono eseguiti esclusivamente presso cliniche di ricovero dotate di reparto di terapia intensiva o rianimazione per garantire la massima tutela dei nostri pazienti.
-          </p>
         </div>
 
       </div>

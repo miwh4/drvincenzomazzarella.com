@@ -44,7 +44,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           >
             <Sparkles className="w-3.5 h-3.5 text-brand-accent" />
             <span className="font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-300 font-medium">
-              Armonia • Naturalezza • Eccellenza Medica
+              Chirurgo plastico
             </span>
           </motion.div>
 
@@ -75,12 +75,12 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           >
             <div className="flex flex-col items-center text-center">
               <Award className="w-5 h-5 text-brand-accent mb-1.5" />
-              <span className="font-sans font-medium text-xs text-white uppercase tracking-wide">Federico II</span>
+              <span className="font-sans font-medium text-xs text-white uppercase tracking-wide">Vanvitelli</span>
               <span className="font-sans text-[9px] text-stone-500 uppercase tracking-widest mt-1">Specialista</span>
             </div>
             <div className="flex flex-col items-center text-center border-x border-white/10">
               <ShieldCheck className="w-5 h-5 text-brand-accent mb-1.5" />
-              <span className="font-sans font-medium text-xs text-white uppercase tracking-wide">SICPRE</span>
+              <span className="font-sans font-medium text-xs text-white uppercase tracking-wide">AICPE · AICEFF · EAFPS</span>
               <span className="font-sans text-[9px] text-stone-500 uppercase tracking-widest mt-1">Membro Attivo</span>
             </div>
             <div className="flex flex-col items-center text-center">
@@ -100,7 +100,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               onClick={onOpenBooking}
               className="group font-sans text-xs uppercase tracking-[0.2em] font-bold text-brand-deep bg-white hover:bg-brand-accent hover:text-brand-deep transition-all duration-300 px-5 py-2.5 rounded-full shadow-none cursor-pointer flex items-center space-x-1"
             >
-              <span>Consulenza Privata</span>
+              <span>Prenota una visita</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
             <button
@@ -124,7 +124,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             {/* Elegant Background frame */}
             <div className="absolute inset-0 border border-brand-accent/20 translate-x-4 translate-y-4 rounded-none -z-10" />
 
-            {/* Doctor portrait placeholder of high-fidelity aesthetic */}
+            {/* Existing home portrait: the supplied new photo is reserved for the CV page. */}
             <div className="relative aspect-3/4 overflow-hidden shadow-2xl rounded-none bg-brand-dark">
               <img
                 src={drInfo.portraitUrl || doctorPortrait}
@@ -139,13 +139,13 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               {/* Overlay card */}
               <div className="absolute bottom-6 left-6 right-6 bg-brand-deep/95 backdrop-blur-md p-5 border border-white/10 shadow-lg rounded-none text-white">
                 <span className="text-[10px] uppercase font-sans tracking-widest text-brand-accent font-bold block mb-1">
-                  Chirurgo Estetico Qualificato
+                  Chirurgo plastico
                 </span>
                 <span className="font-serif text-lg text-white font-semibold block">
                   <span data-forge-path="drInfo.name">{drInfo.name}</span>
                 </span>
                 <span className="text-xs text-stone-400 font-sans font-light mt-1 block">
-                  Specialista Federico II, Napoli.
+                  Specialista in Chirurgia Plastica, Ricostruttiva ed Estetica.
                 </span>
               </div>
             </div>

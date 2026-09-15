@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, CheckCircle, CalendarCheck2, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, CalendarCheck2, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useSiteContent } from '../siteContent';
 
@@ -135,7 +135,7 @@ export default function ContattiPage({ onOpenBooking }: ContattiPageProps) {
       return;
     }
     if (!formData.privacyAccepted) {
-      setError('Accetta l\'informativa sulla privacy per procedere.');
+      setError('Conferma di aver compreso che l’invio avverrà tramite il tuo programma di posta.');
       return;
     }
 
@@ -245,6 +245,7 @@ export default function ContattiPage({ onOpenBooking }: ContattiPageProps) {
                       <div>
                         <p className="font-bold text-brand-deep">Indirizzo Sede</p>
                         <p>{currentClinic.address}</p>
+                        {currentClinic.mapUrl && <a href={currentClinic.mapUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-2 text-brand-accent font-semibold">Apri in Google Maps <ExternalLink className="w-3 h-3" /></a>}
                       </div>
                     </div>
 
@@ -317,9 +318,9 @@ export default function ContattiPage({ onOpenBooking }: ContattiPageProps) {
                         <CheckCircle className="w-8 h-8" />
                       </div>
                       <div className="space-y-2">
-                        <h3 className="font-serif text-2xl text-brand-deep font-bold">Messaggio Spedito</h3>
+                        <h3 className="font-serif text-2xl text-brand-deep font-bold">Completa l’invio dell’e-mail</h3>
                         <p className="font-sans text-xs md:text-sm text-brand-deep/70 font-light leading-relaxed max-w-sm mx-auto">
-                          {siteSettings.contactForm.successMessage}
+                          Il tuo programma di posta è stato aperto. La richiesta arriverà soltanto dopo che avrai inviato l’e-mail.
                         </p>
                       </div>
                       <button
@@ -439,7 +440,7 @@ export default function ContattiPage({ onOpenBooking }: ContattiPageProps) {
                           className="mt-1 w-4 h-4 rounded-none accent-brand-accent text-brand-accent border-stone-300 focus:ring-brand-accent"
                         />
                         <label htmlFor="privacyAccepted" className="font-sans text-[10px] text-brand-deep/50 leading-normal font-light">
-                          Acconsento al trattamento dei miei dati al fine esclusivo di ricevere riscontro alla mia richiesta, in conformità con la normativa sulla tutela dei dati personali GDPR (Regolamento UE 2016/679). *
+                          Ho compreso che si aprirà il mio programma di posta e che la richiesta arriverà solo dopo che avrò inviato l’e-mail. *
                         </label>
                       </div>
 
@@ -461,8 +462,7 @@ export default function ContattiPage({ onOpenBooking }: ContattiPageProps) {
                   )}
 
                   <div className="mt-6 pt-6 border-t border-stone-100 flex items-center space-x-2 text-[10px] text-brand-deep/40 font-light font-sans">
-                    <ShieldCheck className="w-4 h-4 text-brand-accent shrink-0" />
-                    <span>Connessione sicura SSL. I dati sensibili trasmessi sono criptati.</span>
+                    <span>L’invio avviene tramite il tuo programma di posta, non attraverso il sito.</span>
                   </div>
                 </div>
               )}

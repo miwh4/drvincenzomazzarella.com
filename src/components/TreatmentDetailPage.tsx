@@ -42,12 +42,12 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-stone-200 p-5 md:p-6">
+            {!treatment.isTechnology && <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-stone-200 p-5 md:p-6">
               {[
                 { icon: Scissors, label: 'Anestesia', value: treatment.anesthesia },
                 { icon: Clock, label: 'Durata', value: treatment.duration },
                 { icon: Home, label: 'Degenza', value: treatment.hospitalization },
-                { icon: CalendarRange, label: 'Recupero', value: treatment.recoveryTime },
+                { icon: CalendarRange, label: 'Ripresa delle attività', value: treatment.recoveryTime },
               ].map((item) => {
                 const Icon = item.icon;
                 return (
@@ -60,9 +60,20 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
                   </div>
                 );
               })}
-            </div>
+            </div>}
 
-            <section className="space-y-4">
+            {!treatment.isTechnology && ['seno', 'viso', 'corpo'].includes(treatment.category) && (
+              <p className="text-xs text-brand-deep/60 italic">Tempi e modalità possono variare in base al caso clinico e alla procedura eseguita.</p>
+            )}
+
+            {treatment.detailSections?.map((section) => (
+              <section key={section.heading} className="border-t border-stone-200 pt-6 space-y-3">
+                <h2 className="font-serif text-xl md:text-2xl font-bold">{section.heading}</h2>
+                <p className="text-sm md:text-base text-brand-deep/75 leading-relaxed whitespace-pre-line">{section.body}</p>
+              </section>
+            ))}
+
+            {treatment.benefits.length > 0 && <section className="space-y-4">
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-brand-deep">
                 Benefici principali
               </h2>
@@ -74,7 +85,7 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
                   </li>
                 ))}
               </ul>
-            </section>
+            </section>}
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
@@ -82,7 +93,7 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
                 onClick={() => onOpenBooking(treatment.title)}
                 className="px-6 py-3 bg-brand-deep text-white text-xs font-bold uppercase tracking-[0.18em] hover:bg-brand-accent hover:text-brand-deep transition-colors border border-brand-deep hover:border-brand-accent"
               >
-                Prenota consulenza
+                Prenota una visita
               </button>
               <button
                 type="button"
@@ -96,6 +107,7 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
 
           <aside className="lg:col-span-5 lg:sticky lg:top-28 space-y-4">
             <div className="relative aspect-[4/5] overflow-hidden bg-stone-200 border border-stone-200">
+              {treatment.imageUrl ? <>
               <img
                 src={treatment.imageUrl}
                 data-forge-id={`treatment-detail-image-${treatment.id}`}
@@ -104,6 +116,7 @@ export default function TreatmentDetailPage({ treatment, onBack, onOpenBooking }
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
+              </> : <div className="w-full h-full flex items-center justify-center p-10 bg-brand-deep text-white text-center"><span className="font-serif text-3xl">{treatment.title}</span></div>}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-deep/90 to-transparent p-6 text-white">
                 <div className="flex items-center gap-2 text-xs text-stone-200">
                   <Sparkles className="w-4 h-4 text-brand-accent" />

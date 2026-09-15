@@ -307,7 +307,7 @@ export default function Header({ currentTab, onChangeTab, onOpenBooking }: Heade
                 <div className="space-y-2 text-brand-deep/70 font-sans text-xs text-left">
                   <div className="flex items-center space-x-2">
                     <Phone className="w-3.5 h-3.5 text-brand-accent" />
-                    <span>+39 081 1930 4567</span>
+                    <span>+39 350 096 1963</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-3.5 h-3.5 text-brand-accent" />

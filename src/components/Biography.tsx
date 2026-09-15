@@ -24,23 +24,14 @@ export default function Biography() {
 
             <div className="aspect-3/4 overflow-hidden rounded-none shadow-xl bg-[#f4f5f8]">
               <img
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=1000"
-                alt="Dr. Vincenzo Mazzarella consulto"
+                src={drInfo.portraitUrl}
+                alt="Dr. Vincenzo Mazzarella"
                 className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700 grayscale-[10%]"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-brand-deep/10 pointer-events-none" />
             </div>
 
-            {/* Float sign card */}
-            <div className="absolute -bottom-6 -right-6 bg-white p-6 shadow-xl border border-brand-deep/5 rounded-none max-w-[260px] text-left">
-              <span className="font-serif text-lg text-brand-accent italic block mb-2 font-semibold">
-                &ldquo;Il miglior intervento è quello che si vede ma non si percepisce.&rdquo;
-              </span>
-              <span className="font-sans text-[10px] uppercase tracking-wider text-brand-deep/60 font-bold">
-                — Filosofia del Dottore
-              </span>
-            </div>
           </motion.div>
         </div>
 
@@ -59,10 +50,10 @@ export default function Biography() {
 
           <div className="font-sans text-xs md:text-sm text-brand-deep/80 space-y-4 font-light leading-relaxed">
             <p>
-              Il <strong>Dr. Vincenzo Mazzarella</strong> è uno specialista accreditato in Chirurgia Plastica, Ricostruttiva ed Estetica. La sua formazione è avvenuta interamente sotto il segno dell&apos;eccellenza, conseguendo la laurea in Medicina e Chirurgia e successivamente il diploma di Specializzazione presso l&apos;<strong>Università degli Studi di Napoli &quot;Federico II&quot;</strong>.
+              Il <strong>Dr. Vincenzo Mazzarella</strong> ha conseguito la specializzazione in Chirurgia Plastica, Ricostruttiva ed Estetica presso l&apos;<strong>Università degli Studi della Campania Luigi Vanvitelli</strong>. Ha inoltre completato un Master di II livello in Chirurgia funzionale, estetica e ricostruttiva della piramide nasale presso l&apos;Università Cattolica del Sacro Cuore, Policlinico A. Gemelli di Roma.
             </p>
             <p>
-              Il suo approccio integra la più approfondita conoscenza delle tecniche anatomiche con un innato senso della misura ed equilibrio estetico, offrendo risposte terapeutiche su misura per contrastare l&apos;invecchiamento o rimodellare le fisionomie nel pieno rispetto delle proporzioni originarie.
+              La formazione internazionale comprende esperienze a Innsbruck, Lisbona e Bergamo. L&apos;approccio clinico privilegia l&apos;ascolto, la pianificazione individuale e risultati armoniosi e naturali nel rispetto delle caratteristiche di ogni paziente.
             </p>
           </div>
 

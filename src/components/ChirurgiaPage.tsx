@@ -31,7 +31,7 @@ export default function ChirurgiaPage({ onOpenTreatment }: ChirurgiaPageProps) {
           </h1>
           <div className="h-0.5 w-12 bg-brand-accent mx-auto mt-4" />
           <p className="font-sans text-xs md:text-sm text-brand-deep/70 font-light leading-relaxed">
-            Ogni procedura è concepita per ripristinare e valorizzare l'equilibrio delle forme corporee, garantendo la massima aderenza a standard clinici internazionali di sicurezza e un design estetico d'avanguardia su misura.
+            Le procedure vengono valutate e pianificate in modo individuale, considerando anatomia, obiettivi e sicurezza. Tempi e risultati possono variare da paziente a paziente.
           </p>
         </div>
 
@@ -65,13 +65,13 @@ export default function ChirurgiaPage({ onOpenTreatment }: ChirurgiaPageProps) {
                     <div>
                       {/* Image */}
                       <div className="relative aspect-video overflow-hidden bg-stone-100">
-                        <img
+                        {treatment.imageUrl ? <img
                           src={treatment.imageUrl}
                           data-forge-image-path={`treatments.${treatments.findIndex((item) => item.id === treatment.id)}.imageUrl`}
                           alt={treatment.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                           referrerPolicy="no-referrer"
-                        />
+                        /> : <div className="w-full h-full flex items-center justify-center bg-brand-deep text-white font-serif text-xl text-center p-6">{treatment.title}</div>}
                         <div className="absolute inset-0 bg-brand-deep/10 pointer-events-none" />
                       </div>
 

@@ -34,6 +34,9 @@ results.md
 build/
 dist/
 coverage/
+output/
+tmp/
+__pycache__/
 
 # Logs and temporary files
 *.log

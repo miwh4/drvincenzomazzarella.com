@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Play, FileText, ArrowUpRight, Image as ImageIcon, Newspaper, ChevronRight } from 'lucide-react';
+import { Play, ArrowUpRight, Image as ImageIcon, Newspaper, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { MediaItem } from '../types';
 import { useSiteContent } from '../siteContent';
@@ -39,11 +39,11 @@ export default function MediaPage({ onOpenMedia }: MediaPageProps) {
             Media e Divulgazione Scientifica
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl tracking-tight text-brand-deep leading-tight font-bold uppercase">
-            Rassegna Stampa &amp; Interviste
+            Media e attività scientifica
           </h1>
           <div className="h-0.5 w-12 bg-brand-accent mx-auto mt-4" />
           <p className="font-sans text-xs md:text-sm text-brand-deep/70 font-light leading-relaxed">
-            Consulenze, apparizioni televisive, pubblicazioni e interviste del Dr. Vincenzo Mazzarella. Segui i suoi contributi informativi volti ad illustrare i dettagli e la filosofia della moderna chirurgia estetica.
+            Congressi e teaching, video e interviste, pubblicazioni scientifiche.
           </p>
         </div>
 
@@ -68,6 +68,7 @@ export default function MediaPage({ onOpenMedia }: MediaPageProps) {
 
         {/* Dynamic Media Sections */}
         <div className="space-y-16">
+          {media.length === 0 && <div className="max-w-2xl mx-auto bg-white border border-stone-200 p-8 text-center text-sm text-brand-deep/70">I contenuti media saranno aggiunti dopo la verifica e l'invio dei materiali.</div>}
           {visibleSections.map((section) => {
             const entries = itemsBySection.get(section.id) ?? [];
             if (entries.length === 0) return null;
@@ -106,17 +107,6 @@ export default function MediaPage({ onOpenMedia }: MediaPageProps) {
               </section>
             );
           })}
-        </div>
-
-        {/* Scientific Publications Disclosure banner */}
-        <div className="mt-16 bg-white border border-stone-200 p-8 max-w-4xl mx-auto rounded-none text-left space-y-4">
-          <div className="flex items-center space-x-2">
-            <FileText className="w-5 h-5 text-brand-accent" />
-            <h3 className="font-serif text-lg text-brand-deep font-bold">Pubblicazioni Scientifiche Recenti</h3>
-          </div>
-          <p className="font-sans text-xs text-brand-deep/70 font-light leading-relaxed">
-            Il Dr. Vincenzo Mazzarella è un attivo ricercatore e contributore di importanti riviste di settore. Le sue pubblicazioni coprono argomenti di rilievo come la profilassi antibiotica in chirurgia plastica, l'utilizzo di scaffold biocompatibili nella mastoplastica secondaria e l'analisi volumetrica dei filler labbra a rilascio controllato. Tutte le pubblicazioni complete sono indicizzate ed accessibili su PubMed.
-          </p>
         </div>
 
         {/* Closing text */}

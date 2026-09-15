@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { MapPin, Phone, Clock, Shield, Sparkles, Building2, Eye, ChevronLeft, ChevronRight, ImageOff } from 'lucide-react';
+import { MapPin, Phone, Clock, Sparkles, Building2, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSiteContent } from '../siteContent';
 import type { Clinic } from '../types';
@@ -35,14 +35,14 @@ export default function StudioPage() {
         {/* Page Title */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <span className="font-sans text-xs uppercase tracking-[0.2em] text-brand-accent font-bold block">
-            Ambienti Esclusivi
+            Sedi
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl tracking-tight text-brand-deep leading-tight font-bold uppercase">
             Gli Studi Medici del Dottore
           </h1>
           <div className="h-0.5 w-12 bg-brand-accent mx-auto mt-4" />
           <p className="font-sans text-xs md:text-sm text-brand-deep/70 font-light leading-relaxed">
-            Esplora le nostre sedi private. Ogni studio è concepito per offrire un'esperienza d'eccellenza, coniugando comfort, eleganza architettonica e rigore clinico-sanitario.
+            Consulta indirizzi e indicazioni pratiche per raggiungere le sedi. Le visite si svolgono esclusivamente su appuntamento.
           </p>
         </div>
 
@@ -84,10 +84,7 @@ export default function StudioPage() {
               <h2 className="font-serif text-2xl md:text-3xl text-brand-deep font-bold leading-tight">
                 {currentClinic.name}
               </h2>
-              <div className="flex items-center space-x-1 text-brand-accent font-sans text-[10px] uppercase tracking-wider font-bold">
-                <Shield className="w-4 h-4 text-brand-accent" />
-                <span>Struttura Sanitaria Autorizzata</span>
-              </div>
+              <p className="text-brand-accent font-sans text-[10px] uppercase tracking-wider font-bold">Solo su appuntamento</p>
               <div className="h-0.5 w-12 bg-brand-accent mt-2" />
             </div>
 
@@ -186,9 +183,11 @@ function StudioCarousel({ clinic }: { clinic: Clinic }) {
 
   if (images.length === 0) {
     return (
-      <div className="relative aspect-3/2 bg-stone-100 border border-stone-200 rounded-none flex flex-col items-center justify-center text-brand-deep/40 space-y-2">
-        <ImageOff className="w-8 h-8" />
-        <span className="font-sans text-[10px] uppercase tracking-widest font-bold">Nessuna immagine per questa sede</span>
+      <div className="relative aspect-3/2 bg-brand-deep border border-stone-200 rounded-none flex flex-col items-center justify-center text-white space-y-4 p-8 text-center">
+        <span className="font-serif text-3xl">{clinic.city}</span>
+        <span className="text-sm text-white/75">{clinic.address}</span>
+        {clinic.mapUrl && <a href={clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest border border-white/30 px-5 py-3 hover:bg-white hover:text-brand-deep">Indicazioni stradali</a>}
+        {clinic.parkingMapUrl && <a href={clinic.parkingMapUrl} target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest border border-white/30 px-5 py-3 hover:bg-white hover:text-brand-deep">Indicazioni parcheggio</a>}
       </div>
     );
   }

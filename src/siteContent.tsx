@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import { CLINICS, DR_INFO, MEDIA_ITEMS, MEDIA_SECTIONS, TESTIMONIALS, TREATMENTS } from './data';
+import publishedSiteContent from '../pages-content/site-content.json';
 import type { AssetLibraryItem, Clinic, MediaItem, MediaSection, Testimonial, Treatment } from './types';
 
 export interface SiteInfo {
@@ -132,12 +133,7 @@ type ForgeBehaviorPatch = { forgeId: string; behaviors: Partial<ForgeBehavior> }
 type ForgeStylePatch = { forgeId: string; styles: CSSProperties };
 type ForgeAction = NonNullable<SiteContent['customActions']>[string];
 
-export const DEFAULT_TREATMENT_CATEGORIES: TreatmentCategory[] = [
-  { id: 'seno', label: 'Chirurgia del Seno', page: 'chirurgia' },
-  { id: 'viso', label: 'Chirurgia del Viso', page: 'chirurgia' },
-  { id: 'corpo', label: 'Chirurgia del Corpo', page: 'chirurgia' },
-  { id: 'medicina_estetica', label: 'Medicina Estetica', page: 'medicina' },
-];
+export const DEFAULT_TREATMENT_CATEGORIES = publishedSiteContent.treatmentCategories as unknown as TreatmentCategory[];
 
 export const DEFAULT_SITE_CONTENT: SiteContent = {
   meta: {
@@ -161,60 +157,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
   media: MEDIA_ITEMS,
   assetLibrary: [],
   testimonials: TESTIMONIALS,
-  siteSettings: {
-    layout: {
-      siteWidth: 'contained',
-      menuWidth: 'contained',
-    },
-    sections: {
-      footerVisible: true,
-      contactFormVisible: true,
-      floatingActionsVisible: true,
-    },
-    contactForm: {
-      submitMode: 'demo',
-      recipientEmail: 'info@drvincenzomazzarella.it',
-      subjectPrefix: 'Richiesta consulenza dal sito',
-      successMessage: 'Richiesta ricevuta. La segreteria ti contattera entro 24 ore lavorative.',
-    },
-    contact: {
-      mode: 'form',
-      showMap: true,
-      showSedi: true,
-      miodottore: {
-        integration: 'widget',
-        profileUrl: '',
-        embedCode: '',
-      },
-      customHtml: '',
-    },
-    footer: {
-      brandTitle: 'Dr. Vincenzo Mazzarella',
-      brandSubtitle: 'Specialista in Chirurgia Plastica, Ricostruttiva ed Estetica',
-      brandBlurb: "Un percorso improntato sull'eccellenza clinica, la naturalezza del risultato e il rispetto rigoroso dell'identità corporea e facciale di ogni paziente. Napoli, Roma, Milano.",
-      complianceBadge: 'Sito Informativo Sanitario Conforme',
-      quickLinksTitle: 'Sezioni Principali',
-      sediTitle: 'Sedi Principali',
-      showSedi: true,
-      metaLines: ['Cod. Ref. MAZ-2026', 'P.IVA IT08901234567'],
-      legalText: "Informativa Legale Sanitaria: Sito web conforme alle linee guida approvate dalla Federazione Nazionale degli Ordini dei Medici Chirurghi e degli Odontoiatri (FNOMCeO) sulla pubblicità sanitaria e l'informazione medica (Art. 55-56-57 del Codice di Deontologia Medica). Dr. Vincenzo Mazzarella, iscritto all'Ordine dei Medici e Chirurghi di Napoli n. 12345. Specialista in Chirurgia Plastica Ricostruttiva ed Estetica.",
-      copyrightName: 'Dr. Vincenzo Mazzarella. Tutti i diritti riservati.',
-      policyLinks: [
-        { label: 'Privacy Policy', url: '#' },
-        { label: 'Cookie Policy', url: '#' },
-        { label: 'Termini di Utilizzo', url: '#' },
-      ],
-      perPage: {},
-      customHtml: {},
-    },
-    hosting: {
-      domainName: 'drvincenzomazzarella.it',
-      provider: 'Aruba',
-      ftpHost: '',
-      ftpUser: '',
-      publicPath: '/',
-    },
-  },
+  siteSettings: publishedSiteContent.siteSettings as unknown as SiteSettings,
   customStyles: {},
   customMedia: {},
   customTexts: {},
@@ -514,6 +457,8 @@ function normalizeClinics(clinics?: Clinic[]): Clinic[] {
     email: clinic.email || '',
     hours: clinic.hours || '',
     mapEmbedUrl: clinic.mapEmbedUrl || '',
+    mapUrl: clinic.mapUrl || '',
+    parkingMapUrl: clinic.parkingMapUrl || '',
     images: Array.isArray(clinic.images) ? clinic.images.filter(Boolean) : [],
     description: clinic.description || '',
     equipment: Array.isArray(clinic.equipment) ? clinic.equipment.filter(Boolean) : [],
@@ -593,7 +538,7 @@ function mergeContent(content: Partial<SiteContent>): SiteContent {
 }
 
 export function SiteContentProvider({ children }: { children: ReactNode }) {
-  const [content, setContent] = useState<SiteContent>(DEFAULT_SITE_CONTENT);
+  const [content, setContent] = useState<SiteContent>(() => mergeContent(publishedSiteContent as unknown as SiteContent));
 
   useEffect(() => {
     let cancelled = false;
@@ -623,7 +568,7 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
           applyContent(await response.json());
         }
       } catch {
-        applyContent(DEFAULT_SITE_CONTENT);
+        applyContent(publishedSiteContent as unknown as SiteContent);
       }
     };
 

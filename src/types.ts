@@ -11,6 +11,8 @@ export interface Treatment {
   recoveryTime: string; // convalescenza
   benefits: string[];
   imageUrl: string;
+  detailSections?: { heading: string; body: string }[];
+  isTechnology?: boolean;
 }
 
 export interface Clinic {
@@ -22,6 +24,8 @@ export interface Clinic {
   email: string;
   hours: string;
   mapEmbedUrl?: string; // standard visual placeholder of high fidelity map
+  mapUrl?: string;
+  parkingMapUrl?: string;
   images: string[]; // gallery shown in the Studio carousel
   description?: string; // long editorial description shown on "Lo studio"
   equipment?: string[]; // technologies / medical equipment bullet list

@@ -30,7 +30,7 @@ export default function MedicinaPage({ onOpenTreatment }: MedicinaPageProps) {
           </h1>
           <div className="h-0.5 w-12 bg-brand-accent mx-auto mt-4" />
           <p className="font-sans text-xs md:text-sm text-brand-deep/70 font-light leading-relaxed">
-            Procedure ambulatoriali all'avanguardia ideate per preservare la giovinezza della pelle, correggere le imperfezioni del volto e rinfrescare lo sguardo in modo naturale, indolore e senza tempi di degenza.
+            Trattamenti personalizzati per la qualità della pelle e l&apos;armonia del volto. Indicazioni, benefici e tempi vengono discussi durante la valutazione clinica.
           </p>
         </div>
 
@@ -57,13 +57,13 @@ export default function MedicinaPage({ onOpenTreatment }: MedicinaPageProps) {
                   >
                     <div>
                       <div className="relative aspect-video overflow-hidden bg-stone-100">
-                        <img
+                        {treatment.imageUrl ? <img
                           src={treatment.imageUrl}
                           data-forge-image-path={`treatments.${treatments.findIndex((item) => item.id === treatment.id)}.imageUrl`}
                           alt={treatment.title}
                           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
                           referrerPolicy="no-referrer"
-                        />
+                        /> : <div className="w-full h-full flex items-center justify-center p-8 text-center bg-brand-deep text-white font-serif text-xl">{treatment.title}</div>}
                         <div className="absolute inset-0 bg-brand-deep/10 pointer-events-none" />
                       </div>
                       <div className="p-6 text-left space-y-3">
@@ -78,7 +78,7 @@ export default function MedicinaPage({ onOpenTreatment }: MedicinaPageProps) {
                         <span>{treatment.duration}</span>
                       </span>
                       <span className="text-brand-accent text-xs font-semibold tracking-wider flex items-center space-x-0.5 group-hover:translate-x-1 transition-transform">
-                        <span>Scopri Dettagli</span>
+                        <span>{treatment.isTechnology ? 'Scopri la tecnologia' : 'Scopri dettagli'}</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </span>
                     </div>

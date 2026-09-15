@@ -53,10 +53,10 @@ export default function Treatments({ onOpenTreatment }: TreatmentsProps) {
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl tracking-tight text-white leading-tight">
             Chirurgia Plastica e <br />
-            <span className="font-light italic text-brand-accent">Medicina Rigenerativa</span>
+            <span className="font-light italic text-brand-accent">Medicina Estetica</span>
           </h2>
           <p className="font-sans text-xs md:text-sm text-stone-300 font-light leading-relaxed">
-            Seleziona la categoria d&apos;interesse ed esplora le procedure eseguite dal Dr. Vincenzo Mazzarella, progettate per valorizzare i tuoi contorni con precisione clinica e gusto estetico.
+            Esplora le procedure chirurgiche e i trattamenti di medicina estetica. Ogni indicazione viene valutata durante la visita e definita in base alle caratteristiche individuali.
           </p>
         </div>
 
@@ -101,13 +101,13 @@ export default function Treatments({ onOpenTreatment }: TreatmentsProps) {
                 <div>
                   {/* Image container */}
                   <div className="relative aspect-video overflow-hidden bg-brand-dark">
-                    <img
+                    {treatment.imageUrl ? <img
                       src={treatment.imageUrl}
                       data-forge-image-path={`treatments.${treatments.findIndex((item) => item.id === treatment.id)}.imageUrl`}
                       alt={treatment.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       referrerPolicy="no-referrer"
-                    />
+                    /> : <div className="w-full h-full flex items-center justify-center p-8 text-center bg-brand-dark text-white font-serif text-xl">{treatment.title}</div>}
                     <div className="absolute inset-0 bg-brand-deep/20 pointer-events-none" />
                     
                     {/* Category tag */}

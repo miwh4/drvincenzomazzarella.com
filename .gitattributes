@@ -9,6 +9,9 @@
 *.html text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
+*.py text eol=lf
+*.mjs text eol=lf
+*.svg text eol=lf
 *.ps1 text eol=crlf
 *.bat text eol=crlf
 
@@ -21,3 +24,4 @@
 *.woff binary
 *.woff2 binary
 *.ttf binary
+*.pdf binary
