@@ -84,7 +84,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
               <span className="font-sans text-[9px] text-stone-500 uppercase tracking-widest mt-1">Membro Attivo</span>
             </div>
             <div className="flex flex-col items-center text-center">
-              <span className="font-serif italic text-sm text-brand-accent font-semibold">{clinics.slice(0, 2).map((clinic) => clinic.city).join(' • ')}</span>
+              <span className="font-serif italic text-[11px] sm:text-sm leading-tight text-brand-accent font-semibold">{clinics.map((clinic) => clinic.city).join(' • ')}</span>
               <span className="font-sans text-[9px] text-stone-500 uppercase tracking-widest mt-2">Sedi</span>
             </div>
           </motion.div>
